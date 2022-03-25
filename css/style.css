@@ -1988,3 +1988,11 @@ block.gif {
     padding: 0px;
     margin: 0px;
 }
+
+.music {
+    position: absolute;
+    margin-left: auto;
+    margin: 11px -20px;
+    opacity: 70%;
+    align-self: end;
+}
