@@ -21,7 +21,7 @@
 
 
 //     /**
-//      * Controls the different versions of  the menu in blog post articles 
+//      * Controls the different versions of  the menu in blog post articles
 //      * for Desktop, tablet and mobile.
 //      */
 //     if ($(".post").length) {
@@ -100,7 +100,7 @@
 //                 $("#toc-footer").hide();
 //                 $("#share-footer").hide();
 
-//                 // show a "navigation" icon when close to the top of the page, 
+//                 // show a "navigation" icon when close to the top of the page,
 //                 // otherwise show a "scroll to the top" icon
 //                 if (topDistance < 50) {
 //                     $("#actions-footer > #top").hide();
@@ -117,7 +117,7 @@ var colors = new Array(
     [62, 35, 255], [60, 255, 60], [255, 35, 98], [45, 175, 230], [255, 0, 255], [255, 128, 0]);
 
 var step = 0;
-//color table indices for: 
+//color table indices for:
 // current color left
 // next color left
 // current color right
@@ -168,3 +168,34 @@ function updateGradient() {
 }
 
 setInterval(updateGradient, 10);
+
+// console.clear();
+
+class musicPlayer {
+    constructor() {
+        this.play = this.play.bind(this);
+        this.playBtn = document.getElementById('play');
+        this.playBtn.addEventListener('click', this.play);
+        this.controlPanel = document.getElementById('control-panel');
+        this.infoBar = document.getElementById('info');
+    }
+
+    play() {
+        let audio = new Audio('/music/forgetaboutme.mp3');
+
+        let controlPanelObj = this.controlPanel,
+            infoBarObj = this.infoBar
+        Array.from(controlPanelObj.classList).find(function(element) {
+            return element !== "active" ? controlPanelObj.classList.add('active') : controlPanelObj.classList.remove('active');
+        });
+
+        // audio.play();
+
+        // Array.from(infoBarObj.classList).find(function(element) {
+        //     return element !== "active" ? infoBarObj.classList.add('active') : infoBarObj.classList.remove('active');
+        // });
+        // audio.pause();
+    }
+}
+
+const newMusicplayer = new musicPlayer();
