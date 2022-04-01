@@ -1502,6 +1502,7 @@ article .content .caption {
     vertical-align: top;
     text-align: center;
     font-size: 11px;
+    max-width: 48rem;
 }
 
 #footer ul {
