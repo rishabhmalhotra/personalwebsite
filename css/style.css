@@ -1996,11 +1996,10 @@ block.gif {
 .music {
     position: absolute;
     margin-left: auto;
-    opacity: 70%;
+    opacity: 40%;
     align-self: end;
-    -webkit-border-radius: 5px;
-    /* -moz-border-radius: 45px; */
-    border-radius: 5px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
 }
 
 .player {
