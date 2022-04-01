@@ -1998,8 +1998,8 @@ block.gif {
     margin-left: auto;
     opacity: 40%;
     align-self: end;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+    /* -webkit-border-radius: 10px; */
+    /* border-radius: 10px; */
 }
 
 .player {
