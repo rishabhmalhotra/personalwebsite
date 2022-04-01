@@ -589,6 +589,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    vertical-align: middle;
 }
 
 .content {
