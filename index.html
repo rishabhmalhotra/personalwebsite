@@ -131,6 +131,10 @@
                         // Element that holds the text
                         var _ELEMENT = document.querySelector("#text");
 
+                        // Only do this a few times
+                        var cur_times = 0;
+                        var total_times = 3;
+
                         // Implements typing effect
                         function Type() {
                             var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
@@ -139,11 +143,13 @@
                             _PART_INDEX++;
 
                             // If full sentence has been displayed then start to delete the sentence after some time
-                            if (text === _CONTENT[_PART]) {
+                            if (text === _CONTENT[_PART] && cur_times <= total_times) {
                                 clearInterval(_INTERVAL_VAL);
                                 setTimeout(function() {
                                     _INTERVAL_VAL = setInterval(Delete, 50);
                                 }, 1000);
+
+                                cur_times++;
                             }
                         }
 
@@ -166,13 +172,13 @@
 
                                 // Start to display the next sentence after some time
                                 setTimeout(function() {
-                                    _INTERVAL_VAL = setInterval(Type, 100);
+                                    _INTERVAL_VAL = setInterval(Type, 250);
                                 }, 200);
                             }
                         }
 
                         // Start the typing effect on load
-                        _INTERVAL_VAL = setInterval(Type, 100);
+                        _INTERVAL_VAL = setInterval(Type, 250);
                     </script>
 
 
