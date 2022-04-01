@@ -2,7 +2,7 @@
 <html lang=en>
 
 <head>
-    <iframe style="border-radius:1px" src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" width="22%" height="75" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    <iframe style="border-radius:1px" src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" width="20%" height="75" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         class="music"></iframe>
 
     <!-- Fancy music player -->
@@ -52,7 +52,7 @@
             <header id="header">
                 <div>
                     <a href="https://www.block.xyz">
-                        <img class="block-brightness-low.gif" src="/images/Block/block-brightness-low.gif">
+                        <img class="block-brightness-low.gif" src="/images/Block/block.gif">
                     </a>
                 </div>
                 <div id="title">
@@ -131,6 +131,10 @@
                         // Element that holds the text
                         var _ELEMENT = document.querySelector("#text");
 
+                        // Only do this a few times
+                        var cur_times = 0;
+                        var total_times = 5;
+
                         // Implements typing effect
                         function Type() {
                             var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
@@ -139,11 +143,13 @@
                             _PART_INDEX++;
 
                             // If full sentence has been displayed then start to delete the sentence after some time
-                            if (text === _CONTENT[_PART]) {
+                            if (text === _CONTENT[_PART] && cur_times <= total_times) {
                                 clearInterval(_INTERVAL_VAL);
                                 setTimeout(function() {
                                     _INTERVAL_VAL = setInterval(Delete, 50);
                                 }, 1000);
+
+                                cur_times++;
                             }
                         }
 
@@ -166,13 +172,13 @@
 
                                 // Start to display the next sentence after some time
                                 setTimeout(function() {
-                                    _INTERVAL_VAL = setInterval(Type, 100);
+                                    _INTERVAL_VAL = setInterval(Type, 250);
                                 }, 200);
                             }
                         }
 
                         // Start the typing effect on load
-                        _INTERVAL_VAL = setInterval(Type, 100);
+                        _INTERVAL_VAL = setInterval(Type, 250);
                     </script>
 
 
@@ -215,30 +221,39 @@
                 </ul>
             </section> -->
 
-            <p>
-                <div class="footer">
-                    <footer id="footer">
-                        <div class="footer-left">
-                            Copyright &copy; 2021-2022 Rishabh Malhotra
-                        </div>
-                        <div class="footer-right">
-                            <nav>
-                                <ul>
-                                    <!-- <li><a href="/">Home</a></li>
-                                <li><a href="/Projects/">Projects</a></li> -->
-                                    <li><a href="https://block.xyz">Block</a></li>
-                                    <li><a href="https://squareup.com">Square</a></li>
-                                    <li><a href="https://developer.squareup.com/ca/en">Square Dev</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="" footer-left>
-                            Copyright &copy; 2022 Block, Inc. BLOCK, Square and the Block/Square Logos are trademarks of Block, Inc. <a href="https://block.xyz/legal">Legal</a>
-                        </div>
-                    </footer>
-                </div>
-            </p>
+            <!-- Here lived the code for the old footer -->
 
+        </div>
+
+        <div class="footer">
+            <footer id="footer">
+                <div class="footer-left">
+                    Copyright &copy; 2021-2022 Rishabh Malhotra. The Block Logo are trademarks of Block, Inc.
+                </div>
+                <div class="footer-right">
+                    <nav>
+                        <ul>
+                            <li><a href="https://block.xyz">Block</a></li>
+                            <li><a href="https://block.xyz/legal">Legal</a></li>
+
+                            <!-- <li><a href="https://squareup.com">Square</a></li> -->
+                            <!-- <li><a href="https://developer.squareup.com/ca/en">Square Dev</a></li> -->
+                            <!-- <li><a href="/Projects/">Projects</a></li> -->
+                            <!-- <li><a href="/">Home</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="" footer-left>
+                    <!-- Copyright &copy; 2022 Block, Inc. BLOCK and the Block Logo are trademarks of Block, Inc. -->
+                </div>
+                <div class="footer-right">
+                    <nav>
+                        <ul>
+                            <!-- <li><a href="https://block.xyz/legal">Legal</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+            </footer>
         </div>
 
         <!-- styles -->
@@ -263,7 +278,6 @@
         <!-- Umami Analytics -->
 
         <!-- Disqus Comments -->
-
 </body>
 
 </html>
