@@ -50,7 +50,8 @@
     <div class="max-width mx-auto px3 ltr">
         <div class="content index py4">
             <header id="header">
-                <div>
+                <!-- <div> -->
+                <div class="fade-in">
                     <a href="https://www.block.xyz">
                         <img class="block-brightness-low.gif" src="/images/Block/block.gif">
                     </a>
@@ -120,7 +121,7 @@
 
                 <script type="text/javascript">
                     // List of sentences
-                    var _CONTENT = ["Square.", "Block."];
+                    var _CONTENT = ["Block.", "Square."];
 
                     // Current sentence being processed
                     var _PART = 0;
@@ -180,8 +181,11 @@
                         }
                     }
 
-                    // Start the typing effect on load
-                    _INTERVAL_VAL = setInterval(Type, 100);
+                    function callType() {
+                        _INTERVAL_VAL = setInterval(Type, 100);
+                    }
+
+                    _INTERVAL_VAL = setTimeout(callType, 8000);
                 </script>
 
 
