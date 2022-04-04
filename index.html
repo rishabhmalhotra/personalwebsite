@@ -121,7 +121,7 @@
 
                 <script type="text/javascript">
                     // List of sentences
-                    var _CONTENT = ["Square.", "Block."];
+                    var _CONTENT = ["Block.", "Square."];
 
                     // Current sentence being processed
                     var _PART = 0;
@@ -137,7 +137,7 @@
 
                     // Only do this a few times
                     var cur_times = 0;
-                    var total_times = 7;
+                    var total_times = 8;
 
                     // Implements typing effect
                     function Type() {
@@ -181,8 +181,11 @@
                         }
                     }
 
-                    // Start the typing effect on load
-                    _INTERVAL_VAL = setInterval(Type, 100);
+                    function callType() {
+                        _INTERVAL_VAL = setInterval(Type, 100);
+                    }
+
+                    _INTERVAL_VAL = setTimeout(callType, 8000);
                 </script>
 
 
