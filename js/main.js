@@ -96,26 +96,26 @@ function startdecrypt() {
 
     decrypted.textContent = "";
 
-    var shuffleInterval = setInterval(function() {
+    setTimeout(function() {
+        var shuffleInterval = setInterval(function() {
 
-        // Generate random strings. You can modify the generator function range
-        // (Math.random()*(to-from+1)+from);
-        var shuffledText = '';
-        var j = originalText.length;
-        while (j--) shuffledText += String.fromCharCode((Math.random() * 94 + 33) | 0);
+            // Generate random strings. You can modify the generator function range
+            // (Math.random()*(to-from+1)+from);
+            var shuffledText = '';
+            var j = originalText.length;
+            while (j--) shuffledText += String.fromCharCode((Math.random() * 94 + 33) | 0);
 
-        // On every 10 cycles, remove a character from the original text to the decoded text
-        if (i++ % 7 === 0) decryptedText += originalText.pop();
+            // On every 10 cycles, remove a character from the original text to the decoded text
+            if (i++ % 7 === 0) decryptedText += originalText.pop();
 
-        // Display
-        decrypted.textContent = decryptedText;
-        encrypted.textContent = shuffledText;
+            // Display
+            decrypted.textContent = decryptedText;
+            encrypted.textContent = shuffledText;
 
-        // Stop when done
-        if (!shuffledText.length) clearInterval(shuffleInterval);
-
-        // 50ms looks more dramatic
-    }, 50);
+            // Stop when done
+            if (!shuffledText.length) clearInterval(shuffleInterval);
+        }, 20);
+    }, 2000);
 }
 
 if (window.addEventListener) {
