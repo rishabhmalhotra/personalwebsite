@@ -2145,11 +2145,11 @@ block.gif {
 /* Fade in Block gif */
 
 .fade-in {
-    animation: fadeIn ease 22s;
-    -webkit-animation: fadeIn ease 22s;
-    -moz-animation: fadeIn ease 22s;
-    -o-animation: fadeIn ease 22s;
-    -ms-animation: fadeIn ease 22s;
+    animation: fadeIn ease 13s;
+    -webkit-animation: fadeIn ease 13s;
+    -moz-animation: fadeIn ease 13s;
+    -o-animation: fadeIn ease 13s;
+    -ms-animation: fadeIn ease 13s;
 }
 
 @keyframes fadeIn {
