@@ -17,6 +17,15 @@ canvas {
     height: 100vh;
 }
 
+#bottomright {
+    position: absolute;
+    bottom: 0;
+    right: 1vw;
+    color: aquamarine;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    -webkit-font-smoothing: antialiased;
+}
+
 button {
     position: absolute;
     bottom: 5%;
