@@ -47,153 +47,155 @@
 </head>
 
 <body>
-    <div class="max-width mx-auto px3 ltr">
-        <div class="content index py4">
-            <header id="header">
-                <!-- <div> -->
-                <div class="fade-in">
-                    <a href="https://www.block.xyz">
-                        <img class="block-brightness-low.gif" src="/images/Block/block.gif">
-                    </a>
-                </div>
+    <div class="main">
+        <div class="wrapper">
+            <div class="max-width mx-auto px3 ltr">
+                <div class="content index py4">
+                    <header id="header">
+                        <!-- <div> -->
+                        <div class="fade-in">
+                            <a href="https://www.block.xyz">
+                                <img class="block-brightness-low.gif" src="/images/Block/block.gif">
+                            </a>
+                        </div>
 
-                <div id="title">
-                    <div style="float:center">
-                        <script src="http://code.jquery.com/jquery-latest.js"></script>
-                        <h1>
-                            <span id="decoded">Rishabh Malhotra</span>
-                            <span id="encoded"></span>
-                        </h1>
-                    </div>
-                </div>
+                        <div id="title">
+                            <div style="float:center">
+                                <script src="http://code.jquery.com/jquery-latest.js"></script>
+                                <h1>
+                                    <span id="decoded">Rishabh Malhotra</span>
+                                    <span id="encoded"></span>
+                                </h1>
+                            </div>
+                        </div>
 
-                <div id="nav">
-                    <ul>
-                        <li class="icon">
-                            <a href="#"><i class="fas fa-bars fa-2x"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/in/rish-malho/Rishabh%20Malhotra">
+                        <div id="nav">
+                            <ul>
+                                <li class="icon">
+                                    <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.linkedin.com/in/rish-malho/Rishabh%20Malhotra">
                                 LinkedIn
                                 <i class="fab fa-linkedin"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/rishabhmalhotra">
+                                </li>
+                                <li>
+                                    <a href="https://github.com/rishabhmalhotra">
                                 GitHub
                                 <i class="fab fa-github"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/rishmalho">
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/rishmalho">
                                 Twitter
                                 <i class="fab fa-twitter"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="https://unsplash.com/@rishmalho">
+                                </li>
+                                <li>
+                                    <a href="https://unsplash.com/@rishmalho">
                                 Photography
                                 <i class="fas fa-camera"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="mailto:smartguy.rm@gmail.com">
+                                </li>
+                                <li>
+                                    <a href="mailto:smartguy.rm@gmail.com">
                                 Email
                                 <i class="fas fa-envelope"></i>
                             </a>
-                        </li>
-                        <!-- <li>
+                                </li>
+                                <!-- <li>
                             <a href="/Projects/">
                                 Projects
                             </a>
                         </li> -->
-                    </ul>
-                </div>
-            </header>
+                            </ul>
+                        </div>
+                    </header>
 
-            <section id="about">
-                <div id="container">
-                    <br>I graduated from the University of Waterloo in 2020 with a Dean's Hons in Computer Science & currently work as a Software Engineer at
-                    <span id="text"></span>
-                </div>
+                    <section id="about">
+                        <div id="container">
+                            <br>I graduated from the University of Waterloo in 2020 with a Dean's Hons in Computer Science & currently work as a Software Engineer at
+                            <span id="text"></span>
+                        </div>
 
-                <script type="text/javascript">
-                    // List of sentences
-                    var _CONTENT = ["Block.", "Square."];
+                        <script type="text/javascript">
+                            // List of sentences
+                            var _CONTENT = ["Block.", "Square."];
 
-                    // Current sentence being processed
-                    var _PART = 0;
+                            // Current sentence being processed
+                            var _PART = 0;
 
-                    // Character number of the current sentence being processed
-                    var _PART_INDEX = 0;
+                            // Character number of the current sentence being processed
+                            var _PART_INDEX = 0;
 
-                    // Holds the handle returned from setInterval
-                    var _INTERVAL_VAL;
+                            // Holds the handle returned from setInterval
+                            var _INTERVAL_VAL;
 
-                    // Element that holds the text
-                    var _ELEMENT = document.querySelector("#text");
+                            // Element that holds the text
+                            var _ELEMENT = document.querySelector("#text");
 
-                    // Only do this a few times
-                    var cur_times = 0;
-                    var total_times = 8;
+                            // Only do this a few times
+                            var cur_times = 0;
+                            var total_times = 8;
 
-                    // Implements typing effect
-                    function Type() {
-                        var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
-                        _ELEMENT.innerHTML = text;
-                        _ELEMENT.href = "squareup.com";
-                        _PART_INDEX++;
+                            // Implements typing effect
+                            function Type() {
+                                var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
+                                _ELEMENT.innerHTML = text;
+                                _ELEMENT.href = "squareup.com";
+                                _PART_INDEX++;
 
-                        // If full sentence has been displayed then start to delete the sentence after some time
-                        if (text === _CONTENT[_PART] && cur_times <= total_times) {
-                            clearInterval(_INTERVAL_VAL);
-                            setTimeout(function() {
-                                _INTERVAL_VAL = setInterval(Delete, 50);
-                            }, 1000);
+                                // If full sentence has been displayed then start to delete the sentence after some time
+                                if (text === _CONTENT[_PART] && cur_times <= total_times) {
+                                    clearInterval(_INTERVAL_VAL);
+                                    setTimeout(function() {
+                                        _INTERVAL_VAL = setInterval(Delete, 50);
+                                    }, 1000);
 
-                            cur_times++;
-                        }
-                    }
+                                    cur_times++;
+                                }
+                            }
 
-                    // Implements deleting effect
-                    function Delete() {
-                        var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1);
-                        _ELEMENT.innerHTML = text;
-                        _PART_INDEX--;
+                            // Implements deleting effect
+                            function Delete() {
+                                var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1);
+                                _ELEMENT.innerHTML = text;
+                                _PART_INDEX--;
 
-                        // If sentence has been deleted then start to display the next sentence
-                        if (text === '') {
-                            clearInterval(_INTERVAL_VAL);
+                                // If sentence has been deleted then start to display the next sentence
+                                if (text === '') {
+                                    clearInterval(_INTERVAL_VAL);
 
-                            // If last sentence then display the first one, else move to the next
-                            if (_PART == (_CONTENT.length - 1))
-                                _PART = 0;
-                            else
-                                _PART++;
-                            _PART_INDEX = 0;
+                                    // If last sentence then display the first one, else move to the next
+                                    if (_PART == (_CONTENT.length - 1))
+                                        _PART = 0;
+                                    else
+                                        _PART++;
+                                    _PART_INDEX = 0;
 
-                            // Start to display the next sentence after some time
-                            setTimeout(function() {
+                                    // Start to display the next sentence after some time
+                                    setTimeout(function() {
+                                        _INTERVAL_VAL = setInterval(Type, 100);
+                                    }, 200);
+                                }
+                            }
+
+                            function callType() {
                                 _INTERVAL_VAL = setInterval(Type, 100);
-                            }, 200);
-                        }
-                    }
+                            }
 
-                    function callType() {
-                        _INTERVAL_VAL = setInterval(Type, 100);
-                    }
-
-                    _INTERVAL_VAL = setTimeout(callType, 6000);
-                </script>
+                            _INTERVAL_VAL = setTimeout(callType, 6000);
+                        </script>
 
 
-                <p>
-                    <br>I enjoy working on backend services, distributed systems, artificial intelligence, etc. When I'm not building tech, I'm studying
-                    <a href="/Astrodynamics/comingsoon.html">Astrodynamics</a> hoping to better understand humanity's endeavours to venture into new worlds.
-                </p>
+                        <p>
+                            <br>I enjoy working on backend services, distributed systems, artificial intelligence, etc. When I'm not building tech, I'm studying
+                            <a href="/Astrodynamics/comingsoon.html">Astrodynamics</a> hoping to better understand humanity's endeavours to venture into new worlds.
+                        </p>
 
-                <!-- This is the find me line that I moved up so no need anymore -->
-                <!-- <p>
+                        <!-- This is the find me line that I moved up so no need anymore -->
+                        <!-- <p>
                         Find me on
                         <a class="icon" target="_blank" rel="noopener" href="https://www.linkedin.com/in/rish-malho/Rishabh%20Malhotra">
                             <i class="fab fa-linkedin"></i>
@@ -211,9 +213,9 @@
                             <i class="fas fa-envelope"></i>
                         </a>
                     </p> -->
-            </section>
+                    </section>
 
-            <!-- <section id="Projects">
+                    <!-- <section id="Projects">
                 <span class="h1"><a href="/Projects/">Projects</a></span>
                 <ul class="post-list">
                     <li class="post-item">
@@ -227,52 +229,53 @@
                 </ul>
             </section> -->
 
-            <!-- Here lived the code for the old footer -->
+                    <!-- Here lived the code for the old footer -->
 
+                </div>
+
+                <div class="footer">
+                    <footer id="footer">
+                        <div class="footer-left">
+                            &copy; 2021-2022 Rishabh Malhotra. The Block Logo is trademark of Block, Inc.
+                        </div>
+                        <div class="footer-right">
+                            <nav>
+                                <ul>
+                                    <li><a href="https://block.xyz">Block</a></li>
+                                    <li><a href="https://squareup.com">Square</a></li>
+                                    <li><a href="https://block.xyz/legal">Legal</a></li>
+
+                                    <!-- <li><a href="https://developer.squareup.com/ca/en">Square Dev</a></li> -->
+                                    <!-- <li><a href="/Projects/">Projects</a></li> -->
+                                    <!-- <li><a href="/">Home</a></li> -->
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="" footer-left>
+                            <!-- Copyright &copy; 2022 Block, Inc. BLOCK and the Block Logo are trademarks of Block, Inc. -->
+                        </div>
+                        <div class="footer-right">
+                            <nav>
+                                <ul>
+                                    <!-- <li><a href="https://block.xyz/legal">Legal</a></li> -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </footer>
+                </div>
+
+                <!-- styles -->
+                <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+                <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+                <!-- jquery -->
+                <script src="/lib/jquery/jquery.min.js"></script>
+                <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+                <!-- clipboard -->
+                <script src="/js/main.js"></script>
+            </div>
         </div>
-
-        <div class="footer">
-            <footer id="footer">
-                <div class="footer-left">
-                    &copy; 2021-2022 Rishabh Malhotra. The Block Logo is trademark of Block, Inc.
-                </div>
-                <div class="footer-right">
-                    <nav>
-                        <ul>
-                            <li><a href="https://block.xyz">Block</a></li>
-                            <li><a href="https://squareup.com">Square</a></li>
-                            <li><a href="https://block.xyz/legal">Legal</a></li>
-
-                            <!-- <li><a href="https://developer.squareup.com/ca/en">Square Dev</a></li> -->
-                            <!-- <li><a href="/Projects/">Projects</a></li> -->
-                            <!-- <li><a href="/">Home</a></li> -->
-                        </ul>
-                    </nav>
-                </div>
-                <div class="" footer-left>
-                    <!-- Copyright &copy; 2022 Block, Inc. BLOCK and the Block Logo are trademarks of Block, Inc. -->
-                </div>
-                <div class="footer-right">
-                    <nav>
-                        <ul>
-                            <!-- <li><a href="https://block.xyz/legal">Legal</a></li> -->
-                        </ul>
-                    </nav>
-                </div>
-            </footer>
-        </div>
-
-        <!-- styles -->
-        <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-        <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
-
-        <!-- jquery -->
-        <script src="/lib/jquery/jquery.min.js"></script>
-        <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-
-        <!-- clipboard -->
-        <script src="/js/main.js"></script>
-
 </body>
 
 </html>
