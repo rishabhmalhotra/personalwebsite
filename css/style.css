@@ -1590,7 +1590,7 @@ article .content .caption {
     width: 100%;
     color: #666;
     vertical-align: top;
-    text-align: left;
+    text-align: center;
     font-size: 11px;
     max-width: 48rem;
 }
