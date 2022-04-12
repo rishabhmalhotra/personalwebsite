@@ -2,8 +2,10 @@
 <html lang=en>
 
 <head>
-    <iframe style="border-radius:1px" src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" width="20%" height="75" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        class="music"></iframe>
+    <div class="mobileHide">
+        <iframe style="border-radius:1px" src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" width="20%" height="75" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            class="music"></iframe>
+    </div>
 
     <!-- so meta -->
     <meta charset="utf-8">
@@ -35,6 +37,10 @@
 </head>
 
 <body>
+    <div class="mobileShow">
+        <embed src="music/itsalllove.mp3" loop="true" autostart="true" width="2" height="0"></embed>
+        <audio src="music/itsalllove.mp3" autoplay="true"></audio>
+    </div>
     <div class="main">
         <div class="wrapper">
             <div class="max-width mx-auto px3 ltr">
@@ -263,7 +269,6 @@
 
                 <!-- Footer for mobile version of website -->
                 <div class="mobileShow">
-                    <!-- <div class="footer" margin="auto" text-align="center"> -->
                     <footer id="footermobile">
                         &copy; 2021-2022 Rishabh Malhotra. The Block Logo is trademark of Block, Inc.
                         <nav>
@@ -274,7 +279,6 @@
                             </ul>
                         </nav>
                     </footer>
-                    <!-- </div> -->
                 </div>
 
                 <!-- styles -->
