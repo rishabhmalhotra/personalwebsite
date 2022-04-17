@@ -108,74 +108,155 @@
                             <span id="text"></span>
                         </div>
 
-                        <script type="text/javascript">
-                            // List of sentences
-                            var _CONTENT = ["Block.", "Square."];
+                        <!-- Script for detype/retype company name on desktop with browser JS enabled-->
+                        <div class="mobileHide">
+                            <script type="text/javascript">
+                                // List of sentences
+                                var _CONTENT = [
+                                    ":\<pre\> def Block:\<br\>      building_blocks = [\"Square\", \<br\>                         \"Cash App\", \<br\>                         \"Spiral\", \<br\>                         \"Tidal\", \<br\>                         \"TBD\"] \<br\>\<br\>      return building_blocks[0] \<\/pre\>"
+                                ];
 
-                            // Current sentence being processed
-                            var _PART = 0;
+                                // Current sentence being processed
+                                var _PART = 0;
 
-                            // Character number of the current sentence being processed
-                            var _PART_INDEX = 0;
+                                // Character number of the current sentence being processed
+                                var _PART_INDEX = 0;
 
-                            // Holds the handle returned from setInterval
-                            var _INTERVAL_VAL;
+                                // Holds the handle returned from setInterval
+                                var _INTERVAL_VAL;
 
-                            // Element that holds the text
-                            var _ELEMENT = document.querySelector("#text");
+                                // Element that holds the text
+                                var _ELEMENT = document.querySelector("#text");
 
-                            // Only do this a few times
-                            var cur_times = 0;
-                            var total_times = 4; // Keep this even to land at Square.
+                                // Only do this a few times
+                                var cur_times = 1;
+                                var total_times = 1;
 
-                            // Implements typing effect
-                            function Type() {
-                                var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
-                                _ELEMENT.innerHTML = text;
-                                _ELEMENT.href = "squareup.com";
-                                _PART_INDEX++;
+                                // Implements typing effect
+                                function Type() {
+                                    var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
+                                    _ELEMENT.innerHTML = text;
+                                    _ELEMENT.href = "squareup.com";
+                                    _PART_INDEX++;
 
-                                // If full sentence has been displayed then start to delete the sentence after some time
-                                if (text === _CONTENT[_PART] && cur_times <= total_times) {
-                                    clearInterval(_INTERVAL_VAL);
-                                    setTimeout(function() {
-                                        _INTERVAL_VAL = setInterval(Delete, 50);
-                                    }, 1000);
+                                    // If full sentence has been displayed then start to delete the sentence after some time
+                                    if (text === _CONTENT[_PART] && cur_times <= total_times) {
+                                        // clearInterval(_INTERVAL_VAL);
+                                        // setTimeout(function() {
+                                        //     _INTERVAL_VAL = setInterval(Delete, 50);
+                                        // }, 1000);
 
-                                    cur_times++;
+                                        cur_times++;
+                                    }
                                 }
-                            }
 
-                            // Implements deleting effect
-                            function Delete() {
-                                var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1);
-                                _ELEMENT.innerHTML = text;
-                                _PART_INDEX--;
+                                // Implements deleting effect
+                                function Delete() {
+                                    var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1);
+                                    _ELEMENT.innerHTML = text;
+                                    _PART_INDEX--;
 
-                                // If sentence has been deleted then start to display the next sentence
-                                if (text === '') {
-                                    clearInterval(_INTERVAL_VAL);
+                                    // If sentence has been deleted then start to display the next sentence
+                                    if (text === '') {
+                                        clearInterval(_INTERVAL_VAL);
 
-                                    // If last sentence then display the first one, else move to the next
-                                    if (_PART == (_CONTENT.length - 1))
-                                        _PART = 0;
-                                    else
-                                        _PART++;
-                                    _PART_INDEX = 0;
+                                        // If last sentence then display the first one, else move to the next
+                                        if (_PART == (_CONTENT.length - 1))
+                                            _PART = 0;
+                                        else
+                                            _PART++;
+                                        _PART_INDEX = 0;
 
-                                    // Start to display the next sentence after some time
-                                    setTimeout(function() {
-                                        _INTERVAL_VAL = setInterval(Type, 100);
-                                    }, 200);
+                                        // Start to display the next sentence after some time
+                                        setTimeout(function() {
+                                            _INTERVAL_VAL = setInterval(Type, 100);
+                                        }, 200);
+                                    }
                                 }
-                            }
 
-                            function callType() {
-                                _INTERVAL_VAL = setInterval(Type, 100);
-                            }
+                                function callType() {
+                                    _INTERVAL_VAL = setInterval(Type, 50);
+                                }
 
-                            _INTERVAL_VAL = setTimeout(callType, 6000);
-                        </script>
+                                _INTERVAL_VAL = setTimeout(callType, 6000);
+                            </script>
+                        </div>
+
+                        <!-- Script for detype/retype company name on mobile with browser JS enabled-->
+                        <div class="mobileShow">
+                            <script type="text/javascript">
+                                this is required to print the code block in type animation
+                                    // List of sentences
+                                var _CONTENT = [
+                                    "Block.",
+                                    "Square."
+                                ];
+
+                                // Current sentence being processed
+                                var _PART = 0;
+
+                                // Character number of the current sentence being processed
+                                var _PART_INDEX = 0;
+
+                                // Holds the handle returned from setInterval
+                                var _INTERVAL_VAL;
+
+                                // Element that holds the text
+                                var _ELEMENT = document.querySelector("#text");
+
+                                // Only do this a few times
+                                var cur_times = 0;
+                                var total_times = 4; // Keep this even to land at Square.
+
+                                // Implements typing effect
+                                function Type() {
+                                    var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
+                                    _ELEMENT.innerHTML = text;
+                                    _ELEMENT.href = "squareup.com";
+                                    _PART_INDEX++;
+
+                                    // If full sentence has been displayed then start to delete the sentence after some time
+                                    if (text === _CONTENT[_PART] && cur_times <= total_times) {
+                                        clearInterval(_INTERVAL_VAL);
+                                        setTimeout(function() {
+                                            _INTERVAL_VAL = setInterval(Delete, 50);
+                                        }, 1000);
+
+                                        cur_times++;
+                                    }
+                                }
+
+                                // Implements deleting effect
+                                function Delete() {
+                                    var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1);
+                                    _ELEMENT.innerHTML = text;
+                                    _PART_INDEX--;
+
+                                    // If sentence has been deleted then start to display the next sentence
+                                    if (text === '') {
+                                        clearInterval(_INTERVAL_VAL);
+
+                                        // If last sentence then display the first one, else move to the next
+                                        if (_PART == (_CONTENT.length - 1))
+                                            _PART = 0;
+                                        else
+                                            _PART++;
+                                        _PART_INDEX = 0;
+
+                                        // Start to display the next sentence after some time
+                                        setTimeout(function() {
+                                            _INTERVAL_VAL = setInterval(Type, 100);
+                                        }, 200);
+                                    }
+                                }
+
+                                function callType() {
+                                    _INTERVAL_VAL = setInterval(Type, 100);
+                                }
+
+                                _INTERVAL_VAL = setTimeout(callType, 6000);
+                            </script>
+                        </div>
 
 
                         <div class="mobileHide">
