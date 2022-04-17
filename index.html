@@ -48,7 +48,7 @@
 
                         <div id="title">
                             <div style="float:center">
-                                <script src="http://code.jquery.com/jquery-latest.js"></script>
+                                <script src="/js/typescript.js"></script>
                                 <h1>
                                     <div class="mobileHide">
                                         <span id="decoded">Rishabh Malhotra</span>
@@ -108,75 +108,30 @@
                             <span id="text"></span>
                         </div>
 
-                        <script type="text/javascript">
-                            // List of sentences
-                            var _CONTENT = ["Block.", "Square."];
-
-                            // Current sentence being processed
-                            var _PART = 0;
-
-                            // Character number of the current sentence being processed
-                            var _PART_INDEX = 0;
-
-                            // Holds the handle returned from setInterval
-                            var _INTERVAL_VAL;
-
-                            // Element that holds the text
-                            var _ELEMENT = document.querySelector("#text");
-
-                            // Only do this a few times
-                            var cur_times = 0;
-                            var total_times = 4; // Keep this even to land at Square.
-
-                            // Implements typing effect
-                            function Type() {
-                                var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
-                                _ELEMENT.innerHTML = text;
-                                _ELEMENT.href = "squareup.com";
-                                _PART_INDEX++;
-
-                                // If full sentence has been displayed then start to delete the sentence after some time
-                                if (text === _CONTENT[_PART] && cur_times <= total_times) {
-                                    clearInterval(_INTERVAL_VAL);
-                                    setTimeout(function() {
-                                        _INTERVAL_VAL = setInterval(Delete, 50);
-                                    }, 1000);
-
-                                    cur_times++;
-                                }
+                        <!-- Load the relevant type/detype company name script -->
+                        <script>
+                            // if viewportWidth width <= 991
+                            // if (window.innerWidth <= 991) {
+                            if (document.documentElement.clientWidth <= 980) {
+                                // load mobile script
+                                loadScriptFile('/js/companyname_mobile.js');
+                            } else {
+                                // load desktop script
+                                loadScriptFile('/js/companyname_desktop.js');
                             }
 
-                            // Implements deleting effect
-                            function Delete() {
-                                var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1);
-                                _ELEMENT.innerHTML = text;
-                                _PART_INDEX--;
-
-                                // If sentence has been deleted then start to display the next sentence
-                                if (text === '') {
-                                    clearInterval(_INTERVAL_VAL);
-
-                                    // If last sentence then display the first one, else move to the next
-                                    if (_PART == (_CONTENT.length - 1))
-                                        _PART = 0;
-                                    else
-                                        _PART++;
-                                    _PART_INDEX = 0;
-
-                                    // Start to display the next sentence after some time
-                                    setTimeout(function() {
-                                        _INTERVAL_VAL = setInterval(Type, 100);
-                                    }, 200);
-                                }
+                            // loadScriptFile func
+                            function loadScriptFile(src) {
+                                // create element <script>
+                                const $script = $('<script>');
+                                // add type attribute
+                                $script.attr('type', 'text/javascript');
+                                // add src attribute
+                                $script.attr('src', src);
+                                // append the <script> element to <head>
+                                $script.appendTo('head');
                             }
-
-                            function callType() {
-                                _INTERVAL_VAL = setInterval(Type, 100);
-                            }
-
-                            _INTERVAL_VAL = setTimeout(callType, 6000);
                         </script>
-
 
                         <div class="mobileHide">
                             <p>
