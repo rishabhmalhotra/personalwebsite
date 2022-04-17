@@ -130,6 +130,10 @@
                                 $script.attr('src', src);
                                 // append the <script> element to <head>
                                 $script.appendTo('head');
+
+                                // close script tag
+                                const $closescript = $('<\/script>');
+                                $closescript.appendTo('head');
                             }
                         </script>
 
