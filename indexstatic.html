@@ -48,13 +48,17 @@
             <div class="max-width mx-auto px3 ltr">
                 <div class="content index py4">
                     <header id="header">
-                        <a href="https://www.block.xyz">
-                            <img class="block-brightness-low.gif" src="/images/Block/block.gif">
-                        </a>
+                        <!-- Show different size pic on mobile -->
+                        <div class="mobileHide">
+                            <img class="mySlides w3-animate-fading" src="/images/Profile/pixelated124.png" width="140px" height=auto>
+                        </div>
+                        <div class="mobileShow">
+                            <img class="mySlides w3-animate-fading" src="/images/Profile/pixelated124.png" width="120px" height=auto>
+                        </div>
 
                         <div id="title">
                             <div style="float:center">
-                                <script src="http://code.jquery.com/jquery-latest.js"></script>
+                                <script src="/js/typescript.js"></script>
                                 <h1>
                                     Rishabh Malhotra
                                 </h1>
@@ -101,13 +105,18 @@
 
                     <section id="about">
                         <div id="container">
-                            <div class="mobileHide">
-                                <br>
-                            </div>
                             I graduated from the University of Waterloo in 2020 with a Dean's Hons in Computer Science & currently work as a Backend Software Engineer at
                             <div class="mobileShow">Square.</div>
                             <div class="mobileHide">
-                                <pre>def Block:
+                                <noscript>
+                                    Square.
+                                    <style type="text/css">
+                                        #main-content { display:none; }
+                                    </style>
+                                </noscript>
+                                <span id="main-content">
+                                    Block().
+                                    <pre>def Block:
     building_blocks = ["Square",
                        "Cash App",
                        "Spiral",
@@ -116,13 +125,17 @@
 
     return building_blocks[0]
                             </pre>
+                                </span>
                             </div>
                         </div>
 
                         <div class="mobileHide">
                             <p>
                         </div>
-                        <br>When I'm not writing code, I'm probably learning
+                        <div class="mobileShow">
+                            <br>
+                        </div>
+                        When I'm not writing code, I'm probably learning
                         <a href="/Astrodynamics/comingsoon.html">Astrodynamics</a> hoping to better understand humanity's endeavours to venture into new worlds.
                         </p>
 
