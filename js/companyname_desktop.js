@@ -33,7 +33,7 @@ function Type() {
 }
 
 function callType() {
-    _INTERVAL_VAL = setInterval(Type, 25);
+    _INTERVAL_VAL = setInterval(Type, 35);
 }
 
 _INTERVAL_VAL = setTimeout(callType, 6000);
