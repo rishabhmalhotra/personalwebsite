@@ -41,10 +41,15 @@
                 <div class="content index py4">
                     <header id="header">
                         <div class="fade-in">
-                            <a href="https://www.block.xyz">
-                                <img class="block-brightness-low.gif" src="/images/Block/block.gif">
-                            </a>
+                            <!-- Show different size pic on mobile -->
+                            <div class="mobileHide">
+                                <img class="mySlides w3-animate-fading" src="/images/Profile/pixelated124.png" width="140px" height=auto>
+                            </div>
+                            <div class="mobileShow">
+                                <img class="mySlides w3-animate-fading" src="/images/Profile/pixelated124.png" width="120px" height=auto>
+                            </div>
                         </div>
+                        <!-- <script src="/js/imgslideshow.js"></script> -->
 
                         <div id="title">
                             <div style="float:center">
@@ -101,9 +106,6 @@
 
                     <section id="about">
                         <div id="container">
-                            <div class="mobileHide">
-                                <br>
-                            </div>
                             I graduated from the University of Waterloo in 2020 with a Dean's Hons in Computer Science & currently work as a Backend Software Engineer at <noscript>Square.</noscript>
                             <span id="text"></span>
                         </div>
