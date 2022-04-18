@@ -2342,12 +2342,8 @@ block.gif {
     text-decoration: none!important;
 }
 
-.logo {
-    text-decoration: none;
-}
-
-a {
-    text-decoration: none;
+.nounderline a {
+    text-decoration: none!important;
 }
 
 @-webkit-keyframes hue {
