@@ -1530,7 +1530,7 @@ article .content .caption {
 #footer li {
     display: inline-block;
     margin-right: 15px;
-    border-right: 1px solid;
+    /* border-right: 1px solid; */
     border-color: #666;
     vertical-align: middle;
 }
@@ -1579,6 +1579,7 @@ article .content .caption {
     }
     #footer .footer-right {
         align-self: flex-end;
+        color: rgb(0, 0, 0);
     }
 }
 
@@ -1653,6 +1654,7 @@ article .content .caption {
     }
     #footermobile .footer-right {
         align-self: flex-end;
+        color: rgb(0, 0, 0);
     }
 }
 
@@ -2325,5 +2327,25 @@ block.gif {
     }
     .mobileHide {
         display: none;
+    }
+}
+
+
+/* Set gradient motion in title name */
+
+.nametitle {
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 10s infinite linear;
+}
+
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+        -webkit-filter: hue-rotate(-360deg);
     }
 }
