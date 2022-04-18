@@ -2339,6 +2339,7 @@ block.gif {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 10s infinite linear;
+    text-decoration: none;
 }
 
 @-webkit-keyframes hue {
