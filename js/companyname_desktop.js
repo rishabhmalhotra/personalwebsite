@@ -1,6 +1,6 @@
 // List of sentences
 var _CONTENT = [
-    "\<pre\> def Block:\<br\>      building_blocks = [\"Square\", \<br\>                         \"Cash App\", \<br\>                         \"Spiral\", \<br\>                         \"Tidal\", \<br\>                         \"TBD\"] \<br\>\<br\>      return building_blocks[0] \<\/pre\>"
+    "\<pre\> def Block():\<br\>      building_blocks = [\"Square\", \<br\>                         \"Cash App\", \<br\>                         \"Spiral\", \<br\>                         \"Tidal\", \<br\>                         \"TBD\"] \<br\>\<br\>      return building_blocks[0] \<\/pre\>"
 ];
 
 // Current sentence being processed
