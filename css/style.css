@@ -2095,14 +2095,6 @@ block.gif {
     /* border-radius: 10px; */
 }
 
-.click-catcher {
-    position: absolute;
-    /* top: -1em; */
-    left: -1em;
-    /* right: -1em; */
-    bottom: -1em;
-}
-
 .player {
     position: relative;
     top: 25px;
