@@ -2095,6 +2095,18 @@ block.gif {
     /* border-radius: 10px; */
 }
 
+.musicMobile {
+    position: absolute;
+    margin-left: auto;
+    opacity: 65%;
+    align-self: end;
+    display: inline-block;
+    /* position: relative; */
+    z-index: 1;
+    padding: 2em;
+    margin: -2em;
+}
+
 .player {
     position: relative;
     top: 25px;
