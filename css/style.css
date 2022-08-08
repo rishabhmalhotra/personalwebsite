@@ -2096,11 +2096,11 @@ block.gif {
 }
 
 .musicMobile {
-    position: relative;
+    position: absolute;
     margin-left: auto;
     opacity: 65%;
     align-self: end;
-    /* display: inline-block; */
+    display: inline-block;
     /* position: relative; */
     z-index: 1;
     padding: 2em;
