@@ -2100,9 +2100,9 @@ block.gif {
     margin-left: auto;
     opacity: 65%;
     align-self: end;
-    display: inline-block;
+    /* display: inline-block; */
     /* position: relative; */
-    z-index: 1;
+    /* z-index: 1; */
     padding: 2em;
     margin: -2em;
 }
