@@ -2096,7 +2096,7 @@ block.gif {
 }
 
 .musicMobile {
-    position: absolute;
+    position: relative;
     margin-left: auto;
     opacity: 65%;
     align-self: end;
