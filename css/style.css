@@ -2318,6 +2318,13 @@ block.gif {
     display: inline;
 }
 
+.mobileHideMusic {
+    display: inline;
+    /* position: absolute; */
+    margin-left: auto;
+    align-self: end;
+}
+
 
 /* Smartphone Portrait and Landscape */
 
