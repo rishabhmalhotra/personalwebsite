@@ -2311,6 +2311,22 @@ block.gif {
     display: none;
 }
 
+.mobileMusic {
+    position: absolute;
+    margin-left: auto;
+    opacity: 65%;
+    align-self: end;
+    display: none;
+}
+
+.desktopMusic {
+    position: absolute;
+    margin-left: auto;
+    opacity: 65%;
+    align-self: end;
+    display: inline;
+}
+
 
 /* Hide div only on mobile */
 
