@@ -2317,7 +2317,7 @@ block.gif {
     .desktopMusic {
         position: absolute;
         margin-left: auto;
-        opacity: 65%;
+        opacity: 0%;
         align-self: end;
     }
 }
