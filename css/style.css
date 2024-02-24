@@ -2325,6 +2325,17 @@ block.gif {
     }
 }
 
+/* Smartphone Portrait and Landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .mobileShow {
+        display: inline;
+    }
+    
+    .mobileHide {
+        display: none;
+    }
+}
+
 /* Set gradient motion in title name */
 .nametitle {
     color: #f35626;
