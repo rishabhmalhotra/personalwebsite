@@ -2306,8 +2306,6 @@ block.gif {
 .mobileHide {
     display: inline;
 }
-
-/* @media only screen and (max-device-width: 2000px) { */
 .spotify-music {
     position: fixed;
     top: 0;
@@ -2317,11 +2315,12 @@ block.gif {
     z-index: 1000;
     opacity: 65%;
 }
-
-/* } */
 @media (max-device-width: 600px) {
     .spotify-music {
-        width: 50vw;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        width: 80%;
         height: 80px;
     }
 }
