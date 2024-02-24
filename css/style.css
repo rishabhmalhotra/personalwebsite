@@ -2324,44 +2324,6 @@ block.gif {
         height: 80px;
     }
 }
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    .desktopMusic {
-        position: absolute;
-        margin-left: auto;
-        opacity: 0%;
-        align-self: end;
-    }
-    
-    .mobileMusic {
-        position: absolute;
-        margin-left: auto;
-        opacity: 65%;
-        align-self: end;
-    }
-}
-
-/* @media only screen and (min-device-width: 768px) and (max-device-width: 2000px) { */
-@media only screen and (max-device-width: 2000px) {
-    .desktopMusic {
-        /* position: absolute;
-        margin-left: auto;
-        opacity: 65%;
-        align-self: end; */
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 300px;
-        height: 80px;
-        z-index: 1000;
-    }
-    
-    .mobileMusic {
-        position: absolute;
-        margin-left: auto;
-        opacity: 0%;
-        align-self: end;
-    }
-}
 
 /* Smartphone Portrait and Landscape */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
