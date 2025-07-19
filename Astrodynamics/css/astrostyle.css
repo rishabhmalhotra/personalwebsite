@@ -116,31 +116,6 @@ canvas {
     box-shadow: 0 0 20px rgba(127, 255, 212, 0.3);
 }
 
-/* Coming soon post styling */
-.blog-post-preview.coming-soon-post {
-    opacity: 0.4;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.blog-post-preview.coming-soon-post:hover {
-    transform: none;
-    border-color: rgba(127, 255, 212, 0.2);
-}
-
-.blog-post-preview.coming-soon-post .post-meta {
-    color: rgba(127, 255, 212, 0.3);
-}
-
-.blog-post-preview.coming-soon-post .post-excerpt {
-    color: rgba(255, 255, 255, 0.3);
-}
-
-.blog-post-preview.coming-soon-post .post-tags .tag {
-    background: rgba(127, 255, 212, 0.05);
-    color: rgba(127, 255, 212, 0.3);
-    border-color: rgba(127, 255, 212, 0.1);
-}
-
 .post-header h2 {
     margin: 0 0 1rem 0;
     font-size: 1.8rem;
@@ -160,10 +135,6 @@ canvas {
 .post-header h2 a.coming-soon {
     color: rgba(127, 255, 212, 0.6);
     cursor: default;
-}
-
-.post-header h2 a.coming-soon:hover {
-    color: rgba(127, 255, 212, 0.6);
 }
 
 .post-meta {
