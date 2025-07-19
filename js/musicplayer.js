@@ -132,22 +132,27 @@ class MusicPlayer {
     
     initWaveform() {
         // Initialize particles for waveform effect
-        for (let i = 0; i < 5; i++) {
+        const numParticles = 32; // Increased number of particles
+        for (let i = 0; i < numParticles; i++) {
             this.particles.push({
-                x: (i / 4) * this.waveformCanvas.width,
+                x: (i / (numParticles - 1)) * this.waveformCanvas.width,
                 baseY: this.waveformCanvas.height / 2,
                 amplitude: 0,
                 targetAmplitude: 0,
-                frequency: 0.02 + Math.random() * 0.03
+                frequency: 0.02 + Math.random() * 0.01, // Reduced frequency variation
+                phase: Math.random() * Math.PI * 2 // Added phase offset
             });
         }
     }
     
     generateParticles() {
         // Simulate audio reactivity
-        this.particles.forEach(particle => {
-            particle.targetAmplitude = this.isPlaying ? 
-                5 + Math.random() * 15 : 0;
+        this.particles.forEach((particle, index) => {
+            // Create a wave-like pattern
+            const baseAmplitude = this.isPlaying ? 8 : 0;
+            const randomFactor = this.isPlaying ? Math.random() * 4 : 0;
+            const positionFactor = Math.sin((index / this.particles.length) * Math.PI);
+            particle.targetAmplitude = baseAmplitude * positionFactor + randomFactor;
         });
     }
     
@@ -158,38 +163,57 @@ class MusicPlayer {
         this.waveformCtx.clearRect(0, 0, this.waveformCanvas.width, this.waveformCanvas.height);
         
         // Update and draw particles
-        this.waveformCtx.strokeStyle = '#2bbc8a';
+        this.waveformCtx.strokeStyle = 'rgba(43, 188, 138, 0.6)';
         this.waveformCtx.lineWidth = 2;
-        this.waveformCtx.beginPath();
         
+        // Draw the main waveform
+        this.waveformCtx.beginPath();
         this.particles.forEach((particle, index) => {
             // Smooth amplitude transition
-            particle.amplitude += (particle.targetAmplitude - particle.amplitude) * 0.1;
+            particle.amplitude += (particle.targetAmplitude - particle.amplitude) * 0.15;
             
-            // Calculate wave position
+            // Calculate wave position with phase offset
+            const time = Date.now() * particle.frequency;
             const waveOffset = this.isPlaying ? 
-                Math.sin(Date.now() * particle.frequency) * particle.amplitude : 0;
+                Math.sin(time + particle.phase) * particle.amplitude : 0;
             const y = particle.baseY + waveOffset;
             
             if (index === 0) {
                 this.waveformCtx.moveTo(particle.x, y);
             } else {
-                this.waveformCtx.lineTo(particle.x, y);
+                // Use quadratic curves for smoother lines
+                const prevParticle = this.particles[index - 1];
+                const cpX = (particle.x + prevParticle.x) / 2;
+                this.waveformCtx.quadraticCurveTo(prevParticle.x, prevParticle.baseY + 
+                    Math.sin(time + prevParticle.phase) * prevParticle.amplitude,
+                    cpX, y);
             }
         });
-        
         this.waveformCtx.stroke();
         
-        // Draw center dots
-        this.particles.forEach(particle => {
-            this.waveformCtx.fillStyle = '#2bbc8a';
-            this.waveformCtx.beginPath();
-            this.waveformCtx.arc(particle.x, particle.baseY, 2, 0, Math.PI * 2);
-            this.waveformCtx.fill();
+        // Draw a subtle reflection
+        this.waveformCtx.strokeStyle = 'rgba(43, 188, 138, 0.2)';
+        this.waveformCtx.beginPath();
+        this.particles.forEach((particle, index) => {
+            const time = Date.now() * particle.frequency;
+            const waveOffset = this.isPlaying ? 
+                Math.sin(time + particle.phase) * particle.amplitude : 0;
+            const y = particle.baseY - waveOffset; // Inverted offset for reflection
+            
+            if (index === 0) {
+                this.waveformCtx.moveTo(particle.x, y);
+            } else {
+                const prevParticle = this.particles[index - 1];
+                const cpX = (particle.x + prevParticle.x) / 2;
+                this.waveformCtx.quadraticCurveTo(prevParticle.x, prevParticle.baseY - 
+                    Math.sin(time + prevParticle.phase) * prevParticle.amplitude,
+                    cpX, y);
+            }
         });
+        this.waveformCtx.stroke();
         
-        // Randomly update target amplitudes when playing
-        if (this.isPlaying && Math.random() < 0.1) {
+        // Continuously update particles for smoother animation
+        if (this.isPlaying) {
             this.generateParticles();
         }
     }

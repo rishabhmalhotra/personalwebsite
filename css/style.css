@@ -2328,20 +2328,22 @@ block.gif {
 
 /* Custom Music Player - overlaid exactly on top */
 .custom-music-player {
-    position: fixed; /* Changed to fixed to match container */
+    position: fixed;
     top: 20px;
     right: 20px;
     width: 300px;
     height: 60px;
-    background: #1d1f21;
-    border: 2px solid #2bbc8a;
-    border-radius: 8px;
-    z-index: 1001; /* Higher than container */
+    background: rgba(29, 31, 33, 0.4);
+    border: 2px solid rgba(43, 188, 138, 0.5);
+    border-radius: 12px;
+    z-index: 1001;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(43, 188, 138, 0.3);
+    box-shadow: 0 4px 15px rgba(43, 188, 138, 0.15);
     display: flex;
     align-items: center;
     padding: 0 15px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .custom-music-player:hover {
@@ -2397,12 +2399,7 @@ block.gif {
 }
 
 .track-info {
-    color: #c9cacc;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
+    display: none; /* Hide the track info text */
 }
 
 .track-text {
