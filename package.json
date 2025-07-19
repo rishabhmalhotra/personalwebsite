@@ -1,0 +1,68 @@
+{
+  "name": "rishabh-malhotra-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio and blog website for Rishabh Malhotra",
+  "private": true,
+  "author": {
+    "name": "Rishabh Malhotra",
+    "email": "malhotra.rishabh88@yahoo.com",
+    "url": "https://rishabhmalhotra.xyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rishabhmalhotra/personalwebsite"
+  },
+  "keywords": [
+    "portfolio",
+    "blog",
+    "astrodynamics",
+    "rocket-science",
+    "personal-website"
+  ],
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "lint:css": "stylelint \"src/css/**/*.css\"",
+    "lint:js": "eslint \"src/js/**/*.js\"",
+    "lint": "npm run lint:css && npm run lint:js",
+    "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,css,html,json,md}\"",
+    "validate": "npm run lint && npm run format:check",
+    "clean": "rm -rf dist",
+    "build:css": "postcss src/css/main.css -o dist/css/style.css",
+    "build:js": "webpack --mode production",
+    "build:html": "node scripts/build-html.js",
+    "build:assets": "node scripts/copy-assets.js",
+    "build": "npm run clean && npm run build:css && npm run build:js && npm run build:html && npm run build:assets",
+    "watch": "npm run dev"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.2.4",
+    "stylelint": "^16.2.0",
+    "stylelint-config-standard": "^36.0.0",
+    "postcss": "^8.4.33",
+    "postcss-cli": "^11.0.0",
+    "autoprefixer": "^10.4.17",
+    "cssnano": "^6.0.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "html-minifier": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0"
+  },
+  "dependencies": {
+    "three": "^0.121.1",
+    "simplex-noise": "^2.4.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+} 
