@@ -11,6 +11,11 @@ class MusicPlayer {
         this.waveformCtx = null;
         this.animationId = null;
         this.particles = [];
+        this.currentTrack = {
+            name: "Loading...",
+            artist: "..."
+        };
+        this.trackInfoElement = null;
         
         // Initialize when DOM is ready
         if (document.readyState === 'loading') {
@@ -19,6 +24,16 @@ class MusicPlayer {
         } else {
             console.log('MusicPlayer: DOM already loaded, initializing');
             this.init();
+        }
+    }
+
+    updateTrackInfo(name, artist) {
+        this.currentTrack = { name, artist };
+        if (this.trackInfoElement) {
+            this.trackInfoElement.innerHTML = `
+                <p class="track-name">${name}</p>
+                <p class="track-artist">${artist}</p>
+            `;
         }
     }
     
@@ -56,40 +71,72 @@ class MusicPlayer {
             // Create player container
             const playerContainer = document.createElement('div');
             playerContainer.className = 'custom-music-player';
-            console.log('MusicPlayer: Created player container');
-        
-        // Create inner container
-        const innerContainer = document.createElement('div');
-        innerContainer.className = 'player-inner';
-        
-        // Create play/pause button
-        const playButton = document.createElement('button');
-        playButton.className = 'play-button';
-        playButton.innerHTML = '<i class="fas fa-play"></i>';
-        this.playButton = playButton;
-        
-        // Create waveform canvas
-        const waveformCanvas = document.createElement('canvas');
-        waveformCanvas.className = 'waveform-canvas';
-        waveformCanvas.width = 200;
-        waveformCanvas.height = 40;
-        this.waveformCanvas = waveformCanvas;
-        this.waveformCtx = waveformCanvas.getContext('2d');
-        
-        // Create track info
-        const trackInfo = document.createElement('div');
-        trackInfo.className = 'track-info';
-        trackInfo.innerHTML = '<span class="track-text">Playlist</span>';
-        
-        // Assemble the player
-        innerContainer.appendChild(playButton);
-        innerContainer.appendChild(waveformCanvas);
-        innerContainer.appendChild(trackInfo);
-        playerContainer.appendChild(innerContainer);
-        
-        // Insert into the music player container
-        this.spotifyIframe.parentNode.appendChild(playerContainer);
-        console.log('MusicPlayer: Player UI created and inserted');
+            
+            // Create inner container
+            const innerContainer = document.createElement('div');
+            innerContainer.className = 'player-inner';
+            
+            // Create top section with track info and controls
+            const topSection = document.createElement('div');
+            topSection.className = 'player-top';
+            
+            // Create track info
+            const trackInfo = document.createElement('div');
+            trackInfo.className = 'track-info';
+            this.trackInfoElement = trackInfo; // Store reference for updates
+            this.updateTrackInfo(this.currentTrack.name, this.currentTrack.artist);
+            
+            // Create controls container
+            const controls = document.createElement('div');
+            controls.className = 'controls';
+            
+            // Create previous button
+            const prevButton = document.createElement('button');
+            prevButton.className = 'control-button';
+            prevButton.innerHTML = '<i class="fas fa-backward"></i>';
+            prevButton.addEventListener('click', () => {
+                this.spotifyIframe.contentWindow.postMessage({ command: 'prev' }, 'https://open.spotify.com');
+            });
+            
+            // Create play button
+            const playButton = document.createElement('button');
+            playButton.className = 'play-button';
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+            this.playButton = playButton;
+            
+            // Create next button
+            const nextButton = document.createElement('button');
+            nextButton.className = 'control-button';
+            nextButton.innerHTML = '<i class="fas fa-forward"></i>';
+            nextButton.addEventListener('click', () => {
+                this.spotifyIframe.contentWindow.postMessage({ command: 'next' }, 'https://open.spotify.com');
+            });
+            
+            // Create waveform canvas
+            const waveformCanvas = document.createElement('canvas');
+            waveformCanvas.className = 'waveform-canvas';
+            waveformCanvas.width = 200;
+            waveformCanvas.height = 24;
+            this.waveformCanvas = waveformCanvas;
+            this.waveformCtx = waveformCanvas.getContext('2d');
+            
+            // Assemble the controls
+            controls.appendChild(prevButton);
+            controls.appendChild(playButton);
+            controls.appendChild(nextButton);
+            
+            // Assemble the top section
+            topSection.appendChild(trackInfo);
+            topSection.appendChild(controls);
+            
+            // Assemble the player
+            innerContainer.appendChild(topSection);
+            innerContainer.appendChild(waveformCanvas);
+            playerContainer.appendChild(innerContainer);
+            
+            // Insert into the music player container
+            this.spotifyIframe.parentNode.appendChild(playerContainer);
+            console.log('MusicPlayer: Player UI created and inserted');
         } catch (error) {
             console.error('MusicPlayer: Error creating player UI:', error);
         }
@@ -101,10 +148,34 @@ class MusicPlayer {
             this.togglePlayback();
         });
         
-        // Listen for messages from Spotify iframe (if available)
+        // Listen for messages from Spotify iframe
         window.addEventListener('message', (event) => {
             if (event.origin !== 'https://open.spotify.com') return;
-            // Handle Spotify events if needed
+            
+            try {
+                const data = event.data;
+                // Log all messages from Spotify to understand the data structure
+                console.log('Spotify message:', data);
+                
+                // Handle track info updates
+                if (data.type === 'playerStateChanged' && data.data && data.data.track) {
+                    const track = data.data.track;
+                    this.updateTrackInfo(
+                        track.name || 'Unknown Track',
+                        track.artists?.map(a => a.name).join(', ') || 'Unknown Artist'
+                    );
+                }
+                
+                // Handle play state changes
+                if (data.type === 'playbackStateChanged') {
+                    this.isPlaying = data.data?.isPaused === false;
+                    this.playButton.innerHTML = this.isPlaying ? 
+                        '<i class="fas fa-pause"></i>' : 
+                        '<i class="fas fa-play"></i>';
+                }
+            } catch (error) {
+                console.error('Error handling Spotify message:', error);
+            }
         });
     }
     
@@ -119,7 +190,6 @@ class MusicPlayer {
             '<i class="fas fa-play"></i>';
         
         // Send message to Spotify iframe
-        // Note: This uses undocumented Spotify embed API
         this.spotifyIframe.contentWindow.postMessage({
             command: this.isPlaying ? 'play' : 'pause'
         }, 'https://open.spotify.com');
@@ -146,11 +216,19 @@ class MusicPlayer {
     }
     
     generateParticles() {
+        // Only generate new particles if playing
+        if (!this.isPlaying) {
+            this.particles.forEach(particle => {
+                particle.targetAmplitude = 0;
+            });
+            return;
+        }
+        
         // Simulate audio reactivity
         this.particles.forEach((particle, index) => {
             // Create a wave-like pattern
-            const baseAmplitude = this.isPlaying ? 8 : 0;
-            const randomFactor = this.isPlaying ? Math.random() * 4 : 0;
+            const baseAmplitude = 8;
+            const randomFactor = Math.random() * 4;
             const positionFactor = Math.sin((index / this.particles.length) * Math.PI);
             particle.targetAmplitude = baseAmplitude * positionFactor + randomFactor;
         });
@@ -174,8 +252,7 @@ class MusicPlayer {
             
             // Calculate wave position with phase offset
             const time = Date.now() * particle.frequency;
-            const waveOffset = this.isPlaying ? 
-                Math.sin(time + particle.phase) * particle.amplitude : 0;
+            const waveOffset = Math.sin(time + particle.phase) * particle.amplitude;
             const y = particle.baseY + waveOffset;
             
             if (index === 0) {
@@ -196,8 +273,7 @@ class MusicPlayer {
         this.waveformCtx.beginPath();
         this.particles.forEach((particle, index) => {
             const time = Date.now() * particle.frequency;
-            const waveOffset = this.isPlaying ? 
-                Math.sin(time + particle.phase) * particle.amplitude : 0;
+            const waveOffset = Math.sin(time + particle.phase) * particle.amplitude;
             const y = particle.baseY - waveOffset; // Inverted offset for reflection
             
             if (index === 0) {
@@ -212,7 +288,7 @@ class MusicPlayer {
         });
         this.waveformCtx.stroke();
         
-        // Continuously update particles for smoother animation
+        // Update particles only if playing
         if (this.isPlaying) {
             this.generateParticles();
         }
