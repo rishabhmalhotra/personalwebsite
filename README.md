@@ -117,10 +117,10 @@ The project uses a modular CSS approach:
 The site is designed to be served as static files. Any web server or CDN can host it:
 
 1. Build the project (when build system is implemented)
-2. Upload contents to your web server
-3. Ensure proper MIME types for all assets
+2. We can upload contents to our web server
+3. Need to ensure proper MIME types for all assets
 
-### GitHub Pages Deployment
+### Sample GitHub Pages Deployment [This site is hosted on a custom domain but in case you want to fork it]
 
 ```bash
 # Push to gh-pages branch
@@ -155,7 +155,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ## 📄 License
 
-This project is private and proprietary. All rights reserved.
+Free & encouraged to fork!
 
 ## 👤 Author
 
@@ -169,4 +169,4 @@ This project is private and proprietary. All rights reserved.
 
 - Three.js for 3D graphics capabilities
 - Font Awesome for icons
-- The aerospace community for inspiration on the blog content
+- The aerospace community & authors for inspiration on the blog content
