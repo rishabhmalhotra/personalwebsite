@@ -54,35 +54,6 @@ function updateGradient() {
 
 setInterval(updateGradient, 10);
 
-// console.clear();
-
-class musicPlayer {
-    constructor() {
-        this.play = this.play.bind(this);
-        this.playBtn = document.getElementById('play');
-        this.playBtn.addEventListener('click', this.play);
-        this.controlPanel = document.getElementById('control-panel');
-        this.infoBar = document.getElementById('info');
-    }
-
-    play() {
-        let audio = new Audio('/music/forgetaboutme.mp3');
-
-        let controlPanelObj = this.controlPanel,
-            infoBarObj = this.infoBar
-        Array.from(controlPanelObj.classList).find(function(element) {
-            return element !== "active" ? controlPanelObj.classList.add('active') : controlPanelObj.classList.remove('active');
-        });
-
-        // audio.play();
-
-        // Array.from(infoBarObj.classList).find(function(element) {
-        //     return element !== "active" ? infoBarObj.classList.add('active') : infoBarObj.classList.remove('active');
-        // });
-        // audio.pause();
-    }
-}
-
 // Decryption for text
 
 var decrypted = document.getElementById("decoded");

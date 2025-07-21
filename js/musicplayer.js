@@ -1,6 +1,12 @@
 // Custom Music Player Controller
 class MusicPlayer {
     constructor() {
+        // Prevent multiple instances
+        if (window.musicPlayerInstance) {
+            console.log('MusicPlayer: Instance already exists');
+            return window.musicPlayerInstance;
+        }
+        
         this.isPlaying = false;
         this.spotifyService = new SpotifyService();
         this.playButton = null;
@@ -14,12 +20,17 @@ class MusicPlayer {
         };
         this.container = null;
         
+        // Store instance globally
+        window.musicPlayerInstance = this;
+        
         // Initialize when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.init());
         } else {
             this.init();
         }
+        
+        return this;
     }
     
     async init() {
