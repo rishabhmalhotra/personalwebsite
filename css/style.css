@@ -2087,19 +2087,16 @@ block.gif {
 /* MUSIC */
 
 
-/* .music {
+ /* .music {
     position: absolute;
     margin-left: auto;
     opacity: 65%;
     align-self: end;
     /* -webkit-border-radius: 10px; */
+    /* border-radius: 10px; */
+ /* }  */
 
-
-/* border-radius: 10px; */
-
-
-}
-*/ .player {
+.player {
     position: relative;
     top: 25px;
     align-self: end;

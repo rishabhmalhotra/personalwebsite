@@ -38,6 +38,10 @@ class MusicPlayer {
     addPlayerStyles() {
         const style = document.createElement('style');
         style.textContent = `
+            .custom-music-player {
+                width: 250px !important;
+                height: 80px !important;
+            }
             .player-inner {
                 display: flex;
                 align-items: center;
@@ -45,9 +49,17 @@ class MusicPlayer {
                 height: 100%;
                 gap: 12px;
             }
+            .details-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                flex-grow: 1;
+                min-width: 0;
+            }
             .waveform-canvas {
-                width: 120px;
-                flex-shrink: 0;
+                width: 100%;
+                height: 35px;
+                margin-bottom: 5px;
             }
             .track-info {
                 display: flex;
@@ -55,7 +67,6 @@ class MusicPlayer {
                 justify-content: center;
                 flex-grow: 1;
                 min-width: 0; /* Important for text overflow to work */
-                margin-left: 10px;
             }
             .track-title,
             .track-artist {
@@ -134,12 +145,16 @@ class MusicPlayer {
             playButton.className = 'play-button';
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             this.playButton = playButton;
+
+            // Create a wrapper for details (waveform and track info)
+            const detailsWrapper = document.createElement('div');
+            detailsWrapper.className = 'details-wrapper';
             
             // Create waveform canvas
             const waveformCanvas = document.createElement('canvas');
             waveformCanvas.className = 'waveform-canvas';
-            waveformCanvas.width = 200;
-            waveformCanvas.height = 40;
+            waveformCanvas.width = 160;
+            waveformCanvas.height = 35;
             this.waveformCanvas = waveformCanvas;
             this.waveformCtx = waveformCanvas.getContext('2d');
             
@@ -157,11 +172,14 @@ class MusicPlayer {
             // Add track info elements to container
             trackInfo.appendChild(this.trackTitleElement);
             trackInfo.appendChild(this.trackArtistElement);
+
+            // Add waveform and track info to details wrapper
+            detailsWrapper.appendChild(waveformCanvas);
+            detailsWrapper.appendChild(trackInfo);
             
             // Assemble the player
             innerContainer.appendChild(playButton);
-            innerContainer.appendChild(waveformCanvas);
-            innerContainer.appendChild(trackInfo);
+            innerContainer.appendChild(detailsWrapper);
             playerContainer.appendChild(innerContainer);
             
             // Insert into the music player container
