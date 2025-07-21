@@ -166,6 +166,10 @@ class MusicPlayer {
             this.trackTitleElement = document.createElement('div');
             this.trackTitleElement.className = 'track-title';
             
+            // Add a span inside the title element for scrolling
+            const titleText = document.createElement('span');
+            this.trackTitleElement.appendChild(titleText);
+            
             this.trackArtistElement = document.createElement('div');
             this.trackArtistElement.className = 'track-artist';
             
@@ -200,33 +204,30 @@ class MusicPlayer {
         // Listen for messages from Spotify iframe
         window.addEventListener('message', async (event) => {
             const trackData = await this.spotifyService.handleSDKMessage(event);
-            if (trackData) {
+            if (trackData && trackData.track) {
                 this.updateTrackInfo(trackData.track, trackData.artist);
-                this.isPlaying = trackData.isPlaying;
-                this.updatePlayButton();
             }
+        });
+
+        // Listen for playback updates from the Spotify controller
+        this.spotifyService.embedController.addListener('playback_update', e => {
+            this.isPlaying = !e.data.isPaused;
+            this.updatePlayButton();
         });
     }
     
     togglePlayback() {
-        const iframe = document.querySelector('.spotify-music');
-        if (!iframe?.contentWindow) return;
-        
-        this.isPlaying = !this.isPlaying;
-        this.updatePlayButton();
-        
-        // Send message to Spotify iframe
-        iframe.contentWindow.postMessage({
-            command: this.isPlaying ? 'play' : 'pause'
-        }, 'https://open.spotify.com');
-        
-        // Update waveform animation
-        if (this.isPlaying) {
-            this.generateParticles();
+        if (!this.spotifyService.embedController) {
+            console.error('MusicPlayer: Spotify EmbedController not available yet.');
+            return;
         }
+
+        // Use the official SDK method to toggle play/pause
+        this.spotifyService.embedController.togglePlay();
     }
     
     updatePlayButton() {
+        if (!this.playButton) return;
         this.playButton.innerHTML = this.isPlaying ? 
             '<i class="fas fa-pause"></i>' : 
             '<i class="fas fa-play"></i>';
@@ -240,12 +241,23 @@ class MusicPlayer {
             return;
         }
         
-        if (title) {
-            this.trackTitleElement.textContent = title;
+        const titleSpan = this.trackTitleElement.querySelector('span');
+
+        if (title && titleSpan.textContent !== title) {
+            this.trackTitleElement.classList.remove('scrolling'); // Reset animation
+            titleSpan.textContent = title;
             this.currentTrack.name = title;
+
+            // Check for overflow and add scrolling class if needed
+            // Use a timeout to allow the DOM to update before checking width
+            setTimeout(() => {
+                if (titleSpan.scrollWidth > this.trackTitleElement.clientWidth) {
+                    this.trackTitleElement.classList.add('scrolling');
+                }
+            }, 100);
         }
         
-        if (artist) {
+        if (artist && this.trackArtistElement.textContent !== artist) {
             this.trackArtistElement.textContent = artist;
             this.currentTrack.artist = artist;
         }
