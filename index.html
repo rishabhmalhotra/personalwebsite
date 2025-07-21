@@ -12,7 +12,7 @@
     <meta property="og:locale" content="en_US">
 
     <!-- Image links -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
@@ -28,13 +28,14 @@
 
     <!-- rss -->
     <meta name="generator" content="Hexo 5.4.0">
+
 </head>
 
 <body>
     <!-- Music Player Container -->
     <div class="music-player-container">
         <!-- Spotify iframe (invisible but functional) -->
-        <iframe src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="spotify-music"></iframe>
+        <iframe src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" class="spotify-music"></iframe>
         <!-- Custom player will be inserted here by JavaScript -->
     </div>
     
@@ -43,14 +44,19 @@
             <div class="max-width mx-auto px3 ltr">
                 <div class="content index py4">
                     <header id="header">
-                        <!-- Show different size pic on mobile -->
-                        <div class="mobileHide">
-                            <img src="/images/Profile/pixelated124.png" width="140px" height=auto>
+                        <div class="fade-in">
+                            <!-- Show different size pic on mobile -->
+                            <div class="mobileHide">
+                                <img class="mySlides w3-animate-fading" src="/images/Profile/pixelated124.png" width="140px" height=auto>
+                            </div>
                         </div>
                         <div class="mobileShow">
+                            <!-- Use this for adding a fade in timer -->
+                            <!-- <img class="mySlides w3-animate-fading" src="/images/Profile/pixelated124.png" width="120px" height=auto> -->
                             <br><br>
                             <img src="/images/Profile/pixelated124.png" width="120px" height=auto>
                         </div>
+                        <!-- <script src="/js/imgslideshow.js"></script> -->
 
                         <div id="title">
                             <div style="float:center">
@@ -162,8 +168,8 @@
                         <div class="mobileShow">
                             <br>
                         </div>
-                        When I'm not writing code, I'm probably learning
-                        <a href="Astrodynamics/">Astrodynamics</a> hoping to better understand humanity's endeavours to venture into new worlds.
+                                When I'm not writing code, I'm probably learning
+        <a href="/Astrodynamics/index.html">Astrodynamics</a> hoping to better understand humanity's endeavours to venture into new worlds.
                         </p>
 
                         <div class="mobileShow">
@@ -304,5 +310,7 @@
             </div>
         </div>
 </body>
+
+</html>
 
 </html>
