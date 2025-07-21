@@ -54,7 +54,8 @@
   },
   "dependencies": {
     "three": "^0.121.1",
-    "simplex-noise": "^2.4.0"
+    "simplex-noise": "^2.4.0",
+    "jquery": "^3.7.1"
   },
   "browserslist": [
     "> 1%",
