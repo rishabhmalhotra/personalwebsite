@@ -19,6 +19,8 @@ class MusicPlayer {
             artist: ''
         };
         this.container = null;
+        this.trackTitleElement = null;
+        this.trackArtistElement = null;
         
         // Store instance globally
         window.musicPlayerInstance = this;
@@ -98,10 +100,17 @@ class MusicPlayer {
             // Create track info
             const trackInfo = document.createElement('div');
             trackInfo.className = 'track-info';
-            trackInfo.innerHTML = `
-                <div class="track-title"></div>
-                <div class="track-artist"></div>
-            `;
+            
+            // Create and store references to track info elements
+            this.trackTitleElement = document.createElement('div');
+            this.trackTitleElement.className = 'track-title';
+            
+            this.trackArtistElement = document.createElement('div');
+            this.trackArtistElement.className = 'track-artist';
+            
+            // Add track info elements to container
+            trackInfo.appendChild(this.trackTitleElement);
+            trackInfo.appendChild(this.trackArtistElement);
             
             // Assemble the player
             innerContainer.appendChild(playButton);
@@ -160,17 +169,29 @@ class MusicPlayer {
     }
     
     updateTrackInfo(title, artist) {
-        const titleEl = document.querySelector('.track-title');
-        const artistEl = document.querySelector('.track-artist');
+        console.log('Updating track info:', { title, artist });
         
-        if (titleEl && title) {
-            titleEl.textContent = title;
+        if (!this.trackTitleElement || !this.trackArtistElement) {
+            console.error('Track info elements not found!');
+            return;
+        }
+        
+        if (title) {
+            this.trackTitleElement.textContent = title;
             this.currentTrack.name = title;
         }
-        if (artistEl && artist) {
-            artistEl.textContent = artist;
+        
+        if (artist) {
+            this.trackArtistElement.textContent = artist;
             this.currentTrack.artist = artist;
         }
+        
+        // Log current state
+        console.log('Current track info:', {
+            titleElement: this.trackTitleElement.textContent,
+            artistElement: this.trackArtistElement.textContent,
+            currentTrack: this.currentTrack
+        });
     }
     
     initWaveform() {

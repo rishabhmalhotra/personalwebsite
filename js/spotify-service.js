@@ -34,21 +34,40 @@ class SpotifyService {
         if (event.origin !== 'https://open.spotify.com') return null;
         
         try {
+            // Log the raw message for debugging
+            console.log('Received Spotify message:', event.data);
+            
             // Handle both string and object messages
             const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
             
-            if (data.type === 'playback_update') {
-                return {
-                    track: data.track?.name || '',
-                    artist: data.track?.artists?.[0]?.name || '',
-                    isPlaying: data.playing || false
+            // Log parsed data
+            console.log('Parsed Spotify data:', data);
+            
+            // Handle different message types
+            if (data.type === 'playback_update' || data.type === 'player_state_changed') {
+                const trackInfo = {
+                    track: '',
+                    artist: '',
+                    isPlaying: false
                 };
+
+                // Try different possible data structures
+                if (data.track) {
+                    trackInfo.track = data.track.name || data.track.title || '';
+                    trackInfo.artist = data.track.artists?.[0]?.name || data.track.artist || '';
+                } else if (data.data) {
+                    // Some messages might nest the data
+                    trackInfo.track = data.data.name || data.data.title || '';
+                    trackInfo.artist = data.data.artists?.[0]?.name || data.data.artist || '';
+                }
+
+                trackInfo.isPlaying = data.playing || data.data?.playing || false;
+
+                console.log('Extracted track info:', trackInfo);
+                return trackInfo;
             }
         } catch (error) {
-            // Only log parsing errors for string data
-            if (typeof event.data === 'string') {
-                console.error('Error parsing Spotify message:', error);
-            }
+            console.error('Error handling Spotify message:', error);
         }
         return null;
     }
