@@ -2249,6 +2249,43 @@ block.gif {
     margin-left: 0;
 }
 
+.controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px; /* Space between play button and secondary controls */
+}
+
+.secondary-controls {
+    display: flex;
+    gap: 12px; /* Space between back and forward buttons */
+}
+
+.secondary-button {
+    background: none;
+    border: 1px solid #2bbc8a;
+    color: #2bbc8a;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 10px;
+}
+
+.secondary-button:hover {
+    background: #2bbc8a;
+    color: #1d1f21;
+    transform: scale(1.1);
+}
+
+.secondary-button:active {
+    transform: scale(0.95);
+}
+
 .details-wrapper {
     display: flex;
     flex-direction: column;

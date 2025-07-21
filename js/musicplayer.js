@@ -83,12 +83,36 @@ class MusicPlayer {
             // Create inner container
             const innerContainer = document.createElement('div');
             innerContainer.className = 'player-inner';
+
+            // Create controls wrapper
+            const controlsWrapper = document.createElement('div');
+            controlsWrapper.className = 'controls-wrapper';
             
             // Create play/pause button
             const playButton = document.createElement('button');
             playButton.className = 'play-button';
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             this.playButton = playButton;
+
+            // Create secondary controls (forward/back)
+            const secondaryControls = document.createElement('div');
+            secondaryControls.className = 'secondary-controls';
+
+            const backButton = document.createElement('button');
+            backButton.className = 'secondary-button back-button';
+            backButton.innerHTML = '<i class="fas fa-backward"></i>';
+            this.backButton = backButton;
+
+            const forwardButton = document.createElement('button');
+            forwardButton.className = 'secondary-button forward-button';
+            forwardButton.innerHTML = '<i class="fas fa-forward"></i>';
+            this.forwardButton = forwardButton;
+
+            secondaryControls.appendChild(backButton);
+            secondaryControls.appendChild(forwardButton);
+
+            controlsWrapper.appendChild(playButton);
+            controlsWrapper.appendChild(secondaryControls);
 
             // Create a wrapper for details (waveform and track info)
             const detailsWrapper = document.createElement('div');
@@ -126,7 +150,7 @@ class MusicPlayer {
             detailsWrapper.appendChild(trackInfo);
             
             // Assemble the player
-            innerContainer.appendChild(playButton);
+            innerContainer.appendChild(controlsWrapper);
             innerContainer.appendChild(detailsWrapper);
             playerContainer.appendChild(innerContainer);
             
@@ -144,6 +168,10 @@ class MusicPlayer {
         this.playButton.addEventListener('click', () => {
             this.togglePlayback();
         });
+
+        // Back and forward button clicks
+        this.backButton.addEventListener('click', () => this.previousTrack());
+        this.forwardButton.addEventListener('click', () => this.nextTrack());
         
         // Listen for messages from Spotify iframe
         window.addEventListener('message', async (event) => {
@@ -174,6 +202,16 @@ class MusicPlayer {
 
         // Use the official SDK method to toggle play/pause
         this.spotifyService.embedController.togglePlay();
+    }
+
+    nextTrack() {
+        if (!this.spotifyService.embedController) return;
+        this.spotifyService.embedController.next();
+    }
+
+    previousTrack() {
+        if (!this.spotifyService.embedController) return;
+        this.spotifyService.embedController.previous();
     }
     
     updatePlayButton() {
