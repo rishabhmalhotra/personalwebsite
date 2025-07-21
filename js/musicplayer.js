@@ -35,59 +35,6 @@ class MusicPlayer {
         return this;
     }
 
-    addPlayerStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .custom-music-player {
-                width: 250px !important;
-                height: 80px !important;
-            }
-            .player-inner {
-                display: flex;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-                gap: 12px;
-            }
-            .details-wrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                flex-grow: 1;
-                min-width: 0;
-            }
-            .waveform-canvas {
-                width: 100%;
-                height: 35px;
-                margin-bottom: 5px;
-            }
-            .track-info {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                flex-grow: 1;
-                min-width: 0; /* Important for text overflow to work */
-            }
-            .track-title,
-            .track-artist {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                text-align: left;
-            }
-            .track-title {
-                color: #e0e0e0;
-                font-size: 14px;
-                font-weight: 500;
-                margin-bottom: 2px;
-            }
-            .track-artist {
-                color: #a0a0a0;
-                font-size: 12px;
-            }
-        `;
-        document.head.appendChild(style);
-    }
     
     async init() {
         console.log('MusicPlayer: Init called');
@@ -99,33 +46,30 @@ class MusicPlayer {
             return;
         }
 
-        // Add our custom styles to the page
-        this.addPlayerStyles();
-        
-        // Initialize Spotify SDK
-        this.spotifyService.initializeSDK();
-        
         // Get playlist data
         const playlistData = await this.spotifyService.getPlaylistData();
         if (playlistData) {
-            // Create and insert the Spotify iframe with the obtained HTML
+            // Create and insert the Spotify iframe
             const tempContainer = document.createElement('div');
             tempContainer.innerHTML = playlistData.html;
             const iframe = tempContainer.querySelector('iframe');
-            iframe.classList.add('spotify-music');
+            iframe.className = 'spotify-music'; // Use className for consistency
             this.container.appendChild(iframe);
             
-            // Create custom player UI
-            this.createPlayerUI();
-            
-            // Set up event listeners
-            this.setupEventListeners();
-            
-            // Initialize waveform
-            this.initWaveform();
-            
-            // Start animation
-            this.animate();
+            // Initialize Spotify SDK and pass a callback to run when it's ready
+            this.spotifyService.initializeSDK(() => {
+                console.log('MusicPlayer: Spotify SDK is ready, creating UI.');
+                
+                // Now that the SDK is ready, create the custom player UI
+                this.createPlayerUI();
+                
+                // Set up event listeners
+                this.setupEventListeners();
+                
+                // Initialize and start the waveform animation
+                this.initWaveform();
+                this.animate();
+            });
         }
     }
     

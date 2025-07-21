@@ -3,6 +3,7 @@ class SpotifyService {
         this.OEMBED_ENDPOINT = 'https://open.spotify.com/oembed';
         this.PLAYLIST_ID = '6YGvluoYkCURQePkFMoYqW';  // Your playlist ID
         this.currentTrackInfo = null;
+        this.embedController = null; // Add this line
     }
 
     async getPlaylistData() {
@@ -103,15 +104,28 @@ class SpotifyService {
     }
 
     // Initialize the Spotify Web Playback SDK
-    initializeSDK() {
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            // The SDK is ready to use
-            console.log('Spotify Web Playback SDK is ready');
+    initializeSDK(onReadyCallback) { // Add callback parameter
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            console.log('Spotify IFrame API is ready');
+            const element = document.querySelector('.spotify-music');
+            const options = {
+                uri: `spotify:playlist:${this.PLAYLIST_ID}`
+            };
+            const callback = (controller) => {
+                console.log('EmbedController created');
+                this.embedController = controller;
+                // Execute the callback when the controller is ready
+                if (onReadyCallback) {
+                    onReadyCallback(controller);
+                }
+            };
+            IFrameAPI.createController(element, options, callback);
         };
 
-        // Load the Spotify Web Playback SDK script
+        // Load the Spotify IFrame API script
         const script = document.createElement('script');
-        script.src = 'https://sdk.scdn.co/spotify-player.js';
+        script.src = 'https://open.spotify.com/embed-podcast/iframe-api/v1';
+        script.async = true;
         document.head.appendChild(script);
     }
 } 
