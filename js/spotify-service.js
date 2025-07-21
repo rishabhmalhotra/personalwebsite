@@ -2,6 +2,7 @@ class SpotifyService {
     constructor() {
         this.OEMBED_ENDPOINT = 'https://open.spotify.com/oembed';
         this.PLAYLIST_ID = '6YGvluoYkCURQePkFMoYqW';  // Your playlist ID
+        this.currentTrackInfo = null;
     }
 
     async getPlaylistData() {
@@ -12,7 +13,7 @@ class SpotifyService {
             // Modify the HTML to fix the allow attribute warning
             const modifiedHtml = data.html.replace(
                 'allow="encrypted-media"',
-                'allow="encrypted-media" allowfullscreen=""'
+                'allow="encrypted-media; autoplay" title="Spotify Player"'
             );
             
             return {
@@ -29,45 +30,74 @@ class SpotifyService {
         }
     }
 
+    async getTrackInfo(trackURI) {
+        try {
+            // Extract track ID from URI (spotify:track:ID format)
+            const trackId = trackURI.split(':').pop();
+            
+            // Use oEmbed API to get track information
+            const response = await fetch(`${this.OEMBED_ENDPOINT}?url=https://open.spotify.com/track/${trackId}`);
+            const data = await response.json();
+            
+            // The oEmbed response for a track provides the artist in `author_name`
+            return {
+                track: data.title || '',
+                artist: data.author_name || '',
+                thumbnail: data.thumbnail_url
+            };
+        } catch (error) {
+            console.error('Error fetching track info:', error);
+            return null;
+        }
+    }
+
     // Parse the Spotify SDK messages for track changes
-    handleSDKMessage(event) {
+    async handleSDKMessage(event) {
         if (event.origin !== 'https://open.spotify.com') return null;
         
         try {
             // Log the raw message for debugging
-            console.log('Received Spotify message:', event.data);
+            // console.log('Received Spotify message:', event.data);
             
             // Handle both string and object messages
             const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
             
             // Log parsed data
-            console.log('Parsed Spotify data:', data);
+            // console.log('Parsed Spotify data:', data);
             
-            // Handle different message types
             if (data.type === 'playback_update' || data.type === 'player_state_changed') {
-                const trackInfo = {
-                    track: '',
-                    artist: '',
-                    isPlaying: false
-                };
+                const payload = data.payload || data.data || {};
+                const playingURI = payload.playingURI || payload.track?.uri;
 
-                // Try different possible data structures
-                if (data.track) {
-                    trackInfo.track = data.track.name || data.track.title || '';
-                    trackInfo.artist = data.track.artists?.[0]?.name || data.track.artist || '';
-                } else if (data.data) {
-                    // Some messages might nest the data
-                    trackInfo.track = data.data.name || data.data.title || '';
-                    trackInfo.artist = data.data.artists?.[0]?.name || data.data.artist || '';
+                if (!playingURI) {
+                    return null;
                 }
 
-                trackInfo.isPlaying = data.playing || data.data?.playing || false;
+                const isPaused = payload.isPaused;
+                const isPlaying = payload.hasOwnProperty('isPaused') ? !isPaused : (this.currentTrackInfo ? this.currentTrackInfo.isPlaying : false);
 
-                console.log('Extracted track info:', trackInfo);
-                return trackInfo;
+                // Only fetch new track info if we have a URI and it's different from current
+                if (playingURI && (!this.currentTrackInfo || this.currentTrackInfo.uri !== playingURI)) {
+                    // console.log('Fetching track info for URI:', playingURI);
+                    const trackInfo = await this.getTrackInfo(playingURI);
+                    
+                    if (trackInfo) {
+                        this.currentTrackInfo = {
+                            ...trackInfo,
+                            uri: playingURI,
+                            isPlaying: isPlaying
+                        };
+                        // console.log('Updated track info:', this.currentTrackInfo);
+                        return this.currentTrackInfo;
+                    }
+                } else if (this.currentTrackInfo) {
+                    // Just update playing state if we already have track info
+                    this.currentTrackInfo.isPlaying = isPlaying;
+                    return this.currentTrackInfo;
+                }
             }
         } catch (error) {
-            console.error('Error handling Spotify message:', error);
+            console.error('Error handling Spotify message:', error, event.data);
         }
         return null;
     }

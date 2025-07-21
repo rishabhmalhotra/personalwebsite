@@ -34,6 +34,49 @@ class MusicPlayer {
         
         return this;
     }
+
+    addPlayerStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .player-inner {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                gap: 12px;
+            }
+            .waveform-canvas {
+                width: 120px;
+                flex-shrink: 0;
+            }
+            .track-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                flex-grow: 1;
+                min-width: 0; /* Important for text overflow to work */
+                margin-left: 10px;
+            }
+            .track-title,
+            .track-artist {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: left;
+            }
+            .track-title {
+                color: #e0e0e0;
+                font-size: 14px;
+                font-weight: 500;
+                margin-bottom: 2px;
+            }
+            .track-artist {
+                color: #a0a0a0;
+                font-size: 12px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
     
     async init() {
         console.log('MusicPlayer: Init called');
@@ -44,6 +87,9 @@ class MusicPlayer {
             console.error('MusicPlayer: Container not found!');
             return;
         }
+
+        // Add our custom styles to the page
+        this.addPlayerStyles();
         
         // Initialize Spotify SDK
         this.spotifyService.initializeSDK();
@@ -134,8 +180,8 @@ class MusicPlayer {
         });
         
         // Listen for messages from Spotify iframe
-        window.addEventListener('message', (event) => {
-            const trackData = this.spotifyService.handleSDKMessage(event);
+        window.addEventListener('message', async (event) => {
+            const trackData = await this.spotifyService.handleSDKMessage(event);
             if (trackData) {
                 this.updateTrackInfo(trackData.track, trackData.artist);
                 this.isPlaying = trackData.isPlaying;
