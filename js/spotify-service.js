@@ -8,11 +8,18 @@ class SpotifyService {
         try {
             const response = await fetch(`${this.OEMBED_ENDPOINT}?url=spotify:playlist:${this.PLAYLIST_ID}`);
             const data = await response.json();
+            
+            // Modify the HTML to fix the allow attribute warning
+            const modifiedHtml = data.html.replace(
+                'allow="encrypted-media"',
+                'allow="encrypted-media" allowfullscreen=""'
+            );
+            
             return {
                 title: data.title,
                 author: data.author_name,
                 thumbnail: data.thumbnail_url,
-                html: data.html,
+                html: modifiedHtml,
                 width: data.width,
                 height: data.height
             };
@@ -27,7 +34,9 @@ class SpotifyService {
         if (event.origin !== 'https://open.spotify.com') return null;
         
         try {
-            const data = JSON.parse(event.data);
+            // Handle both string and object messages
+            const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+            
             if (data.type === 'playback_update') {
                 return {
                     track: data.track?.name || '',
@@ -36,7 +45,10 @@ class SpotifyService {
                 };
             }
         } catch (error) {
-            console.error('Error parsing Spotify message:', error);
+            // Only log parsing errors for string data
+            if (typeof event.data === 'string') {
+                console.error('Error parsing Spotify message:', error);
+            }
         }
         return null;
     }
