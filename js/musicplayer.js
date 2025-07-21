@@ -89,6 +89,18 @@ class MusicPlayer {
                 if (data.type === 'playbackStateChanged') {
                     this.isPlaying = data.data?.isPaused === false;
                     this.updatePlayButtonState();
+                    
+                    // Handle waveform animation
+                    if (this.isPlaying) {
+                        if (!this.animationId) {
+                            this.animate();
+                        }
+                    } else {
+                        if (this.animationId) {
+                            cancelAnimationFrame(this.animationId);
+                            this.animationId = null;
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Error handling Spotify message:', error);
