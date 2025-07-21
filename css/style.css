@@ -693,12 +693,10 @@ body {
         flex-direction: row;
         margin-bottom: 2rem;
     }
-
     .image-wrap .image-block {
         flex: 1 0 35%;
         margin-right: 2rem;
     }
-
     .image-wrap p {
         flex: 1 0 65%;
     }
@@ -713,7 +711,6 @@ body {
         padding-right: 1rem;
         padding-left: 1rem;
     }
-
     .my4 {
         margin-top: 2rem;
         margin-bottom: 2rem;
@@ -823,32 +820,26 @@ body {
         margin-right: 5rem;
         min-height: 50px;
     }
-
     #header #title h1 {
         display: table-cell;
         vertical-align: middle;
     }
-
     #header #nav ul a:hover {
         background: none;
     }
-
     #header #nav ul li {
         display: none;
         border-right: 0;
     }
-
     #header #nav ul li.icon {
         position: absolute;
         top: 77px;
         right: 1rem;
         display: inline-block;
     }
-
     #header #nav ul.responsive li {
         display: block;
     }
-
     #header #nav li:not(:first-child) {
         padding-top: 1rem;
         padding-left: 70px;
@@ -1068,7 +1059,6 @@ body {
     #header-post #menu-icon {
         display: none;
     }
-
     #header-post #actions {
         display: none;
     }
@@ -1084,7 +1074,6 @@ body {
     #header-post #menu-icon-tablet {
         display: none !important;
     }
-
     #header-post #top-icon-tablet {
         display: none !important;
     }
@@ -1094,12 +1083,10 @@ body {
     #header-post #actions {
         width: auto;
     }
-
     #header-post #actions ul {
         display: inline-block;
         float: right;
     }
-
     #header-post #actions .info {
         display: inline;
         float: left;
@@ -1112,7 +1099,6 @@ body {
     #header-post {
         display: none;
     }
-
     #footer-post-container {
         display: none;
     }
@@ -1304,7 +1290,6 @@ body {
         display: flex;
         margin-bottom: 5px;
     }
-
     .post-list .post-item .meta {
         text-align: left;
     }
@@ -1480,12 +1465,10 @@ article .content .caption {
 }
 
 @media (min-width: 480px) {
-
     .article-tag,
     .article-category {
         display: inline;
     }
-
     .article-tag:before,
     .article-category:before {
         content: "|";
@@ -1516,7 +1499,6 @@ article .content .caption {
         margin-bottom: 5px;
         margin-left: 1rem;
     }
-
     #archive .post-list .post-item .meta {
         text-align: left;
     }
@@ -1591,12 +1573,10 @@ article .content .caption {
         align-content: center;
         margin-bottom: 20px;
     }
-
     #footer .footer-left {
         align-self: flex-start;
         margin-right: 20px;
     }
-
     #footer .footer-right {
         align-self: flex-end;
         color: rgb(0, 0, 0);
@@ -1668,12 +1648,10 @@ article .content .caption {
         align-content: center;
         margin-bottom: 20px;
     }
-
     #footermobile .footer-left {
         align-self: flex-start;
         margin-right: 20px;
     }
-
     #footermobile .footer-right {
         align-self: flex-end;
         color: rgb(0, 0, 0);
@@ -1857,7 +1835,6 @@ article .content .caption {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -1867,7 +1844,6 @@ article .content .caption {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -1877,7 +1853,6 @@ article .content .caption {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -1887,7 +1862,6 @@ article .content .caption {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -2195,7 +2169,7 @@ block.gif {
 }
 
 /* Spotify iframe - positioned within container */
-.spotify-music {
+.music-player-container iframe {
     position: absolute;
     inset: 0;
     /* Shorthand for top/right/bottom/left: 0 */
@@ -2203,6 +2177,7 @@ block.gif {
     height: 100%;
     opacity: 0;
     pointer-events: none;
+    border: none;
 }
 
 /* Custom Music Player - overlaid exactly on top */
