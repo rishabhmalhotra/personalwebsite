@@ -155,8 +155,14 @@ class MusicPlayer {
 
         // Listen for playback updates from the Spotify controller
         this.spotifyService.embedController.addListener('playback_update', e => {
+            const wasPlaying = this.isPlaying;
             this.isPlaying = !e.data.isPaused;
             this.updatePlayButton();
+            
+            // If playback is paused, force amplitudes to zero for graceful shutdown
+            if (wasPlaying && !this.isPlaying) {
+                this.particles.forEach(p => p.targetAmplitude = 0);
+            }
         });
     }
     
@@ -244,6 +250,7 @@ class MusicPlayer {
         // Clear canvas
         this.waveformCtx.clearRect(0, 0, this.waveformCanvas.width, this.waveformCanvas.height);
         
+        const now = Date.now();
         // Update and draw particles
         this.waveformCtx.strokeStyle = 'rgba(43, 188, 138, 0.6)';
         this.waveformCtx.lineWidth = 2;
@@ -255,7 +262,7 @@ class MusicPlayer {
             particle.amplitude += (particle.targetAmplitude - particle.amplitude) * 0.15;
             
             // Calculate wave position with phase offset
-            const time = Date.now() * particle.frequency;
+            const time = now * particle.frequency;
             const waveOffset = this.isPlaying ? 
                 Math.sin(time + particle.phase) * particle.amplitude : 0;
             const y = particle.baseY + waveOffset;
@@ -265,10 +272,11 @@ class MusicPlayer {
             } else {
                 // Use quadratic curves for smoother lines
                 const prevParticle = this.particles[index - 1];
+                const prevTime = now * prevParticle.frequency;
+                const prevWaveOffset = this.isPlaying ?
+                    Math.sin(prevTime + prevParticle.phase) * prevParticle.amplitude : 0;
                 const cpX = (particle.x + prevParticle.x) / 2;
-                this.waveformCtx.quadraticCurveTo(prevParticle.x, prevParticle.baseY + 
-                    Math.sin(time + prevParticle.phase) * prevParticle.amplitude,
-                    cpX, y);
+                this.waveformCtx.quadraticCurveTo(prevParticle.x, prevParticle.baseY + prevWaveOffset, cpX, y);
             }
         });
         this.waveformCtx.stroke();
@@ -277,7 +285,7 @@ class MusicPlayer {
         this.waveformCtx.strokeStyle = 'rgba(43, 188, 138, 0.2)';
         this.waveformCtx.beginPath();
         this.particles.forEach((particle, index) => {
-            const time = Date.now() * particle.frequency;
+            const time = now * particle.frequency;
             const waveOffset = this.isPlaying ? 
                 Math.sin(time + particle.phase) * particle.amplitude : 0;
             const y = particle.baseY - waveOffset;
@@ -286,10 +294,11 @@ class MusicPlayer {
                 this.waveformCtx.moveTo(particle.x, y);
             } else {
                 const prevParticle = this.particles[index - 1];
+                const prevTime = now * prevParticle.frequency;
+                const prevWaveOffset = this.isPlaying ?
+                    Math.sin(prevTime + prevParticle.phase) * prevParticle.amplitude : 0;
                 const cpX = (particle.x + prevParticle.x) / 2;
-                this.waveformCtx.quadraticCurveTo(prevParticle.x, prevParticle.baseY - 
-                    Math.sin(time + prevParticle.phase) * prevParticle.amplitude,
-                    cpX, y);
+                this.waveformCtx.quadraticCurveTo(prevParticle.x, prevParticle.baseY - prevWaveOffset, cpX, y);
             }
         });
         this.waveformCtx.stroke();
