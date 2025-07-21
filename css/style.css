@@ -2399,7 +2399,30 @@ block.gif {
 }
 
 .track-info {
-    display: none; /* Hide the track info text */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 15px;
+    min-width: 120px;
+    max-width: 180px;
+}
+
+.track-title {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.track-artist {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .track-text {

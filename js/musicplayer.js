@@ -79,7 +79,10 @@ class MusicPlayer {
         // Create track info
         const trackInfo = document.createElement('div');
         trackInfo.className = 'track-info';
-        trackInfo.innerHTML = '<span class="track-text">Playlist</span>';
+        trackInfo.innerHTML = `
+            <div class="track-title">You were a dream</div>
+            <div class="track-artist">Artemas</div>
+        `;
         
         // Assemble the player
         innerContainer.appendChild(playButton);
@@ -104,7 +107,16 @@ class MusicPlayer {
         // Listen for messages from Spotify iframe (if available)
         window.addEventListener('message', (event) => {
             if (event.origin !== 'https://open.spotify.com') return;
-            // Handle Spotify events if needed
+            
+            try {
+                const data = event.data;
+                // Handle track info updates
+                if (data.type === 'playback_update' && data.data && data.data.track) {
+                    this.updateTrackInfo(data.data.track.name, data.data.track.artists[0].name);
+                }
+            } catch (error) {
+                console.error('Error handling Spotify message:', error);
+            }
         });
     }
     
@@ -218,6 +230,18 @@ class MusicPlayer {
         }
     }
     
+    updateTrackInfo(title, artist) {
+        const titleEl = document.querySelector('.track-title');
+        const artistEl = document.querySelector('.track-artist');
+        
+        if (titleEl && title) {
+            titleEl.textContent = title;
+        }
+        if (artistEl && artist) {
+            artistEl.textContent = artist;
+        }
+    }
+
     destroy() {
         if (this.animationId) {
             cancelAnimationFrame(this.animationId);
