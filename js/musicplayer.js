@@ -187,7 +187,7 @@ class MusicPlayer {
     }
 
     setupScrollDetection() {
-        console.log('MusicPlayer: Setting up intersection-based minimization');
+        console.log('MusicPlayer: Setting up AGGRESSIVE intersection-based minimization');
         
         // Find the profile picture element
         const profilePicture = document.querySelector('#header #logo img') || 
@@ -206,47 +206,55 @@ class MusicPlayer {
         let isMinimized = false;
         let checkInterval;
         
+        // Main overlap detection with more aggressive settings
         const checkForOverlap = () => {
             if (!this.playerElement || !profilePicture) return;
             
             const playerRect = this.playerElement.getBoundingClientRect();
             const profileRect = profilePicture.getBoundingClientRect();
             
-            // Debug: Log positions
-            console.log('MusicPlayer: Checking overlap - Player:', {
-                left: playerRect.left,
-                right: playerRect.right,
-                top: playerRect.top,
-                bottom: playerRect.bottom
+            // Much larger buffer for earlier detection - 50px instead of 20px
+            const buffer = 50;
+            
+            // Check for ANY proximity or overlap
+            const horizontalProximity = Math.abs(playerRect.left - profileRect.right) < buffer ||
+                                       Math.abs(playerRect.right - profileRect.left) < buffer;
+            
+            const verticalProximity = Math.abs(playerRect.top - profileRect.bottom) < buffer ||
+                                     Math.abs(playerRect.bottom - profileRect.top) < buffer;
+            
+            // Check if they're in the same vertical space (even if not overlapping yet)
+            const inSameVerticalSpace = !(playerRect.bottom < profileRect.top - buffer || 
+                                         playerRect.top > profileRect.bottom + buffer);
+            
+            // Check if they're in the same horizontal space
+            const inSameHorizontalSpace = !(playerRect.right < profileRect.left - buffer || 
+                                           playerRect.left > profileRect.right + buffer);
+            
+            // Aggressive check - minimize if they're even close
+            const shouldMinimize = (horizontalProximity && inSameVerticalSpace) ||
+                                  (verticalProximity && inSameHorizontalSpace) ||
+                                  (inSameVerticalSpace && inSameHorizontalSpace);
+            
+            // Check if profile is scrolled past player position
+            const profileScrolledPast = profileRect.top < playerRect.bottom;
+            
+            console.log('MusicPlayer: Aggressive overlap check -', {
+                shouldMinimize,
+                profileScrolledPast,
+                horizontalProximity,
+                verticalProximity,
+                inSameVerticalSpace,
+                inSameHorizontalSpace,
+                isMinimized
             });
-            console.log('MusicPlayer: Profile picture:', {
-                left: profileRect.left,
-                right: profileRect.right,
-                top: profileRect.top,
-                bottom: profileRect.bottom
-            });
             
-            // Check if profile picture would overlap with music player
-            const wouldOverlap = !(playerRect.right < profileRect.left || 
-                                   playerRect.left > profileRect.right || 
-                                   playerRect.bottom < profileRect.top || 
-                                   playerRect.top > profileRect.bottom);
-            
-            // Add some buffer space (20px) to minimize before actual overlap
-            const buffer = 20;
-            const closeToOverlap = (Math.abs(playerRect.left - profileRect.right) < buffer) ||
-                                   (Math.abs(playerRect.right - profileRect.left) < buffer) ||
-                                   (Math.abs(playerRect.top - profileRect.bottom) < buffer) ||
-                                   (Math.abs(playerRect.bottom - profileRect.top) < buffer);
-            
-            console.log('MusicPlayer: Overlap check - wouldOverlap:', wouldOverlap, 'closeToOverlap:', closeToOverlap, 'isMinimized:', isMinimized);
-            
-            if ((wouldOverlap || closeToOverlap) && !isMinimized) {
-                console.log('MusicPlayer: Profile picture overlap detected, minimizing player');
+            if ((shouldMinimize || profileScrolledPast) && !isMinimized) {
+                console.log('MusicPlayer: Proximity/overlap detected, minimizing player IMMEDIATELY');
                 this.minimizePlayer();
                 isMinimized = true;
-            } else if (!wouldOverlap && !closeToOverlap && isMinimized) {
-                console.log('MusicPlayer: No overlap detected, restoring player');
+            } else if (!shouldMinimize && !profileScrolledPast && isMinimized && !this.isScrollBarNearBottom()) {
+                console.log('MusicPlayer: No proximity and scroll bar not near bottom, restoring player');
                 this.restorePlayer();
                 isMinimized = false;
             }
@@ -333,17 +341,36 @@ class MusicPlayer {
                 scrollVelocity = Math.abs(scrollDelta / timeDelta); // pixels per millisecond
             }
             
-            // If scrolling fast (more than 2px per ms), minimize player
-            const fastScrollThreshold = 2;
+            // Much more sensitive - minimize at 1px per ms instead of 2px
+            const fastScrollThreshold = 1;
             const isScrollingFast = scrollVelocity > fastScrollThreshold;
             
-            console.log('MusicPlayer: Scroll velocity check - velocity:', scrollVelocity.toFixed(3), 'fast scroll:', isScrollingFast, 'isMinimized:', isMinimized);
+            // Also check if scrolling down (positive delta) regardless of speed
+            const isScrollingDown = scrollDelta > 0;
             
-            if (isScrollingFast && !isMinimized) {
-                console.log('MusicPlayer: Fast scrolling detected, minimizing player');
-                this.minimizePlayer();
-                isMinimized = true;
+            // Get profile picture position for proactive minimization
+            if (profilePicture) {
+                const profileRect = profilePicture.getBoundingClientRect();
+                const playerRect = this.playerElement.getBoundingClientRect();
+                
+                // If scrolling down AND profile is getting close (within 200px), minimize proactively
+                const profileApproaching = isScrollingDown && 
+                                         profileRect.top < playerRect.bottom + 200 &&
+                                         profileRect.top > playerRect.top;
+                
+                if ((isScrollingFast || profileApproaching) && !isMinimized) {
+                    console.log('MusicPlayer: Fast scroll or profile approaching, minimizing proactively');
+                    this.minimizePlayer();
+                    isMinimized = true;
+                }
             }
+            
+            console.log('MusicPlayer: Scroll velocity check -', {
+                velocity: scrollVelocity.toFixed(3),
+                fastScroll: isScrollingFast,
+                scrollingDown: isScrollingDown,
+                isMinimized
+            });
             
             lastScrollTop = currentScrollTop;
             lastScrollTime = currentTime;
@@ -380,8 +407,15 @@ class MusicPlayer {
             return distanceFromBottom < 100;
         };
         
-        // Check for overlap every 100ms during scroll
+        // Check for overlap every 50ms during scroll (was 100ms)
         const handleScroll = () => {
+            // Immediate check without delay
+            checkForOverlap();
+            checkScrollBarPosition();
+            checkViewportVisibility();
+            checkScrollVelocity();
+            
+            // Also schedule a delayed check
             if (checkInterval) {
                 clearTimeout(checkInterval);
             }
@@ -390,26 +424,39 @@ class MusicPlayer {
                 checkScrollBarPosition();
                 checkViewportVisibility();
                 checkScrollVelocity();
-            }, 100);
+            }, 50); // Reduced from 100ms
         };
         
         // Also check on window resize
         const handleResize = () => {
+            // Immediate check
+            checkForOverlap();
+            checkScrollBarPosition();
+            checkViewportVisibility();
+            checkScrollVelocity();
+            
             setTimeout(() => {
                 checkForOverlap();
                 checkScrollBarPosition();
                 checkViewportVisibility();
                 checkScrollVelocity();
-            }, 100);
+            }, 50); // Reduced from 100ms
         };
         
-        // Set up periodic checking every 500ms to ensure detection keeps working
+        // Set up AGGRESSIVE periodic checking every 100ms (was 500ms)
         const periodicCheck = setInterval(() => {
             checkForOverlap();
             checkScrollBarPosition();
             checkViewportVisibility();
             checkScrollVelocity();
-        }, 500);
+        }, 100); // Much more frequent checking
+        
+        // Add continuous animation frame checking for maximum responsiveness
+        const continuousCheck = () => {
+            checkForOverlap();
+            this.continuousCheckId = requestAnimationFrame(continuousCheck);
+        };
+        this.continuousCheckId = requestAnimationFrame(continuousCheck);
         
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleResize);
@@ -646,6 +693,9 @@ class MusicPlayer {
         }
         if (this.overlapCheckInterval) {
             clearInterval(this.overlapCheckInterval);
+        }
+        if (this.continuousCheckId) {
+            cancelAnimationFrame(this.continuousCheckId);
         }
     }
 }
