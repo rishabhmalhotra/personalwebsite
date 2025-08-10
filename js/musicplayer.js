@@ -252,27 +252,87 @@ class MusicPlayer {
             }
         };
         
+        // Additional trigger: Check scroll bar position
+        const checkScrollBarPosition = () => {
+            if (!this.playerElement) return;
+            
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            // Calculate how close the scroll bar is to the bottom
+            const scrollBarPosition = scrollTop + windowHeight;
+            const distanceFromBottom = documentHeight - scrollBarPosition;
+            
+            // If scroll bar is within 100px of bottom, minimize player
+            const bottomThreshold = 100;
+            const shouldMinimizeForScroll = distanceFromBottom < bottomThreshold;
+            
+            console.log('MusicPlayer: Scroll bar check - distance from bottom:', distanceFromBottom, 'should minimize:', shouldMinimizeForScroll, 'isMinimized:', isMinimized);
+            
+            if (shouldMinimizeForScroll && !isMinimized) {
+                console.log('MusicPlayer: Scroll bar near bottom, minimizing player');
+                this.minimizePlayer();
+                isMinimized = true;
+            } else if (!shouldMinimizeForScroll && isMinimized && !this.isOverlapping()) {
+                // Only restore if not overlapping AND scroll bar is not near bottom
+                console.log('MusicPlayer: Scroll bar not near bottom and no overlap, restoring player');
+                this.restorePlayer();
+                isMinimized = false;
+            }
+        };
+        
+        // Helper method to check if profile picture is overlapping
+        this.isOverlapping = () => {
+            if (!this.playerElement || !profilePicture) return false;
+            
+            const playerRect = this.playerElement.getBoundingClientRect();
+            const profileRect = profilePicture.getBoundingClientRect();
+            
+            const wouldOverlap = !(playerRect.right < profileRect.left || 
+                                   playerRect.left > profileRect.right || 
+                                   playerRect.bottom < profileRect.top || 
+                                   playerRect.top > profileRect.bottom);
+            
+            const buffer = 20;
+            const closeToOverlap = (Math.abs(playerRect.left - profileRect.right) < buffer) ||
+                                   (Math.abs(playerRect.right - profileRect.left) < buffer) ||
+                                   (Math.abs(playerRect.top - profileRect.bottom) < buffer) ||
+                                   (Math.abs(playerRect.bottom - profileRect.top) < buffer);
+            
+            return wouldOverlap || closeToOverlap;
+        };
+        
         // Check for overlap every 100ms during scroll
         const handleScroll = () => {
             if (checkInterval) {
                 clearTimeout(checkInterval);
             }
-            checkInterval = setTimeout(checkForOverlap, 100);
+            checkInterval = setTimeout(() => {
+                checkForOverlap();
+                checkScrollBarPosition();
+            }, 100);
         };
         
         // Also check on window resize
         const handleResize = () => {
-            setTimeout(checkForOverlap, 100);
+            setTimeout(() => {
+                checkForOverlap();
+                checkScrollBarPosition();
+            }, 100);
         };
         
         // Set up periodic checking every 500ms to ensure detection keeps working
-        const periodicCheck = setInterval(checkForOverlap, 500);
+        const periodicCheck = setInterval(() => {
+            checkForOverlap();
+            checkScrollBarPosition();
+        }, 500);
         
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleResize);
         
         // Initial check
-        setTimeout(checkForOverlap, 500);
+        setTimeout(handleScroll, 500);
         
         console.log('MusicPlayer: Intersection-based minimization setup complete');
         
