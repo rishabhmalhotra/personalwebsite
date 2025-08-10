@@ -212,6 +212,20 @@ class MusicPlayer {
             const playerRect = this.playerElement.getBoundingClientRect();
             const profileRect = profilePicture.getBoundingClientRect();
             
+            // Debug: Log positions
+            console.log('MusicPlayer: Checking overlap - Player:', {
+                left: playerRect.left,
+                right: playerRect.right,
+                top: playerRect.top,
+                bottom: playerRect.bottom
+            });
+            console.log('MusicPlayer: Profile picture:', {
+                left: profileRect.left,
+                right: profileRect.right,
+                top: profileRect.top,
+                bottom: profileRect.bottom
+            });
+            
             // Check if profile picture would overlap with music player
             const wouldOverlap = !(playerRect.right < profileRect.left || 
                                    playerRect.left > profileRect.right || 
@@ -224,6 +238,8 @@ class MusicPlayer {
                                    (Math.abs(playerRect.right - profileRect.left) < buffer) ||
                                    (Math.abs(playerRect.top - profileRect.bottom) < buffer) ||
                                    (Math.abs(playerRect.bottom - profileRect.top) < buffer);
+            
+            console.log('MusicPlayer: Overlap check - wouldOverlap:', wouldOverlap, 'closeToOverlap:', closeToOverlap, 'isMinimized:', isMinimized);
             
             if ((wouldOverlap || closeToOverlap) && !isMinimized) {
                 console.log('MusicPlayer: Profile picture overlap detected, minimizing player');
@@ -249,6 +265,9 @@ class MusicPlayer {
             setTimeout(checkForOverlap, 100);
         };
         
+        // Set up periodic checking every 500ms to ensure detection keeps working
+        const periodicCheck = setInterval(checkForOverlap, 500);
+        
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleResize);
         
@@ -256,6 +275,9 @@ class MusicPlayer {
         setTimeout(checkForOverlap, 500);
         
         console.log('MusicPlayer: Intersection-based minimization setup complete');
+        
+        // Store interval for cleanup
+        this.overlapCheckInterval = periodicCheck;
     }
     
     setupScrollFallback() {
@@ -478,6 +500,9 @@ class MusicPlayer {
     destroy() {
         if (this.animationId) {
             cancelAnimationFrame(this.animationId);
+        }
+        if (this.overlapCheckInterval) {
+            clearInterval(this.overlapCheckInterval);
         }
     }
 }
