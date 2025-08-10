@@ -87,32 +87,17 @@ class MusicPlayer {
             // Create controls wrapper
             const controlsWrapper = document.createElement('div');
             controlsWrapper.className = 'controls-wrapper';
-            
-            // Create play/pause button
-            const playButton = document.createElement('button');
-            playButton.className = 'play-button';
-            playButton.innerHTML = '<i class="fas fa-play"></i>';
-            this.playButton = playButton;
 
-            // Create secondary controls (forward/back)
-            const secondaryControls = document.createElement('div');
-            secondaryControls.className = 'secondary-controls';
+            // Create play button
+            this.playButton = document.createElement('button');
+            this.playButton.className = 'play-button';
+            this.playButton.innerHTML = '<i class="fas fa-play"></i>';
 
-            const backButton = document.createElement('button');
-            backButton.className = 'secondary-button back-button';
-            backButton.innerHTML = '<i class="fas fa-backward"></i>';
-            this.backButton = backButton;
+            // Append play button to controls wrapper
+            controlsWrapper.appendChild(this.playButton);
 
-            const forwardButton = document.createElement('button');
-            forwardButton.className = 'secondary-button forward-button';
-            forwardButton.innerHTML = '<i class="fas fa-forward"></i>';
-            this.forwardButton = forwardButton;
-
-            secondaryControls.appendChild(backButton);
-            secondaryControls.appendChild(forwardButton);
-
-            controlsWrapper.appendChild(playButton);
-            controlsWrapper.appendChild(secondaryControls);
+            // Append controls wrapper to inner container
+            innerContainer.appendChild(controlsWrapper);
 
             // Create a wrapper for details (waveform and track info)
             const detailsWrapper = document.createElement('div');
@@ -150,7 +135,6 @@ class MusicPlayer {
             detailsWrapper.appendChild(trackInfo);
             
             // Assemble the player
-            innerContainer.appendChild(controlsWrapper);
             innerContainer.appendChild(detailsWrapper);
             playerContainer.appendChild(innerContainer);
             
@@ -168,10 +152,6 @@ class MusicPlayer {
         this.playButton.addEventListener('click', () => {
             this.togglePlayback();
         });
-
-        // Back and forward button clicks
-        this.backButton.addEventListener('click', () => this.previousTrack());
-        this.forwardButton.addEventListener('click', () => this.nextTrack());
         
         // Listen for messages from Spotify iframe
         window.addEventListener('message', async (event) => {
@@ -196,24 +176,17 @@ class MusicPlayer {
     
     togglePlayback() {
         if (!this.spotifyService.embedController) {
-            console.error('MusicPlayer: Spotify EmbedController not available yet.');
+            console.error('MusicPlayer: EmbedController not available for playback control');
             return;
         }
-
-        // Use the official SDK method to toggle play/pause
-        this.spotifyService.embedController.togglePlay();
+        
+        if (this.isPlaying) {
+            this.spotifyService.embedController.pause();
+        } else {
+            this.spotifyService.embedController.play();
+        }
     }
 
-    nextTrack() {
-        if (!this.spotifyService.embedController) return;
-        this.spotifyService.embedController.next();
-    }
-
-    previousTrack() {
-        if (!this.spotifyService.embedController) return;
-        this.spotifyService.embedController.previous();
-    }
-    
     updatePlayButton() {
         if (!this.playButton) return;
         this.playButton.innerHTML = this.isPlaying ? 
