@@ -10,8 +10,6 @@
 <html lang=en>
 
 <head>
-    <iframe style="border-radius:1px" src="https://open.spotify.com/embed/playlist/6YGvluoYkCURQePkFMoYqW?utm_source=generator&theme=0" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" class="spotify-music"></iframe>
-
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,6 +40,11 @@
 </head>
 
 <body>
+    <!-- Music Player Container -->
+    <div class="music-player-container">
+        <!-- Spotify player and custom UI will be inserted here by JavaScript -->
+    </div>
+
     <div class="main">
         <div class="wrapper">
             <div class="max-width mx-auto px3 ltr">
@@ -277,10 +280,12 @@
 
                 <!-- clipboard -->
                 <script src="/js/main.js"></script>
+
+                <!-- music player -->
+                <script src="/js/spotify-service.js?v=1.4"></script>
+                <script src="/js/musicplayer.js?v=2.4"></script>
             </div>
         </div>
 </body>
-
-</html>
 
 </html>
