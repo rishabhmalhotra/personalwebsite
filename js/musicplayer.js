@@ -69,6 +69,12 @@ class MusicPlayer {
                 // Initialize and start the waveform animation
                 this.initWaveform();
                 this.animate();
+                
+                // Test minimization after a delay to ensure everything is set up
+                setTimeout(() => {
+                    console.log('MusicPlayer: Testing minimization after setup');
+                    this.testMinimization();
+                }, 3000);
             });
         }
     }
@@ -79,6 +85,8 @@ class MusicPlayer {
             // Create player container
             const playerContainer = document.createElement('div');
             playerContainer.className = 'custom-music-player';
+            this.playerElement = playerContainer; // Store reference for minimization
+            console.log('MusicPlayer: Player element assigned:', this.playerElement);
             
             // Create inner container
             const innerContainer = document.createElement('div');
@@ -142,6 +150,7 @@ class MusicPlayer {
             this.container.appendChild(playerContainer);
             
             console.log('MusicPlayer: Player UI created and inserted');
+            console.log('MusicPlayer: Final player element reference:', this.playerElement);
         } catch (error) {
             console.error('MusicPlayer: Error creating player UI:', error);
         }
@@ -178,21 +187,31 @@ class MusicPlayer {
     }
 
     setupScrollDetection() {
+        console.log('MusicPlayer: Setting up scroll detection');
         let lastScrollTop = 0;
-        let scrollThreshold = 100; // pixels to scroll before minimizing
+        
+        // Check if we're on mobile and adjust threshold
+        const isMobile = window.innerWidth <= 600;
+        let scrollThreshold = isMobile ? 50 : 100; // Lower threshold for mobile
+        console.log('MusicPlayer: Mobile detected:', isMobile, 'Scroll threshold:', scrollThreshold);
+        
         let isMinimized = false;
         
         const handleScroll = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const scrollDelta = scrollTop - lastScrollTop;
             
+            console.log('MusicPlayer: Scroll detected', { scrollTop, scrollDelta, isMinimized });
+            
             // Minimize when scrolling down significantly
             if (scrollDelta > scrollThreshold && !isMinimized) {
+                console.log('MusicPlayer: Scrolling down, minimizing player');
                 this.minimizePlayer();
                 isMinimized = true;
             }
             // Restore when scrolling to top or scrolling up significantly
             else if ((scrollTop < 50) || (scrollDelta < -scrollThreshold && isMinimized)) {
+                console.log('MusicPlayer: Scrolling up or to top, restoring player');
                 this.restorePlayer();
                 isMinimized = false;
             }
@@ -213,17 +232,49 @@ class MusicPlayer {
         };
         
         window.addEventListener('scroll', throttledScroll, { passive: true });
+        
+        // Also listen for window resize to handle mobile orientation changes
+        window.addEventListener('resize', () => {
+            const newIsMobile = window.innerWidth <= 600;
+            if (newIsMobile !== isMobile) {
+                isMobile = newIsMobile;
+                scrollThreshold = isMobile ? 50 : 100;
+                console.log('MusicPlayer: Mobile state changed:', isMobile, 'New threshold:', scrollThreshold);
+            }
+        });
     }
 
     minimizePlayer() {
+        console.log('MusicPlayer: Minimizing player');
         if (this.playerElement) {
             this.playerElement.classList.add('minimized');
+            console.log('MusicPlayer: Player minimized successfully');
+        } else {
+            console.error('MusicPlayer: playerElement not found for minimization');
         }
     }
 
     restorePlayer() {
+        console.log('MusicPlayer: Restoring player');
         if (this.playerElement) {
             this.playerElement.classList.remove('minimized');
+            console.log('MusicPlayer: Player restored successfully');
+        } else {
+            console.error('MusicPlayer: playerElement not found for restoration');
+        }
+    }
+    
+    // Test method to manually test minimization
+    testMinimization() {
+        console.log('MusicPlayer: Testing minimization manually');
+        console.log('Player element:', this.playerElement);
+        console.log('Player element classes:', this.playerElement ? this.playerElement.className : 'null');
+        
+        if (this.playerElement) {
+            this.minimizePlayer();
+            setTimeout(() => {
+                this.restorePlayer();
+            }, 2000);
         }
     }
     
