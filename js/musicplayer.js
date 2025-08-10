@@ -282,6 +282,73 @@ class MusicPlayer {
             }
         };
         
+        // Additional trigger: Check if profile picture is visible in viewport
+        const checkViewportVisibility = () => {
+            if (!this.playerElement || !profilePicture) return;
+            
+            const playerRect = this.playerElement.getBoundingClientRect();
+            const profileRect = profilePicture.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            
+            // Check if profile picture is above the viewport (scrolled out of view)
+            const profileIsAboveViewport = profileRect.bottom < 0;
+            
+            // Check if profile picture is below the viewport (scrolled out of view)
+            const profileIsBelowViewport = profileRect.top > viewportHeight;
+            
+            // Check if profile picture is partially or fully hidden
+            const profileIsHidden = profileIsAboveViewport || profileIsBelowViewport;
+            
+            // Check if player is in the way of the profile picture's natural position
+            const playerBlocksProfile = playerRect.top < profileRect.bottom && playerRect.bottom > profileRect.top;
+            
+            console.log('MusicPlayer: Viewport check - profile above:', profileIsAboveViewport, 'below:', profileIsBelowViewport, 'hidden:', profileIsHidden, 'player blocks:', playerBlocksProfile);
+            
+            if ((profileIsHidden || playerBlocksProfile) && !isMinimized) {
+                console.log('MusicPlayer: Profile picture hidden or blocked, minimizing player');
+                this.minimizePlayer();
+                isMinimized = true;
+            } else if (!profileIsHidden && !playerBlocksProfile && isMinimized && !this.isOverlapping() && !this.isScrollBarNearBottom()) {
+                // Only restore if profile is visible, not blocked, not overlapping, and scroll bar not near bottom
+                console.log('MusicPlayer: Profile picture visible and not blocked, restoring player');
+                this.restorePlayer();
+                isMinimized = false;
+            }
+        };
+        
+        // Additional trigger: Check scroll velocity and direction
+        let lastScrollTop = 0;
+        let lastScrollTime = Date.now();
+        let scrollVelocity = 0;
+        
+        const checkScrollVelocity = () => {
+            if (!this.playerElement) return;
+            
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const currentTime = Date.now();
+            const timeDelta = currentTime - lastScrollTime;
+            const scrollDelta = currentScrollTop - lastScrollTop;
+            
+            if (timeDelta > 0) {
+                scrollVelocity = Math.abs(scrollDelta / timeDelta); // pixels per millisecond
+            }
+            
+            // If scrolling fast (more than 2px per ms), minimize player
+            const fastScrollThreshold = 2;
+            const isScrollingFast = scrollVelocity > fastScrollThreshold;
+            
+            console.log('MusicPlayer: Scroll velocity check - velocity:', scrollVelocity.toFixed(3), 'fast scroll:', isScrollingFast, 'isMinimized:', isMinimized);
+            
+            if (isScrollingFast && !isMinimized) {
+                console.log('MusicPlayer: Fast scrolling detected, minimizing player');
+                this.minimizePlayer();
+                isMinimized = true;
+            }
+            
+            lastScrollTop = currentScrollTop;
+            lastScrollTime = currentTime;
+        };
+        
         // Helper method to check if profile picture is overlapping
         this.isOverlapping = () => {
             if (!this.playerElement || !profilePicture) return false;
@@ -303,6 +370,16 @@ class MusicPlayer {
             return wouldOverlap || closeToOverlap;
         };
         
+        // Helper method to check if scroll bar is near bottom
+        this.isScrollBarNearBottom = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollBarPosition = scrollTop + windowHeight;
+            const distanceFromBottom = documentHeight - scrollBarPosition;
+            return distanceFromBottom < 100;
+        };
+        
         // Check for overlap every 100ms during scroll
         const handleScroll = () => {
             if (checkInterval) {
@@ -311,6 +388,8 @@ class MusicPlayer {
             checkInterval = setTimeout(() => {
                 checkForOverlap();
                 checkScrollBarPosition();
+                checkViewportVisibility();
+                checkScrollVelocity();
             }, 100);
         };
         
@@ -319,6 +398,8 @@ class MusicPlayer {
             setTimeout(() => {
                 checkForOverlap();
                 checkScrollBarPosition();
+                checkViewportVisibility();
+                checkScrollVelocity();
             }, 100);
         };
         
@@ -326,6 +407,8 @@ class MusicPlayer {
         const periodicCheck = setInterval(() => {
             checkForOverlap();
             checkScrollBarPosition();
+            checkViewportVisibility();
+            checkScrollVelocity();
         }, 500);
         
         window.addEventListener('scroll', handleScroll, { passive: true });
