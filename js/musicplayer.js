@@ -172,6 +172,59 @@ class MusicPlayer {
                 this.particles.forEach(p => p.targetAmplitude = 0);
             }
         });
+
+        // Add scroll detection for minimization
+        this.setupScrollDetection();
+    }
+
+    setupScrollDetection() {
+        let lastScrollTop = 0;
+        let scrollThreshold = 100; // pixels to scroll before minimizing
+        let isMinimized = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollDelta = scrollTop - lastScrollTop;
+            
+            // Minimize when scrolling down significantly
+            if (scrollDelta > scrollThreshold && !isMinimized) {
+                this.minimizePlayer();
+                isMinimized = true;
+            }
+            // Restore when scrolling to top or scrolling up significantly
+            else if ((scrollTop < 50) || (scrollDelta < -scrollThreshold && isMinimized)) {
+                this.restorePlayer();
+                isMinimized = false;
+            }
+            
+            lastScrollTop = scrollTop;
+        };
+        
+        // Throttle scroll events for better performance
+        let ticking = false;
+        const throttledScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+        
+        window.addEventListener('scroll', throttledScroll, { passive: true });
+    }
+
+    minimizePlayer() {
+        if (this.playerElement) {
+            this.playerElement.classList.add('minimized');
+        }
+    }
+
+    restorePlayer() {
+        if (this.playerElement) {
+            this.playerElement.classList.remove('minimized');
+        }
     }
     
     togglePlayback() {

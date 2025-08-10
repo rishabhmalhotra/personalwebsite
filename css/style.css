@@ -2320,12 +2320,103 @@ block.gif {
         right: 50%;
         transform: translateX(50%);
         width: calc(100% - 20px);
-        max-width: 350px;
+        max-width: 280px;
+        height: 65px;
+        top: 15px;
+    }
+
+    .custom-music-player {
+        padding: 0 12px;
+    }
+
+    .player-inner {
+        gap: 12px;
+    }
+
+    .play-button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .waveform-canvas {
+        height: 25px;
+        margin-bottom: 4px;
+    }
+
+    .track-title {
+        font-size: 12px;
+        margin-bottom: 1px;
+    }
+
+    .track-artist {
+        font-size: 10px;
     }
 
     .track-info {
+        max-width: 120px;
+    }
+}
+
+/* Scroll-based minimization */
+.custom-music-player.minimized {
+    top: 10px;
+    height: 50px;
+    width: 200px;
+    right: 15px;
+    transform: none;
+    border-radius: 8px;
+    padding: 0 10px;
+}
+
+.custom-music-player.minimized .player-inner {
+    gap: 8px;
+}
+
+.custom-music-player.minimized .play-button {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.custom-music-player.minimized .waveform-canvas {
+    display: none;
+}
+
+.custom-music-player.minimized .track-info {
+    max-width: 100px;
+}
+
+.custom-music-player.minimized .track-title {
+    font-size: 11px;
+    margin-bottom: 0;
+}
+
+.custom-music-player.minimized .track-artist {
+    font-size: 9px;
+}
+
+/* Mobile-specific minimized state */
+@media (max-device-width: 600px) {
+    .custom-music-player.minimized {
+        width: calc(100% - 20px);
+        max-width: 220px;
+        height: 45px;
+        top: 10px;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .custom-music-player.minimized .play-button {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .custom-music-player.minimized .track-info {
         max-width: 80px;
-        font-size: 11px;
     }
 }
 
