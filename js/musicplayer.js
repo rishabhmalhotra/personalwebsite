@@ -187,31 +187,93 @@ class MusicPlayer {
     }
 
     setupScrollDetection() {
-        console.log('MusicPlayer: Setting up scroll detection');
-        let lastScrollTop = 0;
+        console.log('MusicPlayer: Setting up intersection-based minimization');
         
-        // Check if we're on mobile and adjust threshold
-        const isMobile = window.innerWidth <= 600;
-        let scrollThreshold = isMobile ? 50 : 100; // Lower threshold for mobile
-        console.log('MusicPlayer: Mobile detected:', isMobile, 'Scroll threshold:', scrollThreshold);
+        // Find the profile picture element
+        const profilePicture = document.querySelector('#header #logo img') || 
+                              document.querySelector('#header #logo') ||
+                              document.querySelector('.profile-picture') ||
+                              document.querySelector('img[alt*="profile"], img[alt*="avatar"]');
+        
+        if (!profilePicture) {
+            console.log('MusicPlayer: No profile picture found, falling back to scroll-based detection');
+            this.setupScrollFallback();
+            return;
+        }
+        
+        console.log('MusicPlayer: Profile picture found:', profilePicture);
         
         let isMinimized = false;
+        let checkInterval;
+        
+        const checkForOverlap = () => {
+            if (!this.playerElement || !profilePicture) return;
+            
+            const playerRect = this.playerElement.getBoundingClientRect();
+            const profileRect = profilePicture.getBoundingClientRect();
+            
+            // Check if profile picture would overlap with music player
+            const wouldOverlap = !(playerRect.right < profileRect.left || 
+                                   playerRect.left > profileRect.right || 
+                                   playerRect.bottom < profileRect.top || 
+                                   playerRect.top > profileRect.bottom);
+            
+            // Add some buffer space (20px) to minimize before actual overlap
+            const buffer = 20;
+            const closeToOverlap = (Math.abs(playerRect.left - profileRect.right) < buffer) ||
+                                   (Math.abs(playerRect.right - profileRect.left) < buffer) ||
+                                   (Math.abs(playerRect.top - profileRect.bottom) < buffer) ||
+                                   (Math.abs(playerRect.bottom - profileRect.top) < buffer);
+            
+            if ((wouldOverlap || closeToOverlap) && !isMinimized) {
+                console.log('MusicPlayer: Profile picture overlap detected, minimizing player');
+                this.minimizePlayer();
+                isMinimized = true;
+            } else if (!wouldOverlap && !closeToOverlap && isMinimized) {
+                console.log('MusicPlayer: No overlap detected, restoring player');
+                this.restorePlayer();
+                isMinimized = false;
+            }
+        };
+        
+        // Check for overlap every 100ms during scroll
+        const handleScroll = () => {
+            if (checkInterval) {
+                clearTimeout(checkInterval);
+            }
+            checkInterval = setTimeout(checkForOverlap, 100);
+        };
+        
+        // Also check on window resize
+        const handleResize = () => {
+            setTimeout(checkForOverlap, 100);
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleResize);
+        
+        // Initial check
+        setTimeout(checkForOverlap, 500);
+        
+        console.log('MusicPlayer: Intersection-based minimization setup complete');
+    }
+    
+    setupScrollFallback() {
+        console.log('MusicPlayer: Setting up scroll fallback detection');
+        let lastScrollTop = 0;
+        let isMinimized = false;
+        const scrollThreshold = 50;
         
         const handleScroll = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const scrollDelta = scrollTop - lastScrollTop;
             
-            console.log('MusicPlayer: Scroll detected', { scrollTop, scrollDelta, isMinimized });
-            
-            // Minimize when scrolling down significantly
             if (scrollDelta > scrollThreshold && !isMinimized) {
-                console.log('MusicPlayer: Scrolling down, minimizing player');
+                console.log('MusicPlayer: Scrolling down, minimizing player (fallback)');
                 this.minimizePlayer();
                 isMinimized = true;
-            }
-            // Restore when scrolling to top or scrolling up significantly
-            else if ((scrollTop < 50) || (scrollDelta < -scrollThreshold && isMinimized)) {
-                console.log('MusicPlayer: Scrolling up or to top, restoring player');
+            } else if ((scrollTop < 50) || (scrollDelta < -scrollThreshold && isMinimized)) {
+                console.log('MusicPlayer: Scrolling up or to top, restoring player (fallback)');
                 this.restorePlayer();
                 isMinimized = false;
             }
@@ -219,7 +281,6 @@ class MusicPlayer {
             lastScrollTop = scrollTop;
         };
         
-        // Throttle scroll events for better performance
         let ticking = false;
         const throttledScroll = () => {
             if (!ticking) {
@@ -232,16 +293,6 @@ class MusicPlayer {
         };
         
         window.addEventListener('scroll', throttledScroll, { passive: true });
-        
-        // Also listen for window resize to handle mobile orientation changes
-        window.addEventListener('resize', () => {
-            const newIsMobile = window.innerWidth <= 600;
-            if (newIsMobile !== isMobile) {
-                isMobile = newIsMobile;
-                scrollThreshold = isMobile ? 50 : 100;
-                console.log('MusicPlayer: Mobile state changed:', isMobile, 'New threshold:', scrollThreshold);
-            }
-        });
     }
 
     minimizePlayer() {
