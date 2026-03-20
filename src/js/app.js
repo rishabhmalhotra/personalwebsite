@@ -1,14 +1,8 @@
 /**
  * Main Application Entry Point
- * Initializes all modules and handles page-specific functionality
+ * Minimal initialization - animations handled by CSS
+ * Terminal/Code Aesthetic for Backend Engineer
  */
-
-import { GradientAnimation } from './modules/gradient-animation.js';
-import { TextDecryptor } from './modules/text-decryptor.js';
-import { initializeCompanyAnimation } from './modules/company-animation.js';
-import { initializeTypewriter } from './modules/typewriter.js';
-import { initializeThreeScene } from './modules/three-scene.js';
-import { initializeBlogFeatures } from './modules/blog-features.js';
 
 /**
  * DOM Ready handler
@@ -23,57 +17,71 @@ function domReady(fn) {
 }
 
 /**
- * Initialize gradient animation if element exists
+ * Initialize scroll reveal animations
+ * Uses simple IntersectionObserver
  */
-function initGradientAnimation() {
-  const gradientElement = document.getElementById('gradient');
-  if (gradientElement) {
-    const gradient = new GradientAnimation(gradientElement);
-    gradient.start();
-    return gradient;
-  }
-  return null;
+function initScrollReveal() {
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe elements with 'reveal' class
+  document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+  });
 }
 
 /**
- * Initialize text decryption animation
+ * Initialize navigation scroll effect
  */
-function initTextDecryption() {
-  const decryptedEl = document.getElementById('decoded');
-  const encryptedEl = document.getElementById('encoded');
+function initNavScroll() {
+  const nav = document.querySelector('.nav');
+  if (!nav) return;
+
+  let lastScroll = 0;
   
-  if (decryptedEl && encryptedEl) {
-    const decryptor = new TextDecryptor(decryptedEl, encryptedEl);
-    decryptor.start();
-    return decryptor;
-  }
-  return null;
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+  }, { passive: true });
 }
 
 /**
- * Initialize page-specific features based on current page
+ * Initialize mobile navigation toggle
  */
-function initPageFeatures() {
-  const currentPage = window.location.pathname;
+function initMobileNav() {
+  const toggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
   
-  // Homepage features
-  if (currentPage === '/' || currentPage === '/index.html') {
-    // Initialize company name animation based on viewport
-    const isMobile = document.documentElement.clientWidth <= 980;
-    initializeCompanyAnimation(isMobile);
-    
-    // Initialize typewriter effect
-    initializeTypewriter();
-  }
+  if (!toggle || !navLinks) return;
   
-  // Blog features
-  if (currentPage.includes('/Astrodynamics/')) {
-    // Initialize Three.js scene for blog
-    initializeThreeScene();
-    
-    // Initialize blog-specific features
-    initializeBlogFeatures();
-  }
+  toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  
+  // Close on link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
 }
 
 /**
@@ -82,36 +90,24 @@ function initPageFeatures() {
 function init() {
   console.log('Initializing Rishabh Malhotra Portfolio...');
   
-  // Initialize global features
-  const animations = {
-    gradient: initGradientAnimation(),
-    textDecryptor: initTextDecryption(),
-  };
+  // Initialize scroll reveal
+  initScrollReveal();
   
-  // Initialize page-specific features
-  initPageFeatures();
+  // Initialize navigation effects
+  initNavScroll();
+  initMobileNav();
   
-  // Handle window resize for responsive features
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      // Re-initialize responsive features
-      const isMobile = document.documentElement.clientWidth <= 980;
-      if (window.companyAnimation) {
-        window.companyAnimation.updateMode(isMobile);
-      }
-    }, 250);
-  });
-  
-  // Expose animations to global scope for debugging
-  if (process.env.NODE_ENV !== 'production') {
-    window.animations = animations;
+  // Auto-update year in footer
+  const yearElement = document.getElementById('year');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
   }
+  
+  console.log('Portfolio initialized');
 }
 
 // Initialize when DOM is ready
 domReady(init);
 
 // Export for use in other scripts if needed
-export { init, domReady }; 
+export { init, domReady };

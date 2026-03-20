@@ -1,14 +1,24 @@
 # Rishabh Malhotra - Personal Portfolio & Blog
 
-A personal portfolio website featuring an Astrodynamics blog with interactive visualizations and animations.
+A personal portfolio website featuring an Astrodynamics blog with interactive visualizations, built with a refined terminal/code aesthetic that reflects a backend engineering identity.
+
+## 🎨 Design: Terminal/Code Aesthetic
+
+The portfolio has been redesigned with a modern terminal-inspired theme:
+
+- **Primary Color**: Terminal green (#00ff9d) for authentic terminal feel
+- **Typography**: JetBrains Mono (monospace) + Inter (sans-serif)
+- **Dark Theme**: Deep charcoal backgrounds (#0a0a0a)
+- **Subtle Animations**: Purposeful, performance-optimized transitions
+- **Content-First**: Animations serve content, not the other way around
 
 ## 🚀 Features
 
-- **Interactive Portfolio**: Dynamic landing page with animated company name transitions
+- **Interactive Portfolio**: Dynamic landing page with text decryptor animations
 - **Astrodynamics Blog**: Technical blog series on rocket propulsion and space mechanics
-- **3D Visualizations**: Three.js powered space animations and interactive demos
+- **Terminal Aesthetic**: Refined code-inspired design with subtle nods to classic terminals
 - **Responsive Design**: Mobile-first approach with adaptive layouts
-- **Performance Optimized**: Lazy loading, minified assets, and efficient animations
+- **Performance Optimized**: Minimal dependencies, efficient animations, no heavy 3D libraries
 
 ## 📋 Prerequisites
 
@@ -51,76 +61,74 @@ personalwebsite/
 │   ├── posts/              # Individual blog posts
 │   ├── css/                # Blog-specific styles
 │   └── js/                 # Blog-specific scripts
-├── css/                    # Global stylesheets
+├── src/                    # Source files (modern CSS/JS)
+│   ├── css/
+│   │   ├── _variables.css  # Design tokens & CSS variables
+│   │   ├── _base.css       # Base styles
+│   │   ├── _components.css# Component styles
+│   │   ├── _animations.css # Animation keyframes
+│   │   └── main.css        # Main entry point
+│   └── js/
+│       ├── app.js          # Main application
+│       └── modules/        # JS modules
+│           ├── text-decryptor.js
+│           ├── gradient-animation.js
+│           ├── typewriter.js
+│           └── company-animation.js
+├── css/                    # Legacy global stylesheets
 │   ├── style.css           # Main styles
 │   ├── rtl.css            # RTL support
 │   └── w3.css             # W3 utilities
-├── js/                     # JavaScript modules
-│   ├── main.js            # Core functionality
-│   ├── typescript.js       # Name animation
-│   ├── companyname_*.js   # Company transitions
-│   └── imgslideshow.js    # Image animations
+├── js/                     # Legacy JavaScript modules
 ├── images/                 # Image assets
-├── lib/                    # Third-party libraries
-└── music/                  # Audio assets
+└── lib/                    # Third-party libraries
 ```
 
 ## 🔧 Available Scripts
 
 - `npm start` - Start development server
+- `npm run dev` - Start development server (alias)
 - `npm run lint` - Run ESLint and Stylelint
 - `npm run format` - Format code with Prettier
 - `npm run validate` - Run all validation checks
 - `npm run build` - Build for production (coming soon)
 
-## 📝 Code Style
-
-This project follows:
-- [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
-- [Standard CSS Style Guide](https://github.com/stylelint/stylelint-config-standard)
-- Prettier for consistent formatting
-
-### Running Code Quality Checks
-
-```bash
-# Lint JavaScript
-npm run lint:js
-
-# Lint CSS
-npm run lint:css
-
-# Format all files
-npm run format
-
-# Check formatting without modifying
-npm run format:check
-```
-
 ## 🎨 CSS Architecture
 
-The project uses a modular CSS approach:
+The project uses a modern CSS approach:
 
-- **Global Styles**: Base styles and utilities in `/css`
-- **Component Styles**: Scoped styles for specific features
-- **Theme Variables**: Consistent color palette (aquamarine theme)
+- **CSS Variables**: Design tokens for consistent theming (terminal green palette)
+- **Modular Components**: Scoped styles for specific features
+- **Custom Animations**: Keyframe animations without external libraries
 - **Responsive Breakpoints**: Mobile-first with tablet/desktop overrides
+
+### Design Tokens
+
+```css
+/* Terminal Theme Variables */
+--color-primary: #00ff9d;        /* Terminal green */
+--color-accent: #ff6b6b;         /* Coral accent */
+--color-background: #0a0a0a;     /* Deep charcoal */
+--font-mono: 'JetBrains Mono', ...;
+--font-sans: 'Inter', ...;
+```
 
 ## 🧪 JavaScript Architecture
 
 - **ES6 Modules**: Modern JavaScript with proper imports/exports
 - **Event-Driven**: Clean event handling and DOM manipulation
 - **Performance**: RequestAnimationFrame for smooth animations
-- **Third-party Integration**: Three.js for 3D graphics
+- **No Heavy Dependencies**: Removed Three.js for lightweight, purpose-built animations
 
 ## 🚢 Deployment
 
 The site is designed to be served as static files. Any web server or CDN can host it:
 
 1. Build the project (when build system is implemented)
-2. We can upload contents to our web server
-3. Need to ensure proper MIME types for all assets
+2. Upload contents to your web server
+3. Ensure proper MIME types for all assets
 
-### Sample GitHub Pages Deployment [This site is hosted on a custom domain but in case you want to fork it]
+### Sample GitHub Pages Deployment
 
 ```bash
 # Push to gh-pages branch
@@ -147,12 +155,6 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `test:` Adding or updating tests
 - `chore:` Maintenance tasks
 
-## 🐛 Known Issues
-
-- Font Awesome webfonts need to be added to `/lib/font-awesome/webfonts/`
-- Some animations may not work in older browsers
-- Build system is not yet implemented
-
 ## 📄 License
 
 Free & encouraged to fork!
@@ -167,6 +169,5 @@ Free & encouraged to fork!
 
 ## 🙏 Acknowledgments
 
-- Three.js for 3D graphics capabilities
 - Font Awesome for icons
 - The aerospace community & authors for inspiration on the blog content
