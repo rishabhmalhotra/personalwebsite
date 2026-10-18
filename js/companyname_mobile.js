@@ -1,7 +1,7 @@
 // List of sentences
 var _CONTENT = [
-    "Block.",
-    "Square."
+    "eBay Live.",
+    "Ultra-low-latency."
 ];
 
 // Current sentence being processed
@@ -18,13 +18,13 @@ var _ELEMENT = document.querySelector("#text");
 
 // Only do this a few times
 var cur_times = 0;
-var total_times = 4; // Keep this even to land at Square.
+var total_times = 4; // Keep this even to land at Ultra-low-latency.
 
 // Implements typing effect
 function Type() {
     var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1);
     _ELEMENT.innerHTML = text;
-    _ELEMENT.href = "squareup.com";
+    _ELEMENT.href = "ebay.com";
     _PART_INDEX++;
 
     // If full sentence has been displayed then start to delete the sentence after some time

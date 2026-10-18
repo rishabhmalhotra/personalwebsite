@@ -68,3 +68,6 @@ venv/
 *.backup
 *.bak
 backup/ 
+
+# Kilo agent plans and state (not part of the published site)
+.kilo/ 

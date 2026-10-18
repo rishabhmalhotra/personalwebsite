@@ -160,11 +160,11 @@ export function initializeCompanyAnimation(isMobile) {
 
   // Desktop content with code block
   const desktopContent = [
-    '<pre> def Block():\n      building_blocks = ["Square", \n                         "Cash App", \n                         "Spiral", \n                         "Tidal", \n                         "TBD"] \n\n      return building_blocks[0] </pre>'
+    '<pre> def eBay_Live():\n      stream = UltraLowLatencyStream() \n      trust = TrustLayer(stream) \n      auction = AuctionOnStream(trust) \n\n      return auction </pre>'
   ];
 
   // Mobile content (simpler)
-  const mobileContent = ['Square.'];
+  const mobileContent = ['eBay Live.'];
 
   const animation = new CompanyAnimation(element, {
     content: isMobile ? mobileContent : desktopContent,

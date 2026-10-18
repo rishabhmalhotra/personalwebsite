@@ -24,11 +24,12 @@ const siteConfig = {
 
   // Company information
   company: {
-    current: 'BLOCK',
-    previous: 'Square',
-    subsidiaries: ['Square', 'Cash App', 'Spiral', 'Tidal', 'TBD'],
-    website: 'https://block.xyz',
-    legalUrl: 'https://block.xyz/legal',
+    current: 'EBAY',
+    previous: 'eBay Live',
+    role: 'Staff Software Engineer',
+    focus: 'Ultra-low-latency end-to-end streaming architecture and the trust layer that makes an auction on a live stream possible',
+    website: 'https://www.ebay.com',
+    legalUrl: 'https://www.ebay.com',
   },
 
   // Education
