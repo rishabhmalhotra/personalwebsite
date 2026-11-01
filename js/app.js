@@ -23,12 +23,3 @@ for (const [name, init] of Object.entries(features)) {
     console.error(`[app] ${name} failed to initialize`, err);
   }
 }
-
-document.documentElement.classList.toggle('rm', prefersReducedMotion());
-for (const [name, init] of Object.entries(features)) {
-  try {
-    init();
-  } catch (err) {
-    console.error(`[app] ${name} failed to initialize`, err);
-  }
-}
