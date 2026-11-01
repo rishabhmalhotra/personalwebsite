@@ -345,5 +345,3 @@ a.doc:hover .doc-title { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   .bar i { transition: none; }
 }
-
-
