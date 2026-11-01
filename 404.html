@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · Rishabh Malhotra</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0C0F">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/images/favicons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/console.css">
+<script type="module">
+  import { initStatusBar } from '/js/modules/status-bar.js';
+  initStatusBar();
+  document.querySelector('[data-path]').textContent = location.pathname;
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2.5 5h11 M2.5 11h11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="topbar">
+  <a class="crumb" href="/" aria-label="Rishabh Malhotra, home">
+    <img src="/images/avatar.png" alt="" width="20" height="20">
+    <span>rishabh-malhotra</span><span class="sep">/</span><span class="env">404</span>
+  </a>
+  <nav class="tb-nav" aria-label="Primary"><a href="/">Home</a><a href="/#services">Work</a><a href="/Astrodynamics/">Writing</a><a href="/#endpoints">Contact</a></nav>
+  <div class="tb-right">
+    <span class="pill" id="pill" data-state="warn" role="status"><i class="dot warn"></i><span class="ptxt">1 route not found</span></span>
+    <time class="clock" data-clock>--:--:-- UTC</time>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="mnav" aria-label="Menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<div class="mnav" id="mnav">
+  <a class="nl" href="/">Home <span>console</span></a>
+  <a class="nl" href="/#services">Work <span>services</span></a>
+  <a class="nl" href="/Astrodynamics/">Writing <span>docs</span></a>
+  <a class="nl" href="/#endpoints">Contact <span>endpoints</span></a>
+</div>
+
+<main class="console nf" id="content">
+  <section class="panel c12" aria-labelledby="nf-h">
+    <div class="ph"><h2 id="nf-h">Request</h2><span class="meta">404</span><div class="right"><span class="chip"><i class="dot warn"></i>not found</span></div></div>
+    <div class="nf-body">
+      <p class="nf-line"><span class="m">GET</span> <span class="p" data-path>/</span> <span class="s">404</span></p>
+      <h1>This route doesn't exist.</h1>
+      <p class="sub">The page may have moved when the site was rebuilt. Everything that used to be here is still reachable from one of these.</p>
+      <ul class="nf-links">
+        <li><a class="btn btn-primary" href="/">Home<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+        <li><a class="btn" href="/Astrodynamics/">Astrodynamics docs</a></li>
+        <li><a class="btn" href="/#endpoints">Contact</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>&copy; <span data-year>2026</span> Rishabh Malhotra</span>
+  <nav aria-label="Footer"><a href="/">home</a><a href="/Astrodynamics/">astrodynamics</a><a href="https://github.com/rishabhmalhotra" rel="noopener">github</a></nav>
+</footer>
+</body>
+</html>

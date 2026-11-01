@@ -1,172 +1,145 @@
-# Rishabh Malhotra - Personal Portfolio & Blog
+# rishabhmalhotra.xyz
 
-A personal portfolio website featuring an Astrodynamics blog with interactive visualizations and animations.
+Personal site of Rishabh Malhotra. The homepage is styled as an observability console. There's a live traffic map with an outage simulation, career history as services and an event log, a Spotify player for one playlist, and an Astrodynamics writing section.
 
-## 🚀 Features
+It's plain HTML, CSS and native ES modules. No framework, no bundler, no npm dependencies.
 
-- **Interactive Portfolio**: Dynamic landing page with animated company name transitions
-- **Astrodynamics Blog**: Technical blog series on rocket propulsion and space mechanics
-- **3D Visualizations**: Three.js powered space animations and interactive demos
-- **Responsive Design**: Mobile-first approach with adaptive layouts
-- **Performance Optimized**: Lazy loading, minified assets, and efficient animations
-
-## 📋 Prerequisites
-
-- Python 3.x (for local development server)
-- Node.js >= 16.0.0 and npm >= 8.0.0 (for build tools)
-- Modern web browser with ES6 support
-
-## 🛠️ Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/rishabhmalhotra/personalwebsite.git
-cd personalwebsite
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-## 🚀 Development
-
-Start the local development server:
-```bash
-npm start
-# or
-npm run dev
-```
-
-The site will be available at `http://localhost:8000`
-
-## 📁 Project Structure
-
-```
-personalwebsite/
-├── index.html              # Main portfolio page
-├── indexstatic.html        # Static version (no animations)
-├── Astrodynamics/          # Blog section
-│   ├── index.html          # Blog home
-│   ├── posts/              # Individual blog posts
-│   ├── css/                # Blog-specific styles
-│   └── js/                 # Blog-specific scripts
-├── css/                    # Global stylesheets
-│   ├── style.css           # Main styles
-│   ├── rtl.css            # RTL support
-│   └── w3.css             # W3 utilities
-├── js/                     # JavaScript modules
-│   ├── main.js            # Core functionality
-│   ├── typescript.js       # Name animation
-│   ├── companyname_*.js   # Company transitions
-│   └── imgslideshow.js    # Image animations
-├── images/                 # Image assets
-├── lib/                    # Third-party libraries
-└── music/                  # Audio assets
-```
-
-## 🔧 Available Scripts
-
-- `npm start` - Start development server
-- `npm run lint` - Run ESLint and Stylelint
-- `npm run format` - Format code with Prettier
-- `npm run validate` - Run all validation checks
-- `npm run build` - Build for production (coming soon)
-
-## 📝 Code Style
-
-This project follows:
-- [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
-- [Standard CSS Style Guide](https://github.com/stylelint/stylelint-config-standard)
-- Prettier for consistent formatting
-
-### Running Code Quality Checks
+## Run it locally
 
 ```bash
-# Lint JavaScript
-npm run lint:js
-
-# Lint CSS
-npm run lint:css
-
-# Format all files
-npm run format
-
-# Check formatting without modifying
-npm run format:check
+npm start            # serves the repo root at http://localhost:8000
+npm run verify       # link check + content rules (same as the Netlify build)
 ```
 
-## 🎨 CSS Architecture
+Pages use absolute paths (`/css/...`, `/js/...`), so open them through the server, not with `file://`.
 
-The project uses a modular CSS approach:
+## Deploy
 
-- **Global Styles**: Base styles and utilities in `/css`
-- **Component Styles**: Scoped styles for specific features
-- **Theme Variables**: Consistent color palette (aquamarine theme)
-- **Responsive Breakpoints**: Mobile-first with tablet/desktop overrides
+Netlify site `reliable-sorbet-bbe535` deploys this repo.
 
-## 🧪 JavaScript Architecture
+- `netlify.toml` publishes the repo root (`publish = "."`) and runs `npm run build`.
+- `npm run build` only runs `scripts/verify.mjs`. It installs nothing. If a link breaks or banned content appears, the deploy preview fails.
+- Every PR gets a deploy preview. Merging to `master` deploys to production.
+- `_redirects` keeps old URLs working, and `_headers` sets security headers plus CORS for `/.well-known/nostr.json`.
 
-- **ES6 Modules**: Modern JavaScript with proper imports/exports
-- **Event-Driven**: Clean event handling and DOM manipulation
-- **Performance**: RequestAnimationFrame for smooth animations
-- **Third-party Integration**: Three.js for 3D graphics
+## Layout
 
-## 🚢 Deployment
+```
+index.html                 homepage (console)
+404.html                   served by Netlify for unknown paths
+Astrodynamics/             docs index and the two articles
+css/
+  tokens.css               colors, fonts, spacing (single source of truth)
+  base.css                 reset, buttons, chips, status bar, footer (every page)
+  console.css              homepage panels, map, player, 404
+  docs.css                 article and docs index layout
+js/
+  app.js                   homepage entry, initializes each feature in isolation
+  modules/                 one feature per file (map, status bar, services, sparklines)
+  modules/player/          audio panel UI and its two playback engines
+  data/                    generated or static data (playlist, world bitmap)
+  docs/                    article-page scripts (chart, table of contents, MathJax config)
+images/                    avatar, favicons, og-image.png
+scripts/                   run by the build or by maintainers (verify, sync-playlist)
+tools/                     local QA only (screenshots, player end-to-end check)
+```
 
-The site is designed to be served as static files. Any web server or CDN can host it:
+## Common changes
 
-1. Build the project (when build system is implemented)
-2. We can upload contents to our web server
-3. Need to ensure proper MIME types for all assets
+| Change | Where |
+| --- | --- |
+| Profile, metrics, services, event log, endpoints | `index.html` (content lives in the HTML so it works without JS and is indexable) |
+| Colors or fonts | `css/tokens.css` |
+| Map regions, client cities, failover timing | constants at the top of `js/modules/world-map.js` |
+| Playlist tracks | change the playlist on Spotify, then `npm run sync:playlist` and commit `js/data/playlist.js` |
+| New article | add `Astrodynamics/posts/<slug>.html` (copy an existing post), list it in `Astrodynamics/index.html`, the Docs panel in `index.html` and `sitemap.xml` |
+| Share image | `npm start`, then `node tools/shot.mjs http://localhost:8000/ images/og-image.png 1200 630 --wait=3500` |
 
-### Sample GitHub Pages Deployment [This site is hosted on a custom domain but in case you want to fork it]
+## Music player
+
+The audio panel plays the playlist through Spotify's IFrame API. The embed stays on the page at opacity 0, and the panel is the visible UI.
+
+- Spotify's controller has no next or previous, so `player-ui.js` owns the queue. It loads each track and advances when the embed reports the end of one.
+- Visitors logged into Spotify in that browser hear full tracks. Everyone else gets Spotify's 30-second previews, and the panel says so.
+- If the embed can't load (blocked or offline), the player falls back to the preview MP3s from the playlist snapshot through a plain `<audio>` element.
+- The level meter is decorative. A page can't read audio from inside Spotify's frame.
+
+`node tools/player-check.mjs http://localhost:8000` drives the real page in headless Chrome and checks play, progress, next, seek, auto-advance, pause, and the fallback with Spotify blocked.
+
+## Upgrading the repo from the previous site
+
+The simplest path is a local clone, because it handles deletions for you:
 
 ```bash
-# Push to gh-pages branch
-git subtree push --prefix dist origin gh-pages
+git checkout -b feature/site-v2
+git rm -r -q .                       # stage removal of every tracked file
+unzip ~/Downloads/rishabhmalhotra-xyz-site.zip -d /tmp/site-v2
+cp -R /tmp/site-v2/rishabhmalhotra-xyz-site/. .
+git add -A && git commit -m "feat: rebuild site as console design"
+git push -u origin feature/site-v2   # open a PR and check the Netlify deploy preview
 ```
 
-## 🤝 Contributing
+If you use GitHub's "Upload files" page instead, note that it only adds and overwrites files. Delete these old files and folders by hand (none of them are used anymore):
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Run validation (`npm run validate`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
+```
+.babelrc  .eslintrc.json  .prettierrc.json  PR_TEMPLATE.md  package-lock.json
+webpack.config.js  postcss.config.js  indexstatic.html
+config/  src/  lib/  music/  archives/  rishabhmalhotra.xyz/
+css/style.css  css/w3.css  css/rtl.css
+js/main.js  js/musicplayer.js  js/spotify-service.js  js/typescript.js
+js/companyname_desktop.js  js/companyname_mobile.js  js/imgslideshow.js
+scripts/build-html.js  scripts/copy-assets.js
+images/Astrodynamics/  images/Block/  images/Profile/  images/Square/
+Astrodynamics/css/  Astrodynamics/js/
+Astrodynamics/posts/rocket-propulsion-fundamentals-backup.html
+```
 
-### Commit Message Convention
+`_redirects` force-redirects the old URLs (`/indexstatic.html`, the old Raptor article URL, the misplaced nostr file) even if those files are still in the repo.
 
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-- `feat:` New features
-- `fix:` Bug fixes
-- `docs:` Documentation changes
-- `style:` Code style changes (formatting, semicolons, etc)
-- `refactor:` Code refactoring
-- `test:` Adding or updating tests
-- `chore:` Maintenance tasks
+## Agent Contribution Guidelines
 
-## 🐛 Known Issues
+### Ground rules
 
-- Font Awesome webfonts need to be added to `/lib/font-awesome/webfonts/`
-- Some animations may not work in older browsers
-- Build system is not yet implemented
+- No build step, no dependencies. Netlify serves the repo root as committed. Don't add a framework, bundler, transpiler or npm package. Node scripts may only use built-in modules.
+- Run `npm run verify` before every commit. It is the Netlify build, so a failure blocks the deploy preview. Never weaken a check to make it pass. Fix the content instead.
+- Content lives in HTML. Text, numbers and links belong in the page markup, not in JS, so the site works without JavaScript and search engines can read it. JS only adds behavior.
+- Absolute paths. Reference assets as `/css/...`, `/js/...`, `/images/...`. The 404 page is served at arbitrary URLs and relies on this.
 
-## 📄 License
+### Content rules from the owner (enforced by `BANNED` and `BANNED_TERM_HASHES` in `scripts/verify.mjs`)
 
-Free & encouraged to fork!
+- No resume anywhere: no link, no button, no PDF.
+- No personal locations: no home city, no job cities, no timezone hints. AWS region locations on the traffic map (Virginia, Oregon, Ireland) are fine.
+- Money appears only as ranges ("$100Ms"), never exact figures. Reliability and multi-region metrics are fine.
+- Don't add past projects or employer details that aren't already on the site without asking the owner.
+- Uber Eats wording: the integration "authenticates" 100% of Uber Eats traffic into Square.
+- The Astrodynamics section lists only published articles. Don't add placeholder or "coming soon" entries.
+- To guard a new private term, add its hash from `node scripts/verify.mjs --hash "term"`. Never write the term itself into the repo.
 
-## 👤 Author
+### Code conventions
 
-**Rishabh Malhotra**
-- Website: [rishabhmalhotra.xyz](https://rishabhmalhotra.xyz)
-- LinkedIn: [@rishmalho](https://www.linkedin.com/in/rishmalho/)
-- GitHub: [@rishabhmalhotra](https://github.com/rishabhmalhotra)
-- Twitter: [@rishmalho](https://twitter.com/rishmalho)
+- ES modules, 2-space indent, single quotes, semicolons. One feature per file in `js/modules/`, exported as `initX(root, options)`.
+- Each module finds its DOM through `data-*` hooks or ids passed in, never through global lookups of another feature's markup.
+- Name tunables as `UPPER_SNAKE` constants at the top of the module. No magic numbers in logic.
+- `js/app.js` initializes features in isolation (try/catch per feature). Keep it that way.
+- Respect `prefers-reduced-motion`: no continuous animation when it is set, and every interaction still works.
+- Animation loops stop when off screen or in a hidden tab (see `world-map.js`).
+- Colors and fonts come from `css/tokens.css`. Page CSS only references the variables.
+- Comments explain constraints the code can't show. No narration.
 
-## 🙏 Acknowledgments
+### Music player invariants
 
-- Three.js for 3D graphics capabilities
-- Font Awesome for icons
-- The aerospace community & authors for inspiration on the blog content
+- The two engines in `js/modules/player/` share one contract: `load(track, { autoplay })`, `play()`, `pause()`, `seek(ms)`, plus `onState` and `onEnded` callbacks. Keep any new engine to that contract.
+- The Spotify embed signals the end of a track by holding `position == duration` with `isPaused: false`, and can send a stale update for the previous track after `loadUri`. `spotify-engine.js` filters by `playingURI` and arms end detection only after real progress. Don't simplify that away.
+- `js/data/playlist.js` is generated. Change it with `npm run sync:playlist`, never by hand.
+
+### Verifying changes
+
+1. `npm run verify`
+2. `npm start` (or any static server on the repo root), then:
+   - `node tools/shot.mjs http://localhost:8000/ /tmp/home.png 1440 900 --full` and `... 390 844 --full` for mobile. Look at the images.
+   - `node tools/player-check.mjs http://localhost:8000` if you touched anything in `js/modules/player/` or the audio panel.
+3. Check both articles if you touched `css/base.css`, `css/tokens.css` or `css/docs.css`.
+
+### design-mockups/
+
+It contains design exploration mockups and the shared content brief (CONTENT.md). It is not part of the running site. Do not reference its assets from site pages.

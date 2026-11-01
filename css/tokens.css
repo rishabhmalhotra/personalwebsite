@@ -1,0 +1,22 @@
+:root {
+  --bg: #0A0C0F;
+  --panel: #0F1216;
+  --raised: #141820;
+  --border: #1E232B;
+  --border-2: #2A313B;
+  --text: #D7DCE2;
+  --text-hi: #E6EAEE;
+  --text-2: #B9C0C8;
+  --muted: #7D8590;
+  --faint: #4A525C;
+  --ok: #4ADE80;
+  --warn: #F5A524;
+  --down: #F25F5C;
+  --accent: #9DB7FF;
+  --accent-hi: #B3C7FF;
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r: 8px;
+  --pad: 16px;
+  --topbar-h: 44px;
+}
