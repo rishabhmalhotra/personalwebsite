@@ -1,199 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Astrodynamics Blog | Rishabh Malhotra</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/astrostyle.css">
-    <link rel="stylesheet" href="../css/rtl.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs · Astrodynamics · Rishabh Malhotra</title>
+<meta name="description" content="When I'm not on backends I write about astrodynamics, mostly to understand how we get things into orbit.">
+<link rel="canonical" href="https://www.rishabhmalhotra.xyz/Astrodynamics/">
+<meta name="theme-color" content="#0A0C0F">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Docs · Astrodynamics · Rishabh Malhotra">
+<meta property="og:description" content="When I'm not on backends I write about astrodynamics, mostly to understand how we get things into orbit.">
+<meta property="og:url" content="https://www.rishabhmalhotra.xyz/Astrodynamics/">
+<meta property="og:image" content="https://www.rishabhmalhotra.xyz/images/og-image.png">
+<meta property="og:site_name" content="Rishabh Malhotra">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/favicon-192x192.png">
+<link rel="apple-touch-icon" href="/images/favicons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/docs.css">
 </head>
-
 <body>
-    <div id="canvas_container">
-        <div id="blog-overlay">
-            <div id="blog-header">
-                <div id="navigation">
-                    <a href="/indexstatic.html" class="nav-link">Home</a>
-                    <a href="#" class="nav-link active">Astrodynamics</a>
-                </div>
-                <div id="blog-title">
-                    <h1>Astrodynamics</h1>
-                    <p>A critical examination of rocket propulsion and the physics of space travel</p>
-                </div>
-            </div>
+<a class="skip" href="#content">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2.5 5h11 M2.5 11h11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 16 16"><path d="M4 1.75h5.25L12.5 5v9.25H4z M9 1.75V5.25h3.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+</svg>
 
-            <div id="blog-content">
-                <div id="posts-container">
-                    <!-- Post 1: Active -->
-                    <article class="blog-post-preview featured">
-                        <div class="post-header">
-                            <h2><a href="posts/tyranny-rocket-equation.html">The Tyranny of the Rocket Equation</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">July 2025</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-featured">Part 1</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>Why rockets are fundamentally hard: A deep dive into Tsiolkovsky's equation and its unforgiving exponential nature. We'll explore why every kilogram matters, why staging exists, and why even minor improvements require massive engineering efforts.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">fundamentals</span>
-                            <span class="tag">mathematics</span>
-                            <span class="tag">tsiolkovsky</span>
-                        </div>
-                    </article>
+<header class="topbar">
+  <div class="crumb">
+    <a href="/"><img src="/images/avatar.png" alt="" width="20" height="20"><span>rishabh-malhotra</span></a>
+    <span class="sep">/</span><a class="env" href="/Astrodynamics/">docs</a>
+  </div>
+  <nav class="tb-nav" aria-label="Primary"><a href="/">Home</a><a href="/#services">Work</a><a href="/Astrodynamics/" aria-current="page">Writing</a><a href="/#endpoints">Contact</a></nav>
+  <div class="tb-right">
+    <span class="pill" id="pill" data-state="ok" role="status"><i class="dot ok"></i><span class="ptxt">All systems operational</span></span>
+    <time class="clock" data-clock>--:--:-- UTC</time>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="mnav" aria-label="Menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+<div class="mnav" id="mnav">
+  <a class="nl" href="/">Home <span>console</span></a>
+  <a class="nl" href="/#services">Work <span>services</span></a>
+  <a class="nl" href="/Astrodynamics/">Writing <span>docs</span></a>
+  <a class="nl" href="/#endpoints">Contact <span>endpoints</span></a>
+  <div class="mrow"><span>astrodynamics</span><span data-clock>--:--:-- UTC</span></div>
+</div>
 
-                    <!-- Post 2: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">From Fireworks to Orbit: How Rockets Generate Thrust</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming September 2025</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 2</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>The physics of thrust generation from first principles. We'll debunk common misconceptions, derive the thrust equation, and understand why rockets work in vacuum—contrary to popular belief about "pushing against air."</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">physics</span>
-                            <span class="tag">thrust</span>
-                            <span class="tag">momentum</span>
-                        </div>
-                    </article>
-
-                    <!-- Post 3: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">The Chemistry of Going Fast: Propellant Combinations</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming November 2025</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 3</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>An examination of rocket chemistry: why we burn what we burn. From the energy density of chemical bonds to the practical realities of handling hypergolic propellants, we'll explore the trade-offs that define propellant selection.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">chemistry</span>
-                            <span class="tag">propellants</span>
-                            <span class="tag">energy</span>
-                        </div>
-                    </article>
-
-                    <!-- Post 4: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">The Heart of the Beast: Combustion Chamber and Nozzle Design</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming January 2026</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 4</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>Where chemistry becomes thrust: the brutal engineering of combustion chambers and nozzles. We'll explore injector design, cooling challenges, and why the simple-looking bell nozzle is a masterpiece of fluid dynamics.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">engineering</span>
-                            <span class="tag">combustion</span>
-                            <span class="tag">nozzle-design</span>
-                        </div>
-                    </article>
-
-                    <!-- Post 5: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">Feeding the Fire: Engine Cycles and Turbomachinery</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming March 2026</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 5</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>How to move tons of propellant per second: the world of turbopumps and engine cycles. From simple pressure-fed systems to complex staged combustion, we'll analyze the trade-offs between performance and complexity.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">turbomachinery</span>
-                            <span class="tag">engine-cycles</span>
-                            <span class="tag">pumps</span>
-                        </div>
-                    </article>
-
-                    <!-- Post 6: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">The Reusability Revolution: Engineering Rockets That Land</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming May 2026</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 6</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>Why landing rockets is harder than launching them: the engineering challenges of reusability. We'll examine heat damage, structural fatigue, and the economics of refurbishment versus expendability.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">reusability</span>
-                            <span class="tag">landing</span>
-                            <span class="tag">economics</span>
-                        </div>
-                    </article>
-
-                    <!-- Post 7: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">Beyond Chemical Rockets: Electric and Nuclear Propulsion</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming July 2026</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 7</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>When chemistry isn't enough: exploring ion drives, nuclear thermal rockets, and other exotic propulsion. We'll see why these excel in deep space but fail catastrophically for launch applications.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">electric-propulsion</span>
-                            <span class="tag">nuclear</span>
-                            <span class="tag">ion-drives</span>
-                        </div>
-                    </article>
-
-                    <!-- Post 8: Coming Soon -->
-                    <article class="blog-post-preview coming-soon-post">
-                        <div class="post-header">
-                            <h2><a href="#" class="coming-soon">The Future of Getting to Space: What's Next?</a></h2>
-                            <div class="post-meta">
-                                <span class="post-date">Coming September 2026</span>
-                                <span class="post-author">by Rishabh Malhotra</span>
-                                <span class="post-part">Part 8</span>
-                            </div>
-                        </div>
-                        <div class="post-excerpt">
-                            <p>The physics limits of chemical propulsion and what breakthroughs we need. From aerospikes to antimatter, we'll separate the promising from the perpetual motion machines.</p>
-                        </div>
-                        <div class="post-tags">
-                            <span class="tag">future-tech</span>
-                            <span class="tag">breakthrough</span>
-                            <span class="tag">limits</span>
-                        </div>
-                    </article>
-                </div>
-            </div>
+<main id="content" class="docs-main">
+  <section class="panel docs-panel" aria-labelledby="docs-h">
+    <div class="ph"><h1 id="docs-h">Docs</h1><span class="meta">astrodynamics</span><div class="right"><span class="chip"><i class="dot ok"></i>2 published</span></div></div>
+    <p class="docs-intro">When I'm not on backends I write about astrodynamics, mostly to understand how we get things into orbit.</p>
+    <div class="dt-head" aria-hidden="true"><span></span><span>Doc</span><span>Tags</span><span>Published</span><span>Read</span><span></span></div>
+    <ul class="dt-list">
+      <li class="dt-row">
+        <svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg>
+        <div class="dt-main">
+          <a class="dt-title" href="/Astrodynamics/posts/tyranny-rocket-equation.html">The Tyranny of the Rocket Equation</a>
+          <p class="dt-desc">Why rockets are fundamentally hard: A deep dive into Tsiolkovsky's equation and its unforgiving exponential nature. We'll explore why every kilogram matters, why staging exists, and why even minor improvements require massive engineering efforts.</p>
+          <span class="dt-path">/Astrodynamics/posts/tyranny-rocket-equation</span>
         </div>
-    </div>
+        <div class="dt-meta">
+          <span class="dt-tags"><span class="sr-only">Tags: </span><span class="chip">fundamentals</span><span class="chip">mathematics</span><span class="chip">tsiolkovsky</span></span>
+          <span class="dt-date"><span class="sr-only">Published </span><time datetime="2025-07">July 2025</time></span>
+          <span class="dt-read">7 min<span class="sr-only"> read</span></span>
+        </div>
+        <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </li>
+      <li class="dt-row">
+        <svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg>
+        <div class="dt-main">
+          <a class="dt-title" href="/Astrodynamics/posts/rocket-propulsion-raptor.html">Rocket Propulsion: From Newton's Laws to Starship's Raptor</a>
+          <p class="dt-desc">SpaceX's Raptor engine represents one of the most audacious engineering gambles in modern aerospace. While the company's marketing presents it as revolutionary progress, the reality is far more complex—and controversial.</p>
+          <span class="dt-path">/Astrodynamics/posts/rocket-propulsion-raptor</span>
+        </div>
+        <div class="dt-meta">
+          <span class="dt-tags"><span class="sr-only">Tags: </span><span class="chip">rocket-propulsion</span><span class="chip">starship</span><span class="chip">raptor-engine</span><span class="chip">spacex</span><span class="chip">combustion</span></span>
+          <span class="dt-date"><span class="sr-only">Published </span><time datetime="2025-01-15">January 15, 2025</time></span>
+          <span class="dt-read">7 min<span class="sr-only"> read</span></span>
+        </div>
+        <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </li>
+    </ul>
+    <div class="panel-foot"><span>2 docs · 14 min total</span><span>newest first</span></div>
+  </section>
+</main>
 
-    <script src='https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/three@0.121.1/examples/js/controls/OrbitControls.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js'></script>
-    <script src="js/astro.js"></script>
+<footer class="foot"><span>&copy; <span data-year>2026</span> Rishabh Malhotra</span><nav aria-label="Footer"><a href="/">home</a><a href="/Astrodynamics/">astrodynamics</a><a href="https://github.com/rishabhmalhotra" rel="noopener">github</a><a href="https://www.linkedin.com/in/rishmalho/" rel="noopener">linkedin</a></nav></footer>
 
+<script type="module">import { initStatusBar } from '/js/modules/status-bar.js'; initStatusBar();</script>
 </body>
-
-</html> 
+</html>

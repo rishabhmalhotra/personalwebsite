@@ -1,0 +1,7 @@
+# Old URLs from the previous site. The trailing ! forces the redirect even if the
+# old file is still in the repo (GitHub's web upload never deletes files).
+/indexstatic.html                                                /                                                     301!
+/Astrodynamics/comingsoon.html                                   /Astrodynamics/                                       301!
+/Astrodynamics/posts/rocket-propulsion-fundamentals-backup.html  /Astrodynamics/posts/rocket-propulsion-raptor.html    301!
+/rishabhmalhotra.xyz/.well-known/nostr.json                      /.well-known/nostr.json                               301!
+/archives/*                                                      /                                                     301!

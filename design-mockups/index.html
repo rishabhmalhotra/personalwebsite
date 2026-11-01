@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design directions, rishabhmalhotra.xyz</title>
+<style>
+  :root {
+    --bg: #f4f4f2; --card: #fff; --ink: #141414; --muted: #6b6b6b; --rule: #e3e3e0; --accent: #141414;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; }
+  header { max-width: 1240px; margin: 0 auto; padding: 56px 32px 24px; }
+  h1 { font-size: 34px; letter-spacing: -0.02em; margin: 0 0 8px; font-weight: 650; }
+  header p { margin: 0; color: var(--muted); max-width: 760px; font-size: 16px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 16px 32px 80px; display: grid; gap: 28px; }
+  .dir { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; display: grid; grid-template-columns: 1fr 360px; }
+  .shots { position: relative; display: grid; grid-template-columns: 1fr 150px; gap: 14px; padding: 18px; background: #ecece9; align-items: start; }
+  .shots img { width: 100%; display: block; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); background: #ddd; }
+  .shots .mobile { max-height: 520px; object-fit: cover; object-position: top; }
+  .shots .missing { display: grid; place-items: center; aspect-ratio: 1440/900; border-radius: 8px; border: 1px dashed #bbb; color: var(--muted); font-size: 14px; }
+  .info { padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 14px; border-left: 1px solid var(--rule); }
+  .num { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); letter-spacing: .08em; }
+  h2 { margin: 0; font-size: 24px; letter-spacing: -0.01em; }
+  .info p { margin: 0; color: #333; font-size: 15px; }
+  dl { margin: 0; display: grid; gap: 8px; font-size: 14px; }
+  dt { font-weight: 600; }
+  dd { margin: 0 0 4px; color: #444; }
+  .links { margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+  .links a { font-size: 14px; text-decoration: none; color: var(--ink); border: 1px solid var(--ink); padding: 8px 14px; border-radius: 999px; }
+  .links a.primary { background: var(--ink); color: #fff; }
+  .links a:hover { opacity: .8; }
+  .extra { font-size: 13px; color: var(--muted); }
+  .extra a { color: inherit; }
+  footer { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; color: var(--muted); font-size: 14px; }
+  @media (max-width: 900px) {
+    .dir { grid-template-columns: 1fr; }
+    .info { border-left: 0; border-top: 1px solid var(--rule); }
+    .shots { grid-template-columns: 1fr 110px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Five directions for the new site</h1>
+  <p>Each one is a full homepage built from your real resume content, with its own take on the music player. Open each one and click around: every mockup has one interactive piece, and the player buttons work (no audio yet). You can also mix them, for example the Editorial layout with the Orbital diagram as its hero.</p>
+</header>
+<main id="list"></main>
+<footer>These are throwaway mockups for choosing a direction. Copy, the eBay role details and the email address are placeholders until you confirm them.</footer>
+<script>
+const dirs = [
+  {
+    n: '01', slug: '1-editorial', name: 'Editorial',
+    what: 'Typography-led and quiet. It reads like a well-set essay, with a serif headline, a narrow reading column and section labels in the margin. Light and dark modes.',
+    play: 'Click a region in the strip under the headline to take it down and watch traffic fail over.',
+    good: 'Reads senior, ages well, loads fast. Easiest to keep up to date.',
+    risk: 'The quietest of the five. Personality has to come from the writing.',
+    extras: ['dark', 'region-down', 'music'],
+  },
+  {
+    n: '02', slug: '2-control-plane', name: 'Control plane',
+    what: 'Your career as a refined observability console. Dark panels, a dotted world map with live traffic, uptime tiles and your roles listed as services.',
+    play: 'Press "Simulate us-east outage" and watch packets reroute to the standby region.',
+    good: 'Says "distributed systems" before anyone reads a word.',
+    risk: 'Dense. It can feel like a product page rather than a person.',
+    extras: ['outage'],
+  },
+  {
+    n: '03', slug: '3-blueprint', name: 'Blueprint',
+    what: 'An engineering drawing set on blueprint blue. The hero is the Block printing platform architecture, drawn with dimension lines and a title block.',
+    play: 'Press "Fail region A" and the drawing hatches the region out and reroutes through region B.',
+    good: 'Shows how you think about systems, which is what senior readers look for.',
+    risk: 'Most content to keep accurate. The blue is a strong look you either love or don\'t.',
+    extras: ['failover'],
+  },
+  {
+    n: '04', slug: '4-swiss', name: 'Swiss',
+    what: 'Big type on a strict grid in black, white and one orange. No illustration. The numbers carry the page.',
+    play: 'Numbers count up as you scroll in, work rows flip orange on hover and expand on click.',
+    good: 'Confident and memorable without any gimmick.',
+    risk: 'Loud. Less warmth than the others.',
+    extras: ['music'],
+  },
+  {
+    n: '05', slug: '5-orbital', name: 'Orbital',
+    what: 'Dark and restrained, tied to your astrodynamics writing. Your career is drawn as orbits around you, with telemetry readouts and a flight-log timeline.',
+    play: 'Hover or tab to a satellite to pause it and see that role.',
+    good: 'The most personal of the five. It connects your work and your hobby.',
+    risk: 'The theme can read as decorative to some readers.',
+    extras: ['satcard', 'player'],
+  },
+];
+const list = document.getElementById('list');
+for (const d of dirs) {
+  const el = document.createElement('section');
+  el.className = 'dir';
+  const extras = d.extras.map((x) => `<a href="screens/${d.slug}-${x}.png" target="_blank">${x.replace('-', ' ')}</a>`).join(' · ');
+  el.innerHTML = `
+    <div class="shots">
+      <a href="${d.slug}.html" target="_blank"><img src="screens/${d.slug}-desktop.png" alt="${d.name} desktop" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'missing',textContent:'Still building…'}))"></a>
+      <a href="screens/${d.slug}-mobile.png" target="_blank"><img class="mobile" src="screens/${d.slug}-mobile.png" alt="${d.name} mobile" onerror="this.remove()"></a>
+    </div>
+    <div class="info">
+      <div class="num">DIRECTION ${d.n}</div>
+      <h2>${d.name}</h2>
+      <p>${d.what}</p>
+      <dl>
+        <dt>Try this</dt><dd>${d.play}</dd>
+        <dt>Good at</dt><dd>${d.good}</dd>
+        <dt>Risk</dt><dd>${d.risk}</dd>
+      </dl>
+      ${extras ? `<div class="extra">More screenshots: ${extras}</div>` : ''}
+      <div class="links">
+        <a class="primary" href="${d.slug}.html" target="_blank">Open mockup</a>
+        <a href="screens/${d.slug}-full.png" target="_blank">Full page</a>
+      </div>
+    </div>`;
+  list.appendChild(el);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# The site is plain static files served from the repo root.
+# `npm run build` installs nothing and only runs scripts/verify.mjs, so a broken
+# link or a banned string fails the deploy preview instead of reaching production.
+[build]
+  publish = "."
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
