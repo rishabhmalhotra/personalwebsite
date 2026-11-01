@@ -6,7 +6,6 @@ import { initServices } from './modules/services.js';
 import { initPlayer } from './modules/player/player-ui.js';
 
 // Homepage entry. Each feature initializes independently so one failure can't blank the page.
-
 const features = {
   statusBar: () => initStatusBar(),
   worldMap: () => initWorldMap($('#traffic')),
