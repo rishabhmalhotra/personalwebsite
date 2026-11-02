@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Rishabh Malhotra, Staff Software Engineer</title>
+<meta name="description" content="Rishabh Malhotra builds multi-region, low-latency backends at very large scale. Staff Software Engineer on eBay Live, previously Tech Lead at Square (Block).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  --paper: #FFFFFF;
+  --ink: #0A0A0A;
+  --grey: #8A8A8A;
+  --grey-ink: #6F6F6F; /* #8A8A8A fails AA for small text on white */
+  --sig: #FF4F00;
+  --rule-soft: #DCDCDC;
+  --rule-dark: rgba(255, 255, 255, .26);
+  --m: clamp(20px, 3.3334vw, 56px);
+  --g: 24px;
+  --n: 12;
+  --bar: 48px;
+  --fast: 150ms;
+  --ease: cubic-bezier(.2, 0, 0, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+}
+h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; text-align: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--sig); outline-offset: 3px; }
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.wrap { padding-inline: var(--m); }
+.cq { container-type: inline-size; }
+.grid { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); column-gap: var(--g); }
+.tnum { font-variant-numeric: tabular-nums; }
+.up { display: inline-block; }
+.arr { display: inline-block; transform: rotate(90deg); }
+.ext { display: inline-block; transform: rotate(45deg); }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; isolation: isolate; container-type: inline-size; padding-bottom: 95px; }
+.cols { position: absolute; inset: 0 var(--m); z-index: -1; pointer-events: none; }
+.cols i { border-inline: 1px solid rgba(10, 10, 10, .055); }
+
+.hd { padding-top: 24px; align-items: baseline; font-size: 15px; line-height: 1.3; font-weight: 500; }
+.hd-name { grid-column: 1 / 5; font-weight: 700; text-decoration: none; letter-spacing: -.005em; }
+.hd-nav { grid-column: 8 / 13; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: var(--g); }
+.hd a { text-decoration: underline 2px transparent; text-underline-offset: 6px; transition: text-decoration-color var(--fast) linear; }
+.hd a:hover { text-decoration-color: var(--sig); }
+
+.name {
+  --fs: calc((66.6667cqi - var(--g) / 3) / 3.8214);
+  margin-top: 96px;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  column-gap: var(--g);
+  row-gap: .1525em;
+  font-size: var(--fs);
+  font-weight: 800;
+  line-height: .88;
+  letter-spacing: -.045em;
+}
+.name > span:not(.sq) { display: block; margin-left: -.041em; white-space: nowrap; text-box: trim-both cap alphabetic; }
+.n1 { grid-column: 1 / 12; grid-row: 1; letter-spacing: -.052em; }
+.n2 { grid-column: 5 / 13; grid-row: 2; }
+.sq { display: block; background: var(--sig); aspect-ratio: 1; }
+.name .sq { grid-column: 12; grid-row: 1; align-self: start; }
+.intro .sq { display: none; }
+
+.intro { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--ink); align-items: start; }
+.meta { grid-column: 1 / 4; grid-row: 1 / 3; font-size: 15px; line-height: 1.45; font-weight: 500; }
+.meta li:first-child { font-weight: 700; text-box: trim-start cap alphabetic; }
+.meta li + li { color: var(--ink); }
+.lede {
+  grid-column: 5 / 13; grid-row: 1;
+  font-size: clamp(28px, 3.3334vw, 48px);
+  font-weight: 600; line-height: 1.04; letter-spacing: -.03em;
+  text-box: trim-both cap alphabetic;
+}
+.sub { grid-column: 5 / 11; grid-row: 2; margin-top: 28px; color: var(--grey-ink); text-wrap: pretty; }
+
+/* ---------- Sections ---------- */
+.sec { padding: 40px 0 112px; }
+.sec--ink { background: var(--ink); color: var(--paper); }
+#numbers { padding-top: 72px; }
+.sh { border-top: 1px solid currentColor; padding-top: 14px; align-items: baseline; font-size: 15px; line-height: 1.3; font-weight: 500; }
+.sh-i { grid-column: 1 / 2; }
+.sh-l { grid-column: 4 / 9; font-size: 15px; font-weight: 700; }
+.sh-n { grid-column: 9 / 13; justify-self: end; color: var(--grey-ink); }
+.sec--ink .sh-n { color: var(--grey); }
+.sh-n a { color: var(--ink); text-decoration: underline 1px var(--ink); text-underline-offset: 4px; transition: text-decoration-color var(--fast) linear; }
+.sh-n a:hover { text-decoration-color: var(--sig); text-decoration-thickness: 2px; }
+
+/* ---------- Numbers ---------- */
+.figs { margin-top: 72px; row-gap: 80px; }
+.fg { grid-column: span 6; border-top: 1px solid var(--rule-dark); padding-top: 32px; }
+.fg-v {
+  font-size: min(13cqi, 196px);
+  font-weight: 800; line-height: 1; letter-spacing: -.05em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  text-box: trim-both cap alphabetic;
+}
+.u { color: var(--sig); font-size: .4em; letter-spacing: -.01em; margin-left: .07em; font-weight: 700; }
+.u.pre { vertical-align: 1.09em; margin-left: 0; margin-right: .1em; }
+.u.lt { font-size: .46em; vertical-align: .42em; margin-left: 0; margin-right: .06em; }
+.u.sp { margin-left: .22em; }
+.fg figcaption { margin-top: 28px; max-width: 30ch; color: var(--grey); font-size: 18px; line-height: 1.4; text-wrap: pretty; }
+
+.figs2 { margin-top: 104px; row-gap: 48px; }
+.fg2 { grid-column: span 3; border-top: 1px solid var(--rule-dark); padding-top: 22px; }
+.fg2 .fg-v { font-size: min(4.6cqi, 66px); letter-spacing: -.045em; }
+.fg2 .to { color: var(--grey); font-weight: 500; font-size: .5em; margin-inline: .12em .1em; vertical-align: .2em; }
+.fg2 .sl { color: var(--grey); font-weight: 500; margin-inline: .04em; }
+.fg2 figcaption { margin-top: 20px; max-width: 26ch; color: var(--grey); font-size: 15px; line-height: 1.4; text-wrap: pretty; }
+
+/* ---------- Selected work ---------- */
+.wl { position: relative; margin-top: 56px; }
+.wl::after, .wi::before { content: ""; position: absolute; left: var(--m); right: var(--m); height: 1px; background: var(--ink); }
+.wl::after { bottom: 0; }
+.wi { position: relative; transition: background-color var(--fast) linear; }
+.wi::before { top: 0; z-index: 1; }
+.wi:hover, .wi:has(.wi-b:focus-visible) { background: var(--sig); }
+.wi-h { font: inherit; }
+.wi-b { width: 100%; padding-block: 30px 32px; align-items: baseline; text-align: left; }
+.wi-b:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.wi-i { grid-column: 1; font-size: 15px; font-weight: 500; }
+.wi-t { grid-column: 2 / 9; font-size: clamp(32px, 3.75vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -.035em; }
+.tag {
+  display: inline-block; vertical-align: .55em; margin-left: 18px;
+  border: 1px solid currentColor; padding: 6px 8px 5px;
+  font-size: 12px; line-height: 1; letter-spacing: .06em; font-weight: 600;
+  text-transform: uppercase; font-feature-settings: "case";
+}
+.wi-co { grid-column: 9 / 11; font-size: 15px; line-height: 1.45; font-weight: 600; }
+.wi-ro { display: block; font-weight: 400; color: var(--grey-ink); transition: color var(--fast) linear; }
+.wi:hover .wi-ro, .wi:has(.wi-b:focus-visible) .wi-ro { color: var(--ink); }
+.wi-y { grid-column: 11; font-size: 15px; font-weight: 500; }
+.tog { grid-column: 12; justify-self: end; align-self: center; position: relative; width: 20px; height: 20px; transition: transform var(--fast) var(--ease); }
+.tog::before, .tog::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: currentColor; }
+.tog::after { transform: rotate(90deg); }
+.wi.open .tog { transform: rotate(45deg); }
+
+.wi-p { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+.wi.open .wi-p { grid-template-rows: 1fr; }
+.wi-pi { min-height: 0; overflow: hidden; }
+.wi-d { padding-top: 8px; padding-bottom: 56px; align-items: start; }
+.wi-desc { grid-column: 2 / 8; }
+.wi-lead { font-size: 24px; line-height: 1.3; font-weight: 500; letter-spacing: -.015em; text-wrap: pretty; }
+.wi-desc p + p { margin-top: 18px; }
+.wi-desc p:not(.wi-lead) { max-width: 60ch; text-wrap: pretty; }
+.wi-k { font-size: 13px; line-height: 1.3; font-weight: 600; color: var(--grey-ink); margin-bottom: 14px; }
+.wi:hover .wi-k, .wi:hover .wi-figs dt, .wi:hover .wi-soon { color: var(--ink); }
+.wi-figs { grid-column: 9 / 11; }
+.wi-figs div + div { margin-top: 18px; }
+.wi-figs dd { font-size: 30px; line-height: 1; font-weight: 700; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.wi-figs dt { font-size: 14px; line-height: 1.35; color: var(--grey-ink); margin-top: 6px; }
+.wi-figs dl div { display: flex; flex-direction: column-reverse; }
+.wi-stack { grid-column: 11 / 13; }
+.wi-stack li { font-size: 15px; line-height: 1.6; font-weight: 500; }
+.wi-soon { font-size: 15px; color: var(--grey-ink); }
+
+/* ---------- Other wins ---------- */
+.wins { margin-top: 56px; row-gap: 40px; }
+.win { grid-column: span 4; border-top: 1px solid var(--ink); padding-top: 14px; }
+.win-l { font-size: 15px; line-height: 1.3; font-weight: 700; }
+.win-t { margin-top: 44px; font-size: 24px; line-height: 1.28; font-weight: 500; letter-spacing: -.015em; text-wrap: pretty; max-width: 22em; }
+
+/* ---------- Experience ---------- */
+.about { margin-top: 64px; }
+.about-s { grid-column: 4 / 12; font-size: clamp(26px, 2.78vw, 40px); line-height: 1.1; font-weight: 600; letter-spacing: -.025em; text-wrap: balance; text-box: trim-start cap alphabetic; }
+.about-b { grid-column: 4 / 10; margin-top: 28px; color: var(--grey-ink); text-wrap: pretty; }
+
+.xp { display: block; width: 100%; margin-top: 88px; border-collapse: collapse; font-size: 18px; line-height: 1.4; }
+.xp thead, .xp tbody { display: block; }
+.xp tr { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); column-gap: var(--g); align-items: baseline; padding-block: 15px 16px; border-top: 1px solid var(--rule-soft); }
+.xp thead tr { border-top: 0; padding-block: 0 12px; }
+.xp th { font-size: 13px; font-weight: 600; color: var(--grey-ink); text-align: left; }
+.xp tbody { border-bottom: 1px solid var(--ink); }
+.xp tbody tr:first-child { border-top-color: var(--ink); }
+.xp td, .xp th { padding: 0; }
+.xp .c1 { grid-column: 1 / 4; font-variant-numeric: tabular-nums; font-weight: 500; }
+.xp .c2 { grid-column: 4 / 7; font-weight: 700; }
+.xp .c3 { grid-column: 7 / 11; }
+.xp .c4 { grid-column: 11 / 13; }
+.xp .det { display: block; color: var(--grey-ink); text-wrap: pretty; }
+.xp .edu { border-top-color: var(--ink); }
+
+.stk { margin-top: 56px; row-gap: 28px; }
+.stk-h { grid-column: 1 / 4; font-size: 15px; font-weight: 700; }
+.stk-g p:first-child { font-size: 13px; font-weight: 600; color: var(--grey-ink); margin-bottom: 6px; }
+.stk-g p + p { text-wrap: pretty; }
+.g1 { grid-column: 4 / 7; }
+.g2 { grid-column: 7 / 11; }
+.g3 { grid-column: 11 / 13; }
+
+/* ---------- Writing ---------- */
+.wr-intro { margin-top: 64px; }
+.wr-intro p { grid-column: 4 / 12; font-size: clamp(26px, 2.78vw, 40px); line-height: 1.1; font-weight: 600; letter-spacing: -.025em; text-wrap: balance; text-box: trim-start cap alphabetic; }
+.wr { position: relative; margin-top: 72px; }
+.wr li { position: relative; }
+.wr li::before, .wr::after { content: ""; position: absolute; left: var(--m); right: var(--m); height: 1px; background: var(--ink); z-index: 1; }
+.wr li::before { top: 0; }
+.wr::after { bottom: 0; }
+.wr-r { padding-block: 24px 26px; align-items: baseline; text-decoration: none; transition: background-color var(--fast) linear; }
+a.wr-r:hover, a.wr-r:focus-visible { background: var(--sig); outline: none; }
+.wr-i { grid-column: 1; font-size: 15px; font-weight: 500; }
+.wr-t { grid-column: 4 / 11; font-size: clamp(22px, 2.08vw, 30px); line-height: 1.12; font-weight: 700; letter-spacing: -.025em; }
+.wr-s { grid-column: 11; font-size: 15px; font-weight: 500; }
+.is-soon .wr-s { color: var(--grey-ink); }
+.is-soon .wr-t { color: var(--grey); }
+.wr-a { grid-column: 12; justify-self: end; font-size: 26px; line-height: 1; font-weight: 700; }
+.wr-all .wr-t { font-size: 15px; letter-spacing: 0; font-weight: 700; }
+.wr-all .wr-a { font-size: 18px; }
+
+/* ---------- Contact ---------- */
+.sec--end { padding-bottom: calc(28px + var(--bar)); }
+.mail {
+  display: block; width: max-content; margin-top: 104px; margin-left: -.0199em;
+  font-size: calc(100cqi / 10.952);
+  font-weight: 700; line-height: 1; letter-spacing: -.04em; white-space: nowrap;
+  text-decoration: underline transparent; text-decoration-thickness: .055em; text-underline-offset: .11em;
+  transition: text-decoration-color var(--fast) linear;
+  text-box: trim-both cap alphabetic;
+}
+.mail:hover, .mail:focus-visible { text-decoration-color: var(--sig); }
+.mail:focus-visible { outline-offset: 12px; }
+.soc { margin-top: 88px; row-gap: 14px; font-size: 18px; font-weight: 500; }
+.soc li { grid-column: span 2; }
+.soc a { text-decoration: none; transition: color var(--fast) linear; }
+.soc a:hover { color: var(--sig); }
+.soc .ext { color: var(--grey); margin-left: .15em; font-size: .85em; transition: color var(--fast) linear; }
+.soc a:hover .ext { color: var(--sig); }
+.colo { margin-top: 96px; padding-top: 14px; border-top: 1px solid var(--rule-dark); font-size: 15px; color: var(--grey); }
+.colo p:nth-child(1) { grid-column: 1 / 4; }
+.colo p:nth-child(2) { grid-column: 4 / 9; }
+.colo p:nth-child(3) { grid-column: 11 / 13; justify-self: end; }
+.colo a { color: var(--paper); text-decoration: none; transition: color var(--fast) linear; }
+.colo a:hover { color: var(--sig); }
+
+/* ---------- Music bar ---------- */
+.np { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; color: var(--paper); }
+.np-row { position: relative; z-index: 2; height: var(--bar); align-items: center; background: var(--ink); font-size: 14px; line-height: 1; }
+.np-prog { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgba(255, 255, 255, .14); z-index: 3; }
+.np-prog i { display: block; height: 100%; background: var(--sig); transform-origin: 0 50%; transform: scaleX(0); }
+.np-k { grid-column: 1 / 3; display: flex; align-items: center; gap: 10px; color: var(--sig); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-feature-settings: "case"; white-space: nowrap; }
+.viz { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.viz i { width: 2px; height: 100%; background: var(--sig); transform-origin: 50% 100%; transform: scaleY(.3); }
+.viz i:nth-child(2) { transform: scaleY(.55); }
+.viz i:nth-child(3) { transform: scaleY(.4); }
+.viz i:nth-child(4) { transform: scaleY(.7); }
+.is-playing .viz i { animation: viz 560ms var(--ease) infinite alternate; }
+.is-playing .viz i:nth-child(2) { animation-duration: 420ms; animation-delay: -120ms; }
+.is-playing .viz i:nth-child(3) { animation-duration: 640ms; animation-delay: -300ms; }
+.is-playing .viz i:nth-child(4) { animation-duration: 480ms; animation-delay: -200ms; }
+@keyframes viz { from { transform: scaleY(.18); } to { transform: scaleY(1); } }
+
+.np-t { grid-column: 3 / 9; display: flex; align-items: center; gap: 12px; min-width: 0; height: 100%; }
+.np-t:focus-visible { outline-offset: -4px; }
+.mq { flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; }
+.mq-tr { display: inline-flex; }
+.mq-it { padding-right: 0; }
+.mq-it + .mq-it { display: none; }
+.mq-it b { font-weight: 600; }
+.mq-it .ar { color: var(--grey); }
+.mq.run { mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 32px), transparent); }
+.mq.run .mq-it { padding-right: 48px; }
+.mq.run .mq-it + .mq-it { display: inline; }
+.mq.run .mq-tr { animation: mq var(--mq-dur, 12s) linear infinite; }
+.np-t:hover .mq-tr { animation-play-state: paused; }
+@keyframes mq { to { transform: translateX(-50%); } }
+.np-up { flex: none; color: var(--grey); font-weight: 700; transition: transform var(--fast) var(--ease), color var(--fast) linear; }
+.np-t:hover .np-up { color: var(--sig); }
+.np.open .np-up { transform: rotate(180deg); }
+
+.np-time { grid-column: 9 / 10; color: var(--grey); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.np-ctl { grid-column: 10 / 12; display: flex; align-items: center; gap: 4px; margin-left: -10px; }
+.np-ctl button { width: 36px; height: 36px; display: grid; place-items: center; transition: color var(--fast) linear; }
+.np-ctl button:hover { color: var(--sig); }
+.np-ctl svg { width: 14px; height: 14px; fill: currentColor; }
+.np-ctl .pl svg { width: 16px; height: 16px; }
+.np-ctl .i-pause, .is-playing .np-ctl .i-play { display: none; }
+.is-playing .np-ctl .i-pause { display: block; }
+.np-sp { grid-column: 12; justify-self: end; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: color var(--fast) linear; }
+.np-sp:hover { color: var(--sig); }
+
+.npp {
+  position: absolute; left: 0; right: 0; bottom: 100%; z-index: 1;
+  max-height: calc(100vh - var(--bar) - 48px); overflow: auto;
+  background: var(--ink); border-top: 1px solid var(--rule-dark);
+  transform: translateY(calc(100% + var(--bar))); visibility: hidden;
+  transition: transform 220ms var(--ease), visibility 0s linear 220ms;
+}
+.np.open .npp { transform: none; visibility: visible; transition: transform 220ms var(--ease), visibility 0s; }
+.npp-h { padding-block: 22px 20px; align-items: baseline; font-size: 14px; }
+.npp-k { grid-column: 1 / 3; color: var(--grey); font-weight: 600; }
+.npp-n { grid-column: 3 / 9; color: var(--grey); }
+.npp-n b { color: var(--paper); font-weight: 700; font-size: 20px; letter-spacing: -.02em; margin-right: .35em; }
+.npp-sp { grid-column: 9 / 12; font-weight: 600; text-decoration: none; transition: color var(--fast) linear; }
+.npp-sp:hover { color: var(--sig); }
+.npp-x { grid-column: 12; justify-self: end; font-size: 14px; font-weight: 600; color: var(--grey); transition: color var(--fast) linear; }
+.npp-x:hover { color: var(--paper); }
+.npp-l { padding-bottom: 12px; }
+.tr { width: 100%; position: relative; padding-block: 14px 15px; align-items: baseline; transition: background-color var(--fast) linear; }
+.tr::before { content: ""; position: absolute; top: 0; left: var(--m); right: var(--m); height: 1px; background: rgba(255, 255, 255, .12); }
+.tr:hover { background: #161616; }
+.tr:focus-visible { outline-offset: -3px; }
+.tr-i { grid-column: 1 / 3; font-size: 14px; color: var(--grey); font-variant-numeric: tabular-nums; }
+.tr-i .viz { display: none; }
+.tr-t { grid-column: 3 / 9; font-size: 28px; line-height: 1.05; font-weight: 600; letter-spacing: -.025em; }
+.tr-a { grid-column: 9 / 12; font-size: 15px; color: var(--grey); }
+.tr-d { grid-column: 12; justify-self: end; font-size: 14px; color: var(--grey); font-variant-numeric: tabular-nums; }
+.tr[aria-current="true"] .tr-t { color: var(--sig); }
+.tr[aria-current="true"] .tr-n { display: none; }
+.tr[aria-current="true"] .tr-i .viz { display: inline-flex; }
+
+@media (min-width: 761px) and (max-width: 1360px) {
+  .hd-nav { grid-column: 5 / 13; display: flex; justify-content: flex-end; gap: 32px; }
+}
+
+/* ---------- Mobile: 4 columns ---------- */
+@media (max-width: 760px) {
+  :root { --n: 4; --g: 16px; --m: 20px; --bar: 56px; }
+  body { font-size: 17px; }
+  .cols i:nth-child(n + 5) { display: none; }
+
+  .hd { padding-top: 18px; row-gap: 14px; }
+  .hd-name { grid-column: 1 / -1; }
+  .hd-nav { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: 14px; }
+
+  .hero { padding-bottom: 88px; }
+  .name { --fs: calc(100cqi / 3.8214); margin-top: 80px; }
+  .n1, .n2 { grid-column: 1 / -1; }
+  .name .sq { display: none; }
+  .intro { margin-top: 40px; row-gap: 0; }
+  .intro .sq { display: block; grid-column: 4; grid-row: 1; align-self: start; }
+  .meta { grid-column: 1 / 4; grid-row: 1; }
+  .lede { grid-column: 1 / -1; grid-row: 2; margin-top: 52px; font-size: 31px; line-height: 1.06; text-wrap: balance; }
+  .lede br { display: none; }
+  .sub { grid-column: 1 / -1; grid-row: 3; margin-top: 24px; font-size: 17px; }
+
+  .sec { padding: 28px 0 80px; }
+  .sh-l { grid-column: 2 / 4; }
+  .sh-n { grid-column: 3 / 5; }
+  .sh-n:not(:has(a)) { display: none; }
+
+  .figs { margin-top: 48px; row-gap: 48px; }
+  .fg { grid-column: 1 / -1; padding-top: 24px; }
+  .fg-v { font-size: 25cqi; }
+  .fg figcaption { margin-top: 20px; font-size: 16px; }
+  .figs2 { margin-top: 64px; row-gap: 36px; }
+  .fg2 { grid-column: span 2; padding-top: 16px; }
+  .fg2 .fg-v { font-size: 10.4cqi; }
+  .fg2 figcaption { margin-top: 14px; font-size: 14px; }
+
+  .wl { margin-top: 36px; }
+  .wi-b { padding-block: 18px 22px; align-items: start; row-gap: 0; }
+  .wi-i { grid-column: 1 / 3; grid-row: 1; font-size: 14px; }
+  .tog { grid-column: 4; grid-row: 1; align-self: center; width: 16px; height: 16px; }
+  .wi-t { grid-column: 1 / -1; grid-row: 2; margin-top: 16px; font-size: 34px; }
+  .tag { vertical-align: .3em; margin-left: .3em; font-size: 11px; padding: 5px 7px 4px; }
+  .wi-co { grid-column: 1 / 3; grid-row: 3; margin-top: 14px; font-size: 14px; white-space: nowrap; }
+  .wi-y { grid-column: 3 / 5; grid-row: 3; justify-self: end; margin-top: 14px; font-size: 14px; white-space: nowrap; }
+  .wi-d { padding-bottom: 36px; row-gap: 28px; }
+  .wi-desc { grid-column: 1 / -1; }
+  .wi-lead { font-size: 21px; }
+  .wi-desc p:not(.wi-lead) { font-size: 16px; }
+  .wi-figs { grid-column: 1 / 3; }
+  .wi-figs dd { font-size: 26px; }
+  .wi-stack { grid-column: 3 / 5; }
+
+  .wins { margin-top: 36px; row-gap: 32px; }
+  .win { grid-column: 1 / -1; }
+  .win-t { margin-top: 20px; font-size: 21px; }
+
+  .about { margin-top: 40px; }
+  .about-s, .about-b { grid-column: 1 / -1; }
+  .about-s { font-size: 26px; }
+  .xp { margin-top: 48px; font-size: 16px; }
+  .xp thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .xp tr { align-items: start; padding-block: 14px 15px; }
+  .xp .c1 { grid-column: 1; grid-row: 1 / 4; font-size: 13px; line-height: 1.75; }
+  .xp .c2, .xp .c3, .xp .c4 { grid-column: 2 / -1; }
+  .xp .c4 { color: var(--grey-ink); font-size: 14px; margin-top: 2px; }
+  .xp .grp .c2 { display: none; }
+  .stk { margin-top: 44px; row-gap: 20px; }
+  .stk-h, .g1, .g2, .g3 { grid-column: 1 / -1; }
+
+  .wr-intro { margin-top: 40px; }
+  .wr-intro p { grid-column: 1 / -1; font-size: 26px; }
+  .wr { margin-top: 44px; }
+  .wr-r { padding-block: 16px 20px; align-items: center; }
+  .wr-i { grid-column: 1; grid-row: 1; font-size: 14px; }
+  .wr-s { grid-column: 2 / 4; grid-row: 1; font-size: 14px; }
+  .wr-a { grid-column: 4; grid-row: 1; font-size: 22px; }
+  .wr-t { grid-column: 1 / -1; grid-row: 2; margin-top: 12px; font-size: 23px; }
+  .wr-all .wr-t { grid-column: 1 / 4; grid-row: 1; margin-top: 0; }
+
+  .mail { margin-top: 64px; font-size: calc(100cqi / 5.53); margin-left: 0; text-box: none; line-height: .98; }
+  .mail span { display: block; }
+  .mail span:first-child { margin-left: -.0199em; }
+  .mail span:last-child { margin-left: -.0338em; }
+  .soc { margin-top: 56px; row-gap: 12px; font-size: 17px; }
+  .colo { margin-top: 64px; row-gap: 6px; font-size: 14px; }
+  .colo p:nth-child(1) { grid-column: 1 / -1; }
+  .colo p:nth-child(2) { grid-column: 1 / 3; grid-row: 2; }
+  .colo p:nth-child(3) { grid-column: 3 / 5; grid-row: 2; }
+
+  .np-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 8px; row-gap: 5px; align-content: center; }
+  .np-k { grid-column: 1; grid-row: 1; font-size: 10px; gap: 8px; }
+  .viz { height: 10px; }
+  .np-t { grid-column: 1; grid-row: 2; height: auto; gap: 8px; font-size: 14px; }
+  .np-time, .np-sp { display: none; }
+  .np-ctl { grid-column: 2; grid-row: 1 / 3; margin: 0 -8px 0 0; gap: 0; }
+  .np-ctl button { width: 40px; height: 40px; }
+  .npp-h { row-gap: 12px; }
+  .npp-k { grid-column: 1 / 3; }
+  .npp-x { grid-column: 3 / 5; grid-row: 1; }
+  .npp-n { grid-column: 1 / -1; }
+  .npp-sp { grid-column: 1 / -1; }
+  .tr-i { grid-column: 1; }
+  .tr-t { grid-column: 2 / 5; font-size: 22px; }
+  .tr-a { grid-column: 2 / 4; margin-top: 6px; font-size: 14px; }
+  .tr-d { grid-column: 4; }
+}
+
+@media (max-width: 359px) {
+  .hd-nav { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; row-gap: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0s !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero wrap" id="top" aria-label="Introduction">
+  <div class="cols grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <header class="hd grid">
+    <a class="hd-name" href="#top">Rishabh Malhotra</a>
+    <nav class="hd-nav" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#numbers">Numbers</a>
+      <a href="#experience">Experience</a>
+      <a href="#writing">Writing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <h1 class="name">
+    <span class="n1">Rishabh</span>
+    <span class="n2">Malhotra</span>
+    <span class="sq" aria-hidden="true"></span>
+  </h1>
+
+  <div class="intro grid">
+    <ul class="meta">
+      <li>Staff Software Engineer</li>
+      <li>eBay Live</li>
+      <li>Toronto</li>
+    </ul>
+    <span class="sq" aria-hidden="true"></span>
+    <p class="lede">I build backends that keep working <br>when a region doesn&rsquo;t.</p>
+    <p class="sub">Multi-region, low-latency systems at very large scale. Before eBay I was a Tech Lead at Square (Block). Earlier: Lightspeed, Credit Karma, IBM Watson.</p>
+  </div>
+</section>
+
+<main>
+  <section class="sec sec--ink" id="numbers" aria-labelledby="h-numbers">
+    <div class="wrap cq">
+      <div class="sh grid"><span class="sh-i tnum">01</span><h2 class="sh-l" id="h-numbers">Numbers</h2><span class="sh-n">Square (Block), 2021&ndash;2026</span></div>
+
+      <div class="figs grid">
+        <figure class="fg">
+          <p class="fg-v"><span class="cnt" data-to="99.999" data-dec="3">99.999</span><span class="u">%</span></p>
+          <figcaption>Availability on Block&rsquo;s printing platform, up from 99.9%</figcaption>
+        </figure>
+        <figure class="fg">
+          <p class="fg-v"><span class="u lt">&lt;</span><span class="cnt" data-to="800">800</span><span class="u">ms</span></p>
+          <figcaption>Cross-region failover</figcaption>
+        </figure>
+        <figure class="fg">
+          <p class="fg-v"><span class="cnt" data-to="4">4</span>K<span class="u sp">QPS</span></p>
+          <figcaption>100% of Uber Eats traffic into Square, zero production incidents</figcaption>
+        </figure>
+        <figure class="fg">
+          <p class="fg-v"><span class="u pre">$</span><span class="cnt" data-to="100">100</span><span class="u">M</span></p>
+          <figcaption>Incremental annual revenue from the Fulfillment Fees API</figcaption>
+        </figure>
+      </div>
+
+      <div class="figs2 grid">
+        <figure class="fg2">
+          <p class="fg-v">9<span class="u">h</span><span class="to arr" aria-hidden="true">&uarr;</span><span class="sr"> to </span><span class="u lt">&lt;</span>5<span class="u">min</span></p>
+          <figcaption>Annual downtime, before and after</figcaption>
+        </figure>
+        <figure class="fg2">
+          <p class="fg-v">8K<span class="sl">/</span>2K</p>
+          <figcaption>Reads and writes per second, globally</figcaption>
+        </figure>
+        <figure class="fg2">
+          <p class="fg-v">60<span class="to arr" aria-hidden="true">&uarr;</span><span class="sr"> to </span><span class="u lt">&lt;</span>15<span class="u">wk</span></p>
+          <figcaption>Time to launch a new country after the localization engine</figcaption>
+        </figure>
+        <figure class="fg2">
+          <p class="fg-v"><span class="u pre">$</span>1.67<span class="u">B+</span></p>
+          <figcaption>GPV through the Fulfillment Fees API</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="work" aria-labelledby="h-work">
+    <div class="wrap">
+      <div class="sh grid"><span class="sh-i tnum">02</span><h2 class="sh-l" id="h-work">Selected work</h2><span class="sh-n tnum">2023&ndash;now</span></div>
+    </div>
+
+    <div class="wl">
+      <article class="wi">
+        <h3 class="wi-h">
+          <button class="wi-b grid wrap" id="wb1" aria-expanded="false" aria-controls="wp1">
+            <span class="wi-i tnum">01</span>
+            <span class="wi-t">eBay Live<span class="tag">Details coming</span></span>
+            <span class="wi-co">eBay<span class="wi-ro">Staff Software Engineer</span></span>
+            <span class="wi-y tnum">2026&ndash;now</span>
+            <span class="tog" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="wi-p" id="wp1" role="region" aria-labelledby="wb1">
+          <div class="wi-pi">
+            <div class="wi-d grid wrap">
+              <div class="wi-desc">
+                <p class="wi-lead">Backend for live-stream auctions and shopping, where the video, the bid clock and the ledger have to agree in real time.</p>
+              </div>
+              <div class="wi-figs"><p class="wi-k">Case study</p><p class="wi-soon">Details coming</p></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wi">
+        <h3 class="wi-h">
+          <button class="wi-b grid wrap" id="wb2" aria-expanded="true" aria-controls="wp2">
+            <span class="wi-i tnum">02</span>
+            <span class="wi-t">Block printing platform</span>
+            <span class="wi-co">Square (Block)<span class="wi-ro">Tech Lead</span></span>
+            <span class="wi-y tnum">2024&ndash;2026</span>
+            <span class="tog" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="wi-p" id="wp2" role="region" aria-labelledby="wb2">
+          <div class="wi-pi">
+            <div class="wi-d grid wrap">
+              <div class="wi-desc">
+                <p class="wi-lead">Tier-0 platform that prints order tickets for Uber Eats, DoorDash, Postmates and Cash App sellers.</p>
+                <p>Led 5 engineers across 6 workstreams. Active-passive multi-region design with sub-800&nbsp;ms cross-region failover. Took availability from three nines to five nines: annual downtime went from 9 hours to under 5 minutes, protecting $220M+ a year in revenue.</p>
+                <p>Wrote the DynamoDB data model: one polymorphic schema serving 8 access patterns with per-pattern consistency. Moved sharded job queues to Temporal and feed consumers to Kafka.</p>
+              </div>
+              <div class="wi-figs">
+                <p class="wi-k">Results</p>
+                <dl>
+                  <div><dt>Availability</dt><dd>99.999%</dd></div>
+                  <div><dt>Annual downtime, from 9&nbsp;h</dt><dd>&lt;5 min</dd></div>
+                  <div><dt>Revenue protected a year</dt><dd>$220M+</dd></div>
+                </dl>
+              </div>
+              <div class="wi-stack"><p class="wi-k">Stack</p><ul><li>DynamoDB</li><li>Temporal</li><li>Kafka</li><li>Java</li><li>AWS</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wi">
+        <h3 class="wi-h">
+          <button class="wi-b grid wrap" id="wb3" aria-expanded="false" aria-controls="wp3">
+            <span class="wi-i tnum">03</span>
+            <span class="wi-t">Uber Eats on Square</span>
+            <span class="wi-co">Square<span class="wi-ro">Senior Software Engineer</span></span>
+            <span class="wi-y tnum">2023&ndash;2024</span>
+            <span class="tog" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="wi-p" id="wp3" role="region" aria-labelledby="wb3">
+          <div class="wi-pi">
+            <div class="wi-d grid wrap">
+              <div class="wi-desc">
+                <p class="wi-lead">Engineering DRI. Wrote the designs, worked directly with Uber&rsquo;s engineering team, built the OAuth 2.0 flows.</p>
+                <p>Handles 100% of Uber Eats traffic into Square at 4K QPS with zero production incidents.</p>
+              </div>
+              <div class="wi-figs">
+                <p class="wi-k">Results</p>
+                <dl>
+                  <div><dt>Uber Eats traffic into Square</dt><dd>4K QPS</dd></div>
+                  <div><dt>Production incidents</dt><dd>0</dd></div>
+                </dl>
+              </div>
+              <div class="wi-stack"><p class="wi-k">Stack</p><ul><li>Java</li><li>OAuth 2.0</li><li>gRPC</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wi">
+        <h3 class="wi-h">
+          <button class="wi-b grid wrap" id="wb4" aria-expanded="false" aria-controls="wp4">
+            <span class="wi-i tnum">04</span>
+            <span class="wi-t">Fulfillment Fees API</span>
+            <span class="wi-co">Square<span class="wi-ro">Senior Software Engineer</span></span>
+            <span class="wi-y tnum">2023</span>
+            <span class="tog" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="wi-p" id="wp4" role="region" aria-labelledby="wb4">
+          <div class="wi-pi">
+            <div class="wi-d grid wrap">
+              <div class="wi-desc">
+                <p class="wi-lead">First monetization layer for Square&rsquo;s fulfillment platform, sitting in the checkout hot path for 100% of Square Online traffic.</p>
+                <p>$1.67B+ GPV, $100M incremental annual revenue.</p>
+              </div>
+              <div class="wi-figs">
+                <p class="wi-k">Results</p>
+                <dl>
+                  <div><dt>GPV</dt><dd>$1.67B+</dd></div>
+                  <div><dt>Incremental annual revenue</dt><dd>$100M</dd></div>
+                </dl>
+              </div>
+              <div class="wi-stack"><p class="wi-k">Stack</p><ul><li>Java</li><li>Checkout</li><li>Payments</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="wins" aria-labelledby="h-wins">
+    <div class="wrap">
+      <div class="sh grid"><span class="sh-i tnum">03</span><h2 class="sh-l" id="h-wins">Other wins</h2></div>
+      <div class="wins grid">
+        <div class="win"><p class="win-l">Incident command</p><p class="win-t">Led a cross-org SEV0. The postmortem became Square&rsquo;s official template.</p></div>
+        <div class="win"><p class="win-l">Autoscaling</p><p class="win-t">Horizontal autoscaling for fulfillment services: SLO adherence from 96% to&nbsp;99.7%.</p></div>
+        <div class="win"><p class="win-l">Localization</p><p class="win-t">Localization engine adopted by 7&nbsp;commerce services: new-country launches went from 60+ weeks to under&nbsp;15.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="experience" aria-labelledby="h-xp">
+    <div class="wrap">
+      <div class="sh grid"><span class="sh-i tnum">04</span><h2 class="sh-l" id="h-xp">Experience</h2><span class="sh-n"><a href="/resume.pdf">Resume (PDF)</a></span></div>
+
+      <div class="about grid">
+        <p class="about-s">I&rsquo;ve spent my career on the parts of a system that can&rsquo;t go down: checkout hot paths, order pipelines, cross-region failover.</p>
+        <p class="about-b">At Square I led the Tier-0 printing platform behind Uber Eats, DoorDash, Postmates and Cash App orders. Now I work on the backend for eBay Live, eBay&rsquo;s live-stream shopping and auctions product.</p>
+      </div>
+
+      <table class="xp" role="table" aria-label="Experience">
+        <thead role="rowgroup">
+          <tr role="row"><th class="c1" role="columnheader">Years</th><th class="c2" role="columnheader">Company</th><th class="c3" role="columnheader">Role</th><th class="c4" role="columnheader">Place</th></tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr role="row"><td class="c1" role="cell">2026&ndash;now</td><td class="c2" role="cell">eBay</td><td class="c3" role="cell">Staff Software Engineer, eBay Live</td><td class="c4" role="cell">Toronto</td></tr>
+          <tr role="row"><td class="c1" role="cell">2024&ndash;2026</td><td class="c2" role="cell">Square (Block)</td><td class="c3" role="cell">Tech Lead</td><td class="c4" role="cell">Toronto</td></tr>
+          <tr role="row" class="grp"><td class="c1" role="cell">2023&ndash;2024</td><td class="c2" role="cell"><span class="sr">Square (Block)</span></td><td class="c3" role="cell">Senior Software Engineer</td><td class="c4" role="cell">Toronto</td></tr>
+          <tr role="row" class="grp"><td class="c1" role="cell">2021&ndash;2023</td><td class="c2" role="cell"><span class="sr">Square (Block)</span></td><td class="c3" role="cell">Software Engineer</td><td class="c4" role="cell">Toronto</td></tr>
+          <tr role="row"><td class="c1" role="cell">2020&ndash;2021</td><td class="c2" role="cell">Lightspeed Commerce</td><td class="c3" role="cell">Software Developer<span class="det">Go services handling 10M events a day</span></td><td class="c4" role="cell">Toronto</td></tr>
+          <tr role="row"><td class="c1" role="cell">2019</td><td class="c2" role="cell">Credit Karma</td><td class="c3" role="cell">Software Engineering Intern<span class="det">Scala audit-log service on CQRS</span></td><td class="c4" role="cell">San Francisco</td></tr>
+          <tr role="row"><td class="c1" role="cell">2018</td><td class="c2" role="cell">IBM Watson</td><td class="c3" role="cell">Software Engineering Intern<span class="det">Planning Analytics APIs, CNN image pipelines</span></td><td class="c4" role="cell">Ottawa / Toronto</td></tr>
+          <tr role="row" class="edu"><td class="c1" role="cell">2020</td><td class="c2" role="cell">University of Waterloo</td><td class="c3" role="cell">Hons. BCS Computer Science<span class="det">Dean&rsquo;s Honours</span></td><td class="c4" role="cell">Waterloo</td></tr>
+        </tbody>
+      </table>
+
+      <div class="stk grid">
+        <p class="stk-h">Stack</p>
+        <div class="stk-g g1"><p>Languages</p><p>Java, Go, Python, Scala, TypeScript, SQL</p></div>
+        <div class="stk-g g2"><p>Data and messaging</p><p>Kafka, Temporal, DynamoDB, Postgres, Aurora, SQS</p></div>
+        <div class="stk-g g3"><p>Infrastructure</p><p>AWS, GCP, Terraform, Datadog</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="writing" aria-labelledby="h-writing">
+    <div class="wrap">
+      <div class="sh grid"><span class="sh-i tnum">05</span><h2 class="sh-l" id="h-writing">Writing</h2><span class="sh-n">Astrodynamics</span></div>
+      <div class="wr-intro grid"><p>When I&rsquo;m not on backends I write about astrodynamics, mostly to understand how we get things into orbit.</p></div>
+    </div>
+    <ol class="wr">
+      <li><a class="wr-r grid wrap" href="/Astrodynamics/posts/tyranny-rocket-equation.html"><span class="wr-i tnum">01</span><span class="wr-t">The Tyranny of the Rocket Equation</span><span class="wr-s">Read</span><span class="wr-a arr" aria-hidden="true">&uarr;</span></a></li>
+      <li><div class="wr-r grid wrap is-soon"><span class="wr-i tnum">02</span><span class="wr-t">From Fireworks to Orbit: How Rockets Generate Thrust</span><span class="wr-s">Coming soon</span></div></li>
+      <li><div class="wr-r grid wrap is-soon"><span class="wr-i tnum">03</span><span class="wr-t">The Chemistry of Going Fast: Propellant Combinations</span><span class="wr-s">Coming soon</span></div></li>
+      <li><a class="wr-r wr-all grid wrap" href="/Astrodynamics/index.html"><span class="wr-t">All posts</span><span class="wr-a arr" aria-hidden="true">&uarr;</span></a></li>
+    </ol>
+  </section>
+
+  <section class="sec sec--ink sec--end" id="contact" aria-labelledby="h-contact">
+    <div class="wrap cq">
+      <div class="sh grid"><span class="sh-i tnum">06</span><h2 class="sh-l" id="h-contact">Contact</h2><span class="sh-n">Toronto</span></div>
+      <a class="mail" href="mailto:smartguy.rm@gmail.com"><span>smartguy.rm</span><span>@gmail.com</span></a>
+      <ul class="soc grid">
+        <li><a href="https://www.linkedin.com/in/rishmalho/">LinkedIn<span class="ext" aria-hidden="true">&uarr;</span></a></li>
+        <li><a href="https://github.com/rishabhmalhotra">GitHub<span class="ext" aria-hidden="true">&uarr;</span></a></li>
+        <li><a href="https://twitter.com/rishmalho">X<span class="ext" aria-hidden="true">&uarr;</span></a></li>
+        <li><a href="http://primal.net/p/npub1gxuneh3mkxlm28fg0uxv2qtp8q4nr2h47kn26rqfp2vnw0gp30ustn3l2q">nostr<span class="ext" aria-hidden="true">&uarr;</span></a></li>
+        <li><a href="https://unsplash.com/@rishmalho">Photography<span class="ext" aria-hidden="true">&uarr;</span></a></li>
+        <li><a href="/resume.pdf">Resume<span class="ext" aria-hidden="true">&uarr;</span></a></li>
+      </ul>
+      <footer class="colo grid">
+        <p>&copy; 2026 Rishabh Malhotra</p>
+        <p>Set in Inter Tight</p>
+        <p><a href="#top">Back to top <span class="up" aria-hidden="true">&uarr;</span></a></p>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<aside class="np" id="np" aria-label="Music player">
+  <div class="npp" id="np-panel" aria-label="Track list">
+    <div class="npp-h grid wrap">
+      <p class="npp-k">Playlist</p>
+      <p class="npp-n"><b>Music</b>rishabhmalhotra, 38 tracks</p>
+      <a class="npp-sp" href="https://open.spotify.com/playlist/6YGvluoYkCURQePkFMoYqW" target="_blank" rel="noopener">Open in Spotify <span class="ext" aria-hidden="true">&uarr;</span></a>
+      <button class="npp-x" type="button">Close</button>
+    </div>
+    <ol class="npp-l" id="np-list"></ol>
+  </div>
+  <div class="np-prog" aria-hidden="true"><i id="np-bar"></i></div>
+  <div class="np-row grid wrap">
+    <p class="np-k"><span class="viz" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Now playing</p>
+    <button class="np-t" type="button" aria-expanded="false" aria-controls="np-panel">
+      <span class="sr">Show track list. Current track: </span>
+      <span class="mq" id="np-mq"><span class="mq-tr"><span class="mq-it"><b>ecstacy</b><span class="ar">, SUICIDAL-IDOL</span></span><span class="mq-it" aria-hidden="true"><b>ecstacy</b><span class="ar">, SUICIDAL-IDOL</span></span></span></span>
+      <span class="np-up" aria-hidden="true">&uarr;</span>
+    </button>
+    <p class="np-time"><span id="np-cur">0:00</span> / <span id="np-dur">1:36</span></p>
+    <div class="np-ctl">
+      <button type="button" class="pv" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5h2.2v11H2.5zM13.5 2.5v11L5.5 8z"/></svg></button>
+      <button type="button" class="pl" aria-label="Play"><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 1.8v12.4L14 8z"/></svg><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h3.4v12H3zM9.6 2H13v12H9.6z"/></svg></button>
+      <button type="button" class="nx" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 2.5h2.2v11h-2.2zM2.5 2.5v11L10.5 8z"/></svg></button>
+    </div>
+    <a class="np-sp" href="https://open.spotify.com/playlist/6YGvluoYkCURQePkFMoYqW" target="_blank" rel="noopener">Spotify <span class="ext" aria-hidden="true">&uarr;</span></a>
+  </div>
+</aside>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Selected work accordion */
+  document.querySelectorAll('.wi-b').forEach((btn) => {
+    const item = btn.closest('.wi');
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    const set = (open) => {
+      item.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      panel.inert = !open;
+    };
+    set(btn.getAttribute('aria-expanded') === 'true');
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  });
+
+  /* Count-up. Markup holds the final values; they are zeroed on the first scroll only if
+     still below the fold, so static captures and mid-page reloads always show real numbers. */
+  const counters = [...document.querySelectorAll('.cnt')];
+  const show = (el, v) => { el.textContent = v.toFixed(+el.dataset.dec || 0); };
+  const figs = document.querySelector('.figs');
+  if (!reduce && 'IntersectionObserver' in window && figs) {
+    let armed = false;
+    const run = () => {
+      const t0 = performance.now();
+      const dur = 1100;
+      const step = (now) => {
+        const t = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - t, 4);
+        counters.forEach((el) => show(el, +el.dataset.to * e));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const arm = () => {
+      removeEventListener('scroll', arm);
+      if (figs.getBoundingClientRect().top < innerHeight) return;
+      armed = true;
+      counters.forEach((el) => show(el, 0));
+    };
+    addEventListener('scroll', arm, { passive: true });
+    const seen = new IntersectionObserver(([en]) => {
+      if (!en.isIntersecting || !armed) return;
+      seen.disconnect();
+      run();
+    }, { threshold: 0.3 });
+    seen.observe(figs);
+  }
+
+  /* Music player (UI only) */
+  const tracks = [
+    { t: 'ecstacy', a: 'SUICIDAL-IDOL', d: 96 },
+    { t: 'you haunt me', a: 'Marzi and Yana', d: 196 },
+    { t: 'You', a: 'Zen/it', d: 164 },
+    { t: 'Tonight', a: 'Arman Cekin and C-Mart', d: 142 },
+    { t: 'Una Noche', a: 'HUGEL and WILCE', d: 237 },
+    { t: 'Burning', a: 'NAOMI JEREMIAH', d: 169 },
+  ];
+  const np = document.getElementById('np');
+  const $ = (s) => np.querySelector(s);
+  const bar = $('#np-bar');
+  const cur = $('#np-cur');
+  const dur = $('#np-dur');
+  const mq = $('#np-mq');
+  const list = $('#np-list');
+  const toggle = $('.np-t');
+  const playBtn = $('.pl');
+  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  const pad = (n) => String(n).padStart(2, '0');
+  const st = { i: 0, pos: 38, playing: false, last: 0 };
+
+  list.innerHTML = tracks.map((tr, i) => `
+    <li><button type="button" class="tr grid wrap" data-i="${i}">
+      <span class="tr-i"><span class="tr-n">${pad(i + 1)}</span><span class="viz" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+      <span class="tr-t">${tr.t}</span><span class="tr-a">${tr.a}</span><span class="tr-d">${fmt(tr.d)}</span>
+    </button></li>`).join('');
+  const rows = [...list.querySelectorAll('.tr')];
+
+  const fitMarquee = () => {
+    mq.classList.remove('run');
+    if (reduce) return;
+    const first = mq.querySelector('.mq-it');
+    if (first.scrollWidth > mq.clientWidth + 1) {
+      mq.classList.add('run');
+      mq.style.setProperty('--mq-dur', `${(first.offsetWidth / 40).toFixed(2)}s`);
+    }
+  };
+
+  const paintTime = () => {
+    const d = tracks[st.i].d;
+    bar.style.transform = `scaleX(${Math.min(1, st.pos / d)})`;
+    cur.textContent = fmt(st.pos);
+  };
+
+  const render = () => {
+    const tr = tracks[st.i];
+    const html = `<b>${tr.t}</b><span class="ar">, ${tr.a}</span>`;
+    mq.querySelectorAll('.mq-it').forEach((n) => { n.innerHTML = html; });
+    dur.textContent = fmt(tr.d);
+    rows.forEach((r, i) => r.setAttribute('aria-current', String(i === st.i)));
+    paintTime();
+    fitMarquee();
+  };
+
+  const tick = (now) => {
+    if (!st.playing) return;
+    st.pos += (now - st.last) / 1000;
+    st.last = now;
+    if (st.pos >= tracks[st.i].d) { st.i = (st.i + 1) % tracks.length; st.pos = 0; render(); }
+    else paintTime();
+    requestAnimationFrame(tick);
+  };
+
+  const setPlaying = (on) => {
+    st.playing = on;
+    np.classList.toggle('is-playing', on);
+    playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play');
+    if (on) { st.last = performance.now(); requestAnimationFrame(tick); }
+  };
+
+  const go = (i, play = st.playing) => {
+    st.i = (i + tracks.length) % tracks.length;
+    st.pos = 0;
+    render();
+    setPlaying(play);
+  };
+
+  const setOpen = (open) => {
+    np.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    $('#np-panel').inert = !open;
+  };
+
+  playBtn.addEventListener('click', () => setPlaying(!st.playing));
+  $('.pv').addEventListener('click', () => go(st.i - 1));
+  $('.nx').addEventListener('click', () => go(st.i + 1));
+  toggle.addEventListener('click', () => setOpen(!np.classList.contains('open')));
+  $('.npp-x').addEventListener('click', () => { setOpen(false); toggle.focus(); });
+  rows.forEach((r) => r.addEventListener('click', () => go(+r.dataset.i, true)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && np.classList.contains('open')) { setOpen(false); toggle.focus(); }
+  });
+  addEventListener('resize', fitMarquee);
+
+  setOpen(false);
+  render();
+  if (document.fonts) document.fonts.ready.then(fitMarquee);
+})();
+</script>
+</body>
+</html>
