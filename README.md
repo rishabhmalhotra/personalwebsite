@@ -153,3 +153,18 @@ Astrodynamics/posts/rocket-propulsion-fundamentals-backup.html
 ### design-mockups/
 
 It contains design exploration mockups and the shared content brief (CONTENT.md). It is not part of the running site. Do not reference its assets from site pages.
+
+
+## GitHub Actions
+
+### Playlist sync (`.github/workflows/sync-playlist.yml`)
+- Runs every 15 minutes (`cron: '*/15 * * * *'`) and on manual dispatch.
+- Uses `actions/checkout@v4` and `actions/setup-node@v4` (Node 20). Sets `permissions: contents: write`.
+- Executes `node scripts/sync-playlist.mjs` with env vars `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` (owner auth required since Spotify retired public playlist reads in Feb 2026).
+- If `js/data/playlist.js` or `js/data/playlist.json` changed, commits them as `chore: sync playlist snapshot from Spotify` and pushes. The workflow does `git rebase --abort || true; git pull --rebase --quiet || true` before pushing to handle concurrent runs.
+
+### How the UI stays in sync with the JSON snapshot
+- Source of truth at runtime: `js/data/playlist.js` is imported by `js/modules/player/player-ui.js` as `PLAYLIST` (generated; never edit by hand). 
+- Polling: the player polls `js/data/playlist.json` every 15 minutes via `fetch('/js/data/playlist.json', { cache: 'no-store' })` (see `SYNC_INTERVAL_MS = 15*60*1000` in `player-ui.js`). 
+- Re-queue logic: if track count/order/URIs differ, it finds the current track by URI in the fresh list (keeps position by track identity), updates `tracks`, resets position, re-renders track list/UI, and if playing calls `engine.load(newTrack, { autoplay: true })` to swap to the new queue without restarting the session. If the current track was removed, it falls back to index 0.
+- Engines: `spotify-engine.js` (Spotify IFrame API) and `preview-engine.js` (<audio> fallback). Both implement `load(track,{autoplay}), play(), pause(), seek(ms), onState, onEnded`. Spotify end detection waits for real progress and filters by `playingURI` to avoid stale events after `loadUri`.

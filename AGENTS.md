@@ -51,3 +51,11 @@ These are enforced by `BANNED` and `BANNED_TERM_HASHES` in `scripts/verify.mjs`.
 - Always use `PR_TEMPLATE.md` when opening a PR.
 - Follow the title convention: `feat:`, `fix:`, `docs:`.
 - Complete the description and checklist before requesting review.
+
+
+## GitHub Actions & playlist sync (must know)
+
+- Workflow `.github/workflows/sync-playlist.yml`: cron every 15 min + workflow_dispatch; checkout/setup-node; runs `node scripts/sync-playlist.mjs` with `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`; commits+pushes `js/data/playlist.js` and `js/data/playlist.json` if changed (handles rebase/pull on concurrent runs). Owner auth required (Spotify retired public reads Feb 2026).
+- Generator `scripts/sync-playlist.mjs` produces both the ES module snapshot `js/data/playlist.js` (export `PLAYLIST`) and JSON `js/data/playlist.json`. Never hand-edit either.
+- Runtime sync: `js/modules/player/player-ui.js` imports `PLAYLIST` at load, polls `/js/data/playlist.json` every 15 min with `cache: 'no-store'`. On change, it re-queues by track URI (preserving current track if present), updates state/UI, and calls `engine.load()` with autoplay if playing. If current track removed, falls back to index 0.
+- Player contract: engines in `js/modules/player/` must implement `load(track,{autoplay}), play(), pause(), seek(ms), onState, onEnded`. Spotify engine filters by `playingURI` and arms end detection after real progress (track end signaled when `position==duration` and `isPaused:false`; stale events after `loadUri` ignored).
