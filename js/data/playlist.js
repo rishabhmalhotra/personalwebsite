@@ -6,8 +6,8 @@ export const PLAYLIST = {
   url: "https://open.spotify.com/playlist/6YGvluoYkCURQePkFMoYqW",
   syncedAt: "2026-11-02",
   tracks: [
-    {"uri":"spotify:track:5dYyoRxPWVaV36XSD49yGS","title":"New Bestie","artist":"Drake","durationMs":259864,"art":"https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3","preview":""},
     {"uri":"spotify:track:7ppIKUHCFQGCQny1Se2jLV","title":"Q&A","artist":"Drake","durationMs":223255,"art":"https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3","preview":""},
+    {"uri":"spotify:track:5dYyoRxPWVaV36XSD49yGS","title":"New Bestie","artist":"Drake","durationMs":259864,"art":"https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3","preview":""},
     {"uri":"spotify:track:4gIzhWC1f98N3NtNlyPfY5","title":"BBW","artist":"Drake","durationMs":211859,"art":"https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3","preview":""},
     {"uri":"spotify:track:2CIlKt4lRwAAUx5fYgCBxN","title":"ecstacy","artist":"SUICIDAL-IDOL","durationMs":96028,"art":"https://i.scdn.co/image/ab67616d0000b2737b8baa87cfc594d3694952bb","preview":""},
     {"uri":"spotify:track:6uu9VaSDuWBXsJx8VTmsOJ","title":"you haunt me","artist":"Marzi, Yana","durationMs":196153,"art":"https://i.scdn.co/image/ab67616d0000b2731f0c3a0dd712f13854fdc11d","preview":""},
