@@ -24,6 +24,8 @@ const TOKEN_URL = 'https://accounts.spotify.com/api/token';
 const PLAYLIST_URL = `https://api.spotify.com/v1/playlists/${PLAYLIST_ID}`;
 const TRACKS_URL = `${PLAYLIST_URL}/tracks`;
 const LIMIT = 50;
+// Without a market the tracks endpoint can refuse content for the client token.
+const MARKET = 'US';
 
 async function getAccessToken(clientId, clientSecret) {
   const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
@@ -51,16 +53,16 @@ async function fetchAllTracks(token) {
   const tracks = [];
   let offset = 0;
   for (;;) {
-    const res = await fetch(`${TRACKS_URL}?limit=${LIMIT}&offset=${offset}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const url = `${TRACKS_URL}?market=${MARKET}&limit=${LIMIT}&offset=${offset}`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     if (res.status === 429) {
       const retryAfter = Number(res.headers.get('Retry-After') || '5');
       await new Promise((r) => setTimeout(r, retryAfter * 1000));
       continue;
     }
-    if (!res.ok) throw new Error(`Spotify tracks request failed: ${res.status} ${await res.text()}`);
-    const data = await res.json();
+    const body = await res.text();
+    if (!res.ok) throw new Error(`Spotify tracks request failed: ${res.status} ${body}`);
+    const data = JSON.parse(body);
     for (const item of data.items || []) {
       const t = item.track;
       if (!t || t.type !== 'track' || !t.uri) continue;
