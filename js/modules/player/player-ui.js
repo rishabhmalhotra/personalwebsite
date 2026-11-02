@@ -15,6 +15,10 @@ const PREVIEW_MAX_MS = 31000;
 const METER_BARS = 28;
 const METER_TICK_MS = 110;
 const MOBILE_QUERY = '(max-width: 760px)';
+// Poll js/data/playlist.json for edits made on Spotify. The IFrame embed has no playlist
+// concept, so this is the only way the order can drift from the live playlist. Well under
+// Spotify's rate limits (no minimum interval, ~10 req/sec): one request per poll.
+const SYNC_INTERVAL_MS = 60 * 1000;
 
 const HINTS = {
   spotifyPreview: '30-second preview. Log in to Spotify in this browser to hear full tracks.',
@@ -26,7 +30,7 @@ const HINTS = {
 
 export function initPlayer(panel, { host, chips = [] }) {
   if (!panel || !host || !PLAYLIST.tracks.length) return;
-  const tracks = PLAYLIST.tracks;
+  let tracks = PLAYLIST.tracks;
   const reduced = prefersReducedMotion();
 
   const ui = {
@@ -271,6 +275,51 @@ export function initPlayer(panel, { host, chips = [] }) {
     ui.queueLabel.textContent = `queue · ${tracks.length} tracks`;
   }
 
+  // Re-read the committed playlist snapshot. If the order or membership changed, re-queue
+  // from the current track (or the first track if it was removed) without restarting audio.
+  let syncTimer = 0;
+  let syncing = false;
+  async function syncPlaylist() {
+    if (syncing) return;
+    syncing = true;
+    try {
+      const res = await fetch('/js/data/playlist.json', { cache: 'no-store' });
+      if (!res.ok) return;
+      const fresh = await res.json();
+      if (!Array.isArray(fresh.tracks) || !fresh.tracks.length) return;
+      const same = fresh.tracks.length === tracks.length
+        && fresh.tracks.every((t, i) => t && tracks[i] && t.uri === tracks[i].uri);
+      if (same) return;
+
+      const currentUri = current().uri;
+      const nextIdx = fresh.tracks.findIndex((t) => t.uri === currentUri);
+      const keepIndex = nextIdx >= 0 ? nextIdx : 0;
+      const wasPlaying = state.playing || state.awaitingPlay;
+      tracks = fresh.tracks;
+      state.index = keepIndex;
+      state.positionMs = 0;
+      state.stampedAt = performance.now();
+      state.durationMs = state.preview ? Math.min(PREVIEW_LENGTH_MS, tracks[keepIndex].durationMs) : tracks[keepIndex].durationMs;
+      state.awaitingPlay = wasPlaying;
+      renderTrackList();
+      render();
+      if (wasPlaying && engine) {
+        loadedUri = tracks[keepIndex].uri;
+        try { await engine.load(tracks[keepIndex], { autoplay: true }); armStallTimer(); }
+        catch (err) { callbacks.onError(err); }
+      }
+    } catch (err) {
+      console.warn('[player] playlist sync failed:', err.message);
+    } finally {
+      syncing = false;
+      armSyncTimer();
+    }
+  }
+  function armSyncTimer() {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(syncPlaylist, SYNC_INTERVAL_MS);
+  }
+
   // Keep the current row visible inside the scrolling list without moving the page.
   function revealCurrentTrack() {
     const row = $$('.tr', ui.list)[state.index];
@@ -370,4 +419,5 @@ export function initPlayer(panel, { host, chips = [] }) {
   renderTrackList();
   if (matchMedia(MOBILE_QUERY).matches) setQueueOpen(false);
   render();
+  armSyncTimer();
 }

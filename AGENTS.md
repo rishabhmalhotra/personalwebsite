@@ -36,7 +36,7 @@ These are enforced by `BANNED` and `BANNED_TERM_HASHES` in `scripts/verify.mjs`.
 
 - The two engines in `js/modules/player/` share one contract: `load(track, { autoplay })`, `play()`, `pause()`, `seek(ms)`, plus `onState` and `onEnded` callbacks. Keep any new engine to that contract.
 - The Spotify embed signals the end of a track by holding `position == duration` with `isPaused: false`, and can send a stale update for the previous track after `loadUri`. `spotify-engine.js` filters by `playingURI` and arms end detection only after real progress. Don't simplify that away.
-- `js/data/playlist.js` is generated. Change it with `npm run sync:playlist`, never by hand.
+- `js/data/playlist.js` is generated. Change it with `npm run sync:playlist`, never by hand. The page polls `js/data/playlist.json` every minute and re-queues from the current track when the order changes.
 
 ## Verifying changes
 
