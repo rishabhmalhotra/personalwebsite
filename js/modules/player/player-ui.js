@@ -18,7 +18,7 @@ const MOBILE_QUERY = '(max-width: 760px)';
 // Poll js/data/playlist.json for edits made on Spotify. The IFrame embed has no playlist
 // concept, so this is the only way the order can drift from the live playlist. Well under
 // Spotify's rate limits (no minimum interval, ~10 req/sec): one request per poll.
-const SYNC_INTERVAL_MS = 60 * 1000;
+const SYNC_INTERVAL_MS = 15 * 60 * 1000;
 
 const HINTS = {
   spotifyPreview: '30-second preview. Log in to Spotify in this browser to hear full tracks.',
