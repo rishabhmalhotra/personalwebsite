@@ -1,8 +1,8 @@
-name: sync-playlist 
-on: 
-  schedule: 
-    - cron: '* * * * *' 
-  workflow_dispatch: 
+name: sync-playlist
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
  
 permissions: 
   contents: write 
