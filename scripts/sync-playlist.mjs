@@ -2,12 +2,15 @@
 /**
  * Syncs the Spotify playlist into js/data/playlist.js.
  *
- * Uses the Spotify Web API with the Client Credentials grant, which runs server-side
- * (CI or a machine with the secrets). The playlist must be public; a private playlist
- * would need a user token instead.
+ * Spotify retired the public-read endpoint in February 2026: GET
+ * /v1/playlists/{id}/tracks is gone and replaced by GET /v1/playlists/{id}/items,
+ * which only works for playlists the caller owns or collaborates on. A
+ * client-credentials token has no "current user", so the sync must authenticate
+ * as the playlist owner (rishabhmalhotra) via the Authorization Code flow with a
+ * refresh token.
  *
- * Env: SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET
- * Output: js/data/playlist.js in the exact shape the audio panel consumes.
+ * Env: SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
+ * Output: js/data/playlist.js and js/data/playlist.json in the shape the panel reads.
  */
 
 import { writeFile } from 'fs/promises';
@@ -22,12 +25,12 @@ const PLAYLIST_ID = '6YGvluoYkCURQePkFMoYqW';
 const PLAYLIST_URI = `spotify:playlist:${PLAYLIST_ID}`;
 const TOKEN_URL = 'https://accounts.spotify.com/api/token';
 const PLAYLIST_URL = `https://api.spotify.com/v1/playlists/${PLAYLIST_ID}`;
-const TRACKS_URL = `${PLAYLIST_URL}/tracks`;
+const ITEMS_URL = `${PLAYLIST_URL}/items`;
 const LIMIT = 50;
-// Without a market the tracks endpoint can refuse content for the client token.
+// Without a market the items endpoint can refuse content for the token.
 const MARKET = 'US';
 
-async function getAccessToken(clientId, clientSecret) {
+async function getAccessToken(clientId, clientSecret, refreshToken) {
   const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
   const res = await fetch(TOKEN_URL, {
     method: 'POST',
@@ -35,7 +38,7 @@ async function getAccessToken(clientId, clientSecret) {
       Authorization: `Basic ${basic}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: 'grant_type=client_credentials',
+    body: `grant_type=refresh_token&refresh_token=${encodeURIComponent(refreshToken)}`,
   });
   console.error(`[diag] POST token -> ${res.status}`);
   if (!res.ok) throw new Error(`Spotify token request failed: ${res.status} ${await res.text()}`);
@@ -51,25 +54,25 @@ async function fetchPlaylistMeta(token) {
   return res.json();
 }
 
-async function fetchAllTracks(token) {
-  const tracks = [];
+async function fetchAllItems(token) {
+  const items = [];
   let offset = 0;
   for (;;) {
-    const url = `${TRACKS_URL}?market=${MARKET}&limit=${LIMIT}&offset=${offset}`;
+    const url = `${ITEMS_URL}?market=${MARKET}&limit=${LIMIT}&offset=${offset}`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    console.error(`[diag] GET tracks (offset=${offset}) -> ${res.status}`);
+    console.error(`[diag] GET items (offset=${offset}) -> ${res.status}`);
     if (res.status === 429) {
       const retryAfter = Number(res.headers.get('Retry-After') || '5');
       await new Promise((r) => setTimeout(r, retryAfter * 1000));
       continue;
     }
     const body = await res.text();
-    if (!res.ok) throw new Error(`Spotify tracks request failed: ${res.status} ${body}`);
+    if (!res.ok) throw new Error(`Spotify items request failed: ${res.status} ${body}`);
     const data = JSON.parse(body);
-    for (const item of data.items || []) {
-      const t = item.track;
+    for (const entry of data.items || []) {
+      const t = entry.item;
       if (!t || t.type !== 'track' || !t.uri) continue;
-      tracks.push({
+      items.push({
         uri: t.uri,
         title: t.name,
         artist: (t.artists || []).map((a) => a.name).join(', '),
@@ -81,28 +84,29 @@ async function fetchAllTracks(token) {
     if (!data.next) break;
     offset += LIMIT;
   }
-  return tracks;
+  return items;
 }
 
 async function main() {
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-  if (!clientId || !clientSecret) {
-    console.error('Set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET, then run again.');
+  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+  if (!clientId || !clientSecret || !refreshToken) {
+    console.error('Set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET and SPOTIFY_REFRESH_TOKEN, then run again.');
     process.exit(1);
   }
 
-  const token = await getAccessToken(clientId, clientSecret);
-  const [meta, tracks] = await Promise.all([
+  const token = await getAccessToken(clientId, clientSecret, refreshToken);
+  const [meta, items] = await Promise.all([
     fetchPlaylistMeta(token).catch(() => null),
-    fetchAllTracks(token),
+    fetchAllItems(token),
   ]);
 
   const name = (meta && meta.name) || 'Music';
   const owner = (meta && meta.owner && meta.owner.display_name) || 'rishabhmalhotra';
   const syncedAt = new Date().toISOString().slice(0, 10);
 
-  const trackLines = tracks.map((t) => '    ' + JSON.stringify(t)).join(',\n');
+  const trackLines = items.map((t) => '    ' + JSON.stringify(t)).join(',\n');
   const jsContent = `// Generated by npm run sync:playlist. Do not edit by hand.
 export const PLAYLIST = {
   id: ${JSON.stringify(PLAYLIST_ID)},
@@ -123,7 +127,7 @@ ${trackLines}
     owner,
     url: 'https://open.spotify.com/playlist/' + PLAYLIST_ID,
     syncedAt,
-    tracks,
+    tracks: items,
   }, null, 2) + '\n';
 
   const playlistPath = join(root, 'js', 'data', 'playlist.js');
@@ -139,7 +143,7 @@ ${trackLines}
     throw new Error('Generated playlist.js did not expose PLAYLIST.tracks as an array');
   }
 
-  console.log(`Synced ${tracks.length} tracks (playlist "${name}") to js/data/playlist.js and js/data/playlist.json`);
+  console.log(`Synced ${items.length} tracks (playlist "${name}") to js/data/playlist.js and js/data/playlist.json`);
 }
 
 main();
