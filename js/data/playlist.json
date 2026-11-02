@@ -3,303 +3,311 @@
   "name": "Music",
   "owner": "rishabhmalhotra",
   "url": "https://open.spotify.com/playlist/6YGvluoYkCURQePkFMoYqW",
-  "syncedAt": "2026-11-01",
+  "syncedAt": "2026-11-02",
   "tracks": [
-    {
-      "uri": "spotify:track:2CIlKt4lRwAAUx5fYgCBxN",
-      "title": "ecstacy",
-      "artist": "SUICIDAL-IDOL",
-      "durationMs": 96028,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027b8baa87cfc594d3694952bb",
-      "preview": "https://p.scdn.co/mp3-preview/c07fe6507fa491bf807ab922b8f9b54851e83d46"
-    },
-    {
-      "uri": "spotify:track:6uu9VaSDuWBXsJx8VTmsOJ",
-      "title": "you haunt me",
-      "artist": "Marzi, Yana",
-      "durationMs": 196153,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e021f0c3a0dd712f13854fdc11d",
-      "preview": "https://p.scdn.co/mp3-preview/412e0e6168bd62a6dda98216de7c5510cf242b29"
-    },
-    {
-      "uri": "spotify:track:0J2CLBNjk7lSiVBatKtj02",
-      "title": "You",
-      "artist": "Zen/it",
-      "durationMs": 163809,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0264375f921ee2abdb6c5d1e20",
-      "preview": "https://p.scdn.co/mp3-preview/31050ac9a16676fa6061262500c3e1a7dd16748d"
-    },
-    {
-      "uri": "spotify:track:7uuDAeMQrufj048z0D6ykf",
-      "title": "Tonight",
-      "artist": "Arman Cekin, C-Mart",
-      "durationMs": 141771,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02bc6c75bc5e2dd8706e111626",
-      "preview": "https://p.scdn.co/mp3-preview/ea2c760859cd6abb23ff497e46312856934c7098"
-    },
-    {
-      "uri": "spotify:track:19J9b3xXrIma9lYG2Jmgmr",
-      "title": "Burning",
-      "artist": "NAOMI JEREMIAH",
-      "durationMs": 168986,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02afa65dd2935c8aae517b8874",
-      "preview": "https://p.scdn.co/mp3-preview/349d2ec4baa57a55ae7e75dbc62b5e43f4d65025"
-    },
-    {
-      "uri": "spotify:track:7cMhicmOIwfJlWURl90AOc",
-      "title": "Follow You",
-      "artist": "Noizy",
-      "durationMs": 164546,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c02eda7009734297d34e2f43",
-      "preview": "https://p.scdn.co/mp3-preview/b553b5dcd4a932d67d33fea8b9b8b5c2aad98180"
-    },
-    {
-      "uri": "spotify:track:5820PtzfB116EIALe50F6t",
-      "title": "PBT",
-      "artist": "Travis Scott, Tyla, Vybz Kartel",
-      "durationMs": 250982,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025d0f8a4c3623e02a79928288",
-      "preview": "https://p.scdn.co/mp3-preview/ad4c79d68916926d061ab25f20fb319956dd5315"
-    },
-    {
-      "uri": "spotify:track:731iHS5XSTYcrRA3RNVnnL",
-      "title": "weight - sped up",
-      "artist": "Zubi, Ashref",
-      "durationMs": 145360,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e026e00067ca3af1d1dbcc8548a",
-      "preview": "https://p.scdn.co/mp3-preview/b70a93ff3c052eb54327f765bfad8be6c8982073"
-    },
-    {
-      "uri": "spotify:track:5c7PnccuRgqXO1bdfI4hJI",
-      "title": "Miss Me Like",
-      "artist": "Zen/it",
-      "durationMs": 126666,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e025e5b8a438900944a39e42e94",
-      "preview": "https://p.scdn.co/mp3-preview/97020d4c161a97313e1ba863ff818cd793662c5b"
-    },
-    {
-      "uri": "spotify:track:0El2079wLILBLXPsWM1sa7",
-      "title": "Life After Love",
-      "artist": "Leah Music",
-      "durationMs": 130707,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027763858a06517f02e65269db",
-      "preview": "https://p.scdn.co/mp3-preview/b266fa9b2a2d909346eb2e4dd7de3438de378b9e"
-    },
-    {
-      "uri": "spotify:track:0QCIpQV3twfqo9kh0t8Zza",
-      "title": "SHAKE IT TO THE MAX (FLY) - REMIX",
-      "artist": "MOLIY, Shenseea, Skillibeng, Silent Addy",
-      "durationMs": 178775,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020069ee4e37f913fb1653b389",
-      "preview": "https://p.scdn.co/mp3-preview/0ce150aec7b8cfe73d042684ec87fbc6b3ac8421"
-    },
-    {
-      "uri": "spotify:track:5F5LVMxSd57YEsS1z31kPi",
-      "title": "I'm Outside in an AMG",
-      "artist": "Dj Rehan",
-      "durationMs": 118208,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029f8980f59174128b07c13c14",
-      "preview": "https://p.scdn.co/mp3-preview/22a2ab54af763a35a920e4b2f84bc1885d9d9e4b"
-    },
-    {
-      "uri": "spotify:track:0W6I02J9xcqK8MtSeosEXb",
-      "title": "Get Into It (Yuh)",
-      "artist": "Doja Cat",
-      "durationMs": 138293,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0214b7b2a920a41166d53ddd49",
-      "preview": "https://p.scdn.co/mp3-preview/6475ca26204ab558c1bab3d2369fc761194c7c2b"
-    },
-    {
-      "uri": "spotify:track:7tRXTDi87CiAqU5sIBQfIC",
-      "title": "Behind The Sun",
-      "artist": "ODESZA",
-      "durationMs": 250634,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0229c8b4d33f385336cd6e8c4e",
-      "preview": "https://p.scdn.co/mp3-preview/ceb1276d0f96b2414fdfca7da4db190728da0f1f"
-    },
-    {
-      "uri": "spotify:track:0kZMNEEOuRgEXtrQAvY2AR",
-      "title": "real things (steve mix)",
-      "artist": "mike., Stevie Daniels",
-      "durationMs": 162616,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02a04551facfbf6bd184ec7431",
-      "preview": "https://p.scdn.co/mp3-preview/9977f0f37718c7fedf95cf52dd4bf0654812c446"
-    },
-    {
-      "uri": "spotify:track:02YMpD1xbZZzpZbuZNvmD7",
-      "title": "Sideways",
-      "artist": "Gordo, Drake",
-      "durationMs": 253770,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e023545071847de6d8158776ae3",
-      "preview": "https://p.scdn.co/mp3-preview/52168f4df08b6b2c3331f5331000d68804afb5ba"
-    },
-    {
-      "uri": "spotify:track:2GLN3KJjmFhXG8mHGr6II0",
-      "title": "Float (feat. Seun Kuti & Egypt 80)",
-      "artist": "Janelle Monáe, Seun Kuti, Egypt 80",
-      "durationMs": 242166,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02016302cf58c074b0f4caf26b",
-      "preview": "https://p.scdn.co/mp3-preview/e34b6bb5fba060a0b93100612b23dac204d8b3ed"
-    },
-    {
-      "uri": "spotify:track:5HjI944ehcMwYGPR1Mf148",
-      "title": "Good Energy",
-      "artist": "Yung Wylin'",
-      "durationMs": 191529,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fc2c376832de3bcef145c9d3",
-      "preview": "https://p.scdn.co/mp3-preview/7df9ebbd146b48a7e14ff2b7b21b6cdbebe7063b"
-    },
-    {
-      "uri": "spotify:track:4UkUxO2WlKLc0Q1iEutGGh",
-      "title": "CONTIGO (with Tiësto)",
-      "artist": "KAROL G, Tiësto",
-      "durationMs": 192786,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c5426d9daa879064ccf12fb1",
-      "preview": "https://p.scdn.co/mp3-preview/46d37a96f9c1d66ddc670fde12aee038fedb3d89"
-    },
-    {
-      "uri": "spotify:track:6XjDF6nds4DE2BBbagZol6",
-      "title": "Gata Only",
-      "artist": "FloyyMenor, Cris MJ",
-      "durationMs": 222000,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c4583f3ad76630879a75450a",
-      "preview": "https://p.scdn.co/mp3-preview/12ae7f061a9da14a7c1e6a3e21de68365697efe8"
-    },
-    {
-      "uri": "spotify:track:6VciS3dRMpZhJiDxT8ArFi",
-      "title": "Young Miko: Bzrp Music Sessions, Vol. 58/66",
-      "artist": "Bizarrap, Young Miko",
-      "durationMs": 187172,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e024d76bba22c162a1fb3d52039",
-      "preview": "https://p.scdn.co/mp3-preview/c4ee031a19d772af54ad340c53635467b97a1ff3"
-    },
-    {
-      "uri": "spotify:track:5yYV7pSaVaMdCOtx8fksc1",
-      "title": "Intro (Real Love)",
-      "artist": "Brandz, Zion Foster",
-      "durationMs": 99350,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e023956db3a56159e98112e4403",
-      "preview": "https://p.scdn.co/mp3-preview/a78b8d906bcb259847b5f3e678b35c84a8590836"
-    },
-    {
-      "uri": "spotify:track:3azJifCSqg9fRij2yKIbWz",
-      "title": "The Color Violet",
-      "artist": "Tory Lanez",
-      "durationMs": 226466,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e020c5f23cbf0b1ab7e37d0dc67",
-      "preview": "https://p.scdn.co/mp3-preview/1d7c627bf549328110519c4bd21ac39d7ca50ea1"
-    },
-    {
-      "uri": "spotify:track:3fpTMuD1u3gJlVI4FadVHs",
-      "title": "Fancy",
-      "artist": "Drake, T.I., Swizz Beatz",
-      "durationMs": 319386,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0211b21e8b868800918d21bb77",
-      "preview": "https://p.scdn.co/mp3-preview/15f383bed3b216943bd5b0d2fdcd93b444652ce6"
-    },
-    {
-      "uri": "spotify:track:08gK6ltenudfMwEMlgC7Ny",
-      "title": "If U Call",
-      "artist": "NorthSideBaby",
-      "durationMs": 186181,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0227ace0de868ce5d1ae711a18",
-      "preview": "https://p.scdn.co/mp3-preview/704619989eb11a2dbf626d44cda39a434db181dc"
-    },
-    {
-      "uri": "spotify:track:4FRW5Nza1Ym91BGV4nFWXI",
-      "title": "Lemon Pepper Freestyle (feat. Rick Ross)",
-      "artist": "Drake, Rick Ross",
-      "durationMs": 383036,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e028b20e4631fa15d3953528bbc",
-      "preview": "https://p.scdn.co/mp3-preview/48cd90ead9d7eff27b7447531bf5d00a7e0f7a70"
-    },
-    {
-      "uri": "spotify:track:0lnjQ28TEgtDoQxxtBXBzf",
-      "title": "Mai Tai",
-      "artist": "Lloyd P-White",
-      "durationMs": 173081,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027f92ab741d20ea8bd5ff910a",
-      "preview": "https://p.scdn.co/mp3-preview/72e737e2109283eee3d5888e5b2d2ff2b17a9d52"
-    },
-    {
-      "uri": "spotify:track:3NZJlJemX3mzjf56MqC5ML",
-      "title": "Forever",
-      "artist": "Chris Brown",
-      "durationMs": 278573,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b0d747e54b78eb460dcb9316",
-      "preview": "https://p.scdn.co/mp3-preview/8ced469a7f355ad5cc1119e9fa83d79dc134d22f"
-    },
-    {
-      "uri": "spotify:track:0Ntea3SB1jJ0SxRNt5MvjM",
-      "title": "Private Landing (Sped Up) [feat. Justin Bieber & Future]",
-      "artist": "Don Toliver, sped up nightcore, Justin Bieber, Future",
-      "durationMs": 217604,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025e266bdafa41d01e77625721",
-      "preview": "https://p.scdn.co/mp3-preview/192367d4461db07b5b0ab1fee6b13c3e03ee55ad"
-    },
-    {
-      "uri": "spotify:track:0ivNuTyFgd9CcNjVEjgv0O",
-      "title": "Shocks",
-      "artist": "Monet192",
-      "durationMs": 129039,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02e47cda3e21dd6490aa5c1a39",
-      "preview": "https://p.scdn.co/mp3-preview/7e443fcfa43c68f17e52ba9cc6bda56a01530e43"
-    },
-    {
-      "uri": "spotify:track:308xlrid086raOlnE908hI",
-      "title": "Losin Control - DOLLA $LICE Remix",
-      "artist": "Zak Downtown, DOLLA $LICE",
-      "durationMs": 150045,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02a46199ec3360edc1a02561a6",
-      "preview": "https://p.scdn.co/mp3-preview/3936e1523abc0534f2fa0e5792b1e56d87759769"
-    },
-    {
-      "uri": "spotify:track:6xCEJw7t0p6gWyshfttZyP",
-      "title": "Zendaya",
-      "artist": "Chris Patrick",
-      "durationMs": 158687,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022b1b7fe37e1816d655058427",
-      "preview": "https://p.scdn.co/mp3-preview/b3010e34346f0a66647ccd57604551abec728443"
-    },
-    {
-      "uri": "spotify:track:1Dt6sLHeMKlUY9BYbnsSmK",
-      "title": "Breeze",
-      "artist": "Kris Yute",
-      "durationMs": 160000,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e023e25caf4093a2734dd5d4f28",
-      "preview": "https://p.scdn.co/mp3-preview/da5e3558ed8d046d49a8260b1fe2251c8aaf4991"
-    },
-    {
-      "uri": "spotify:track:3W2ZcrRsInZbjWylOi6KhZ",
-      "title": "You & Me - Flume Remix",
-      "artist": "Disclosure, Eliza Doolittle, Flume",
-      "durationMs": 282812,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02786201dca187d2b0c956c24b",
-      "preview": "https://p.scdn.co/mp3-preview/d8a98f5fb0900b5e444787d017be52eb24609578"
-    },
-    {
-      "uri": "spotify:track:4gIzhWC1f98N3NtNlyPfY5",
-      "title": "BBW",
-      "artist": "Drake",
-      "durationMs": 211859,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02539bb112d7c970545dd971e3",
-      "preview": "https://p.scdn.co/mp3-preview/48446d9045aafdab6a48cbb6b4e8fad60e631bb2"
-    },
     {
       "uri": "spotify:track:5dYyoRxPWVaV36XSD49yGS",
       "title": "New Bestie",
       "artist": "Drake",
       "durationMs": 259864,
-      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02539bb112d7c970545dd971e3",
-      "preview": "https://p.scdn.co/mp3-preview/d1c7d8c131f89672f6b1c229a7357b1478df5c1e"
+      "art": "https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3",
+      "preview": ""
     },
     {
       "uri": "spotify:track:7ppIKUHCFQGCQny1Se2jLV",
       "title": "Q&A",
       "artist": "Drake",
       "durationMs": 223255,
-      "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02539bb112d7c970545dd971e3",
-      "preview": "https://p.scdn.co/mp3-preview/220e7e089882063692e36ec28d25517d2d2c595a"
+      "art": "https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:4gIzhWC1f98N3NtNlyPfY5",
+      "title": "BBW",
+      "artist": "Drake",
+      "durationMs": 211859,
+      "art": "https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:2CIlKt4lRwAAUx5fYgCBxN",
+      "title": "ecstacy",
+      "artist": "SUICIDAL-IDOL",
+      "durationMs": 96028,
+      "art": "https://i.scdn.co/image/ab67616d0000b2737b8baa87cfc594d3694952bb",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:6uu9VaSDuWBXsJx8VTmsOJ",
+      "title": "you haunt me",
+      "artist": "Marzi, Yana",
+      "durationMs": 196153,
+      "art": "https://i.scdn.co/image/ab67616d0000b2731f0c3a0dd712f13854fdc11d",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0J2CLBNjk7lSiVBatKtj02",
+      "title": "You",
+      "artist": "Zen/it",
+      "durationMs": 163809,
+      "art": "https://i.scdn.co/image/ab67616d0000b27364375f921ee2abdb6c5d1e20",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:7uuDAeMQrufj048z0D6ykf",
+      "title": "Tonight",
+      "artist": "Arman Cekin, C-Mart",
+      "durationMs": 141771,
+      "art": "https://i.scdn.co/image/ab67616d0000b273bc6c75bc5e2dd8706e111626",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:2U8628Kr74d57kcTQGRifE",
+      "title": "Una Noche",
+      "artist": "HUGEL, WILCE",
+      "durationMs": 236846,
+      "art": "https://i.scdn.co/image/ab67616d0000b273341ce5f95f92447d034a7305",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:19J9b3xXrIma9lYG2Jmgmr",
+      "title": "Burning",
+      "artist": "NAOMI JEREMIAH",
+      "durationMs": 168986,
+      "art": "https://i.scdn.co/image/ab67616d0000b273afa65dd2935c8aae517b8874",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:7cMhicmOIwfJlWURl90AOc",
+      "title": "Follow You",
+      "artist": "Noizy",
+      "durationMs": 164546,
+      "art": "https://i.scdn.co/image/ab67616d0000b273c02eda7009734297d34e2f43",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:5820PtzfB116EIALe50F6t",
+      "title": "PBT",
+      "artist": "Travis Scott, Tyla, Vybz Kartel",
+      "durationMs": 250982,
+      "art": "https://i.scdn.co/image/ab67616d0000b2735d0f8a4c3623e02a79928288",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:731iHS5XSTYcrRA3RNVnnL",
+      "title": "weight - sped up",
+      "artist": "Zubi, Ashref",
+      "durationMs": 145360,
+      "art": "https://i.scdn.co/image/ab67616d0000b2736e00067ca3af1d1dbcc8548a",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:5c7PnccuRgqXO1bdfI4hJI",
+      "title": "Miss Me Like",
+      "artist": "Zen/it",
+      "durationMs": 126666,
+      "art": "https://i.scdn.co/image/ab67616d0000b2735e5b8a438900944a39e42e94",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0El2079wLILBLXPsWM1sa7",
+      "title": "Life After Love",
+      "artist": "Leah Music",
+      "durationMs": 130707,
+      "art": "https://i.scdn.co/image/ab67616d0000b2737763858a06517f02e65269db",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0QCIpQV3twfqo9kh0t8Zza",
+      "title": "SHAKE IT TO THE MAX (FLY) - REMIX",
+      "artist": "MOLIY, Shenseea, Skillibeng, Silent Addy",
+      "durationMs": 178775,
+      "art": "https://i.scdn.co/image/ab67616d0000b2730069ee4e37f913fb1653b389",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:5F5LVMxSd57YEsS1z31kPi",
+      "title": "I'm Outside in an AMG",
+      "artist": "Dj Rehan",
+      "durationMs": 118208,
+      "art": "https://i.scdn.co/image/ab67616d0000b2739f8980f59174128b07c13c14",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0W6I02J9xcqK8MtSeosEXb",
+      "title": "Get Into It (Yuh)",
+      "artist": "Doja Cat",
+      "durationMs": 138293,
+      "art": "https://i.scdn.co/image/ab67616d0000b27314b7b2a920a41166d53ddd49",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:7tRXTDi87CiAqU5sIBQfIC",
+      "title": "Behind The Sun",
+      "artist": "ODESZA",
+      "durationMs": 250634,
+      "art": "https://i.scdn.co/image/ab67616d0000b27329c8b4d33f385336cd6e8c4e",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0kZMNEEOuRgEXtrQAvY2AR",
+      "title": "real things (steve mix)",
+      "artist": "mike., Stevie Daniels",
+      "durationMs": 162616,
+      "art": "https://i.scdn.co/image/ab67616d0000b273a04551facfbf6bd184ec7431",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:02YMpD1xbZZzpZbuZNvmD7",
+      "title": "Sideways",
+      "artist": "Gordo, Drake",
+      "durationMs": 253770,
+      "art": "https://i.scdn.co/image/ab67616d0000b2733545071847de6d8158776ae3",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:2GLN3KJjmFhXG8mHGr6II0",
+      "title": "Float (feat. Seun Kuti & Egypt 80)",
+      "artist": "Janelle Monáe, Seun Kuti, Egypt 80",
+      "durationMs": 242166,
+      "art": "https://i.scdn.co/image/ab67616d0000b273016302cf58c074b0f4caf26b",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:5HjI944ehcMwYGPR1Mf148",
+      "title": "Good Energy",
+      "artist": "Yung Wylin'",
+      "durationMs": 191529,
+      "art": "https://i.scdn.co/image/ab67616d0000b273fc2c376832de3bcef145c9d3",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:4UkUxO2WlKLc0Q1iEutGGh",
+      "title": "CONTIGO (with Tiësto)",
+      "artist": "KAROL G, Tiësto",
+      "durationMs": 192786,
+      "art": "https://i.scdn.co/image/ab67616d0000b273c5426d9daa879064ccf12fb1",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:6XjDF6nds4DE2BBbagZol6",
+      "title": "Gata Only",
+      "artist": "FloyyMenor, Cris MJ",
+      "durationMs": 222000,
+      "art": "https://i.scdn.co/image/ab67616d0000b273c4583f3ad76630879a75450a",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:6VciS3dRMpZhJiDxT8ArFi",
+      "title": "Young Miko: Bzrp Music Sessions, Vol. 58/66",
+      "artist": "Bizarrap, Young Miko",
+      "durationMs": 187172,
+      "art": "https://i.scdn.co/image/ab67616d0000b2734d76bba22c162a1fb3d52039",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:5yYV7pSaVaMdCOtx8fksc1",
+      "title": "Intro (Real Love)",
+      "artist": "Brandz, Zion Foster",
+      "durationMs": 99350,
+      "art": "https://i.scdn.co/image/ab67616d0000b2733956db3a56159e98112e4403",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:3azJifCSqg9fRij2yKIbWz",
+      "title": "The Color Violet",
+      "artist": "Tory Lanez",
+      "durationMs": 226466,
+      "art": "https://i.scdn.co/image/ab67616d0000b2730c5f23cbf0b1ab7e37d0dc67",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:3fpTMuD1u3gJlVI4FadVHs",
+      "title": "Fancy",
+      "artist": "Drake, T.I., Swizz Beatz",
+      "durationMs": 319386,
+      "art": "https://i.scdn.co/image/ab67616d0000b27311b21e8b868800918d21bb77",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:08gK6ltenudfMwEMlgC7Ny",
+      "title": "If U Call",
+      "artist": "NorthSideBaby",
+      "durationMs": 186181,
+      "art": "https://i.scdn.co/image/ab67616d0000b27327ace0de868ce5d1ae711a18",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:4FRW5Nza1Ym91BGV4nFWXI",
+      "title": "Lemon Pepper Freestyle (feat. Rick Ross)",
+      "artist": "Drake, Rick Ross",
+      "durationMs": 383036,
+      "art": "https://i.scdn.co/image/ab67616d0000b2738b20e4631fa15d3953528bbc",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0lnjQ28TEgtDoQxxtBXBzf",
+      "title": "Mai Tai",
+      "artist": "Lloyd P-White",
+      "durationMs": 173081,
+      "art": "https://i.scdn.co/image/ab67616d0000b2737f92ab741d20ea8bd5ff910a",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:3NZJlJemX3mzjf56MqC5ML",
+      "title": "Forever",
+      "artist": "Chris Brown",
+      "durationMs": 278573,
+      "art": "https://i.scdn.co/image/ab67616d0000b273b0d747e54b78eb460dcb9316",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0Ntea3SB1jJ0SxRNt5MvjM",
+      "title": "Private Landing (Sped Up) [feat. Justin Bieber & Future]",
+      "artist": "Don Toliver, sped up nightcore, Justin Bieber, Future",
+      "durationMs": 217604,
+      "art": "https://i.scdn.co/image/ab67616d0000b2735e266bdafa41d01e77625721",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:0ivNuTyFgd9CcNjVEjgv0O",
+      "title": "Shocks",
+      "artist": "Monet192",
+      "durationMs": 129039,
+      "art": "https://i.scdn.co/image/ab67616d0000b273e47cda3e21dd6490aa5c1a39",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:308xlrid086raOlnE908hI",
+      "title": "Losin Control - DOLLA $LICE Remix",
+      "artist": "Zak Downtown, DOLLA $LICE",
+      "durationMs": 150045,
+      "art": "https://i.scdn.co/image/ab67616d0000b273a46199ec3360edc1a02561a6",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:6xCEJw7t0p6gWyshfttZyP",
+      "title": "Zendaya",
+      "artist": "Chris Patrick",
+      "durationMs": 158687,
+      "art": "https://i.scdn.co/image/ab67616d0000b2732b1b7fe37e1816d655058427",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:1Dt6sLHeMKlUY9BYbnsSmK",
+      "title": "Breeze",
+      "artist": "Kris Yute",
+      "durationMs": 160000,
+      "art": "https://i.scdn.co/image/ab67616d0000b2733e25caf4093a2734dd5d4f28",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:3W2ZcrRsInZbjWylOi6KhZ",
+      "title": "You & Me - Flume Remix",
+      "artist": "Disclosure, Eliza Doolittle, Flume",
+      "durationMs": 282812,
+      "art": "https://i.scdn.co/image/ab67616d0000b273786201dca187d2b0c956c24b",
+      "preview": ""
     }
   ]
 }

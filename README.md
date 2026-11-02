@@ -72,7 +72,7 @@ The audio panel plays the playlist through Spotify's IFrame API. The embed stays
 npm run sync:playlist
 ```
 
-This needs Spotify app credentials in `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET`. The playlist must be public (client-credentials auth can't read private playlists). A GitHub Actions workflow in `.github/workflows/sync-playlist.yml` runs the sync every minute and commits the regenerated files.
+This authenticates as the playlist owner (rishabhmalhotra) via a refresh token, because Spotify retired the public-read endpoint in February 2026. It needs `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REFRESH_TOKEN`. A GitHub Actions workflow in `.github/workflows/sync-playlist.yml` runs the sync every minute and commits the regenerated files.
 
 `node tools/player-check.mjs http://localhost:8000` drives the real page in headless Chrome and checks play, progress, next, seek, auto-advance, pause, and the fallback with Spotify blocked.
 
