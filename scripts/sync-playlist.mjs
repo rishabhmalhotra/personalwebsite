@@ -37,6 +37,7 @@ async function getAccessToken(clientId, clientSecret) {
     },
     body: 'grant_type=client_credentials',
   });
+  console.error(`[diag] POST token -> ${res.status}`);
   if (!res.ok) throw new Error(`Spotify token request failed: ${res.status} ${await res.text()}`);
   const data = await res.json();
   if (!data.access_token) throw new Error('Spotify token response had no access_token');
@@ -45,6 +46,7 @@ async function getAccessToken(clientId, clientSecret) {
 
 async function fetchPlaylistMeta(token) {
   const res = await fetch(PLAYLIST_URL, { headers: { Authorization: `Bearer ${token}` } });
+  console.error(`[diag] GET playlist metadata -> ${res.status}`);
   if (!res.ok) throw new Error(`Spotify playlist metadata request failed: ${res.status} ${await res.text()}`);
   return res.json();
 }
@@ -55,6 +57,7 @@ async function fetchAllTracks(token) {
   for (;;) {
     const url = `${TRACKS_URL}?market=${MARKET}&limit=${LIMIT}&offset=${offset}`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    console.error(`[diag] GET tracks (offset=${offset}) -> ${res.status}`);
     if (res.status === 429) {
       const retryAfter = Number(res.headers.get('Retry-After') || '5');
       await new Promise((r) => setTimeout(r, retryAfter * 1000));
