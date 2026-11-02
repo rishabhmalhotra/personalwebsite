@@ -9,7 +9,7 @@ Copy may be trimmed to fit a layout, but do not invent new claims, numbers, or e
 - Current role (draft, user will confirm): Staff Software Engineer at eBay, working on eBay Live
 - Location: Toronto
 - Headline: I build backends that keep working when a region doesn't.
-- Sub-headline: Multi-region, low-latency systems at very large scale. Before eBay I was a Tech Lead at Square (Block). Earlier: Lightspeed, Credit Karma, IBM Watson.
+- Sub-headline: Multi-region, low-latency systems at very large scale. Earlier: Lightspeed, Credit Karma, IBM Watson.
 - Short about (2 to 3 sentences, use in an about block if the layout has one):
   I've spent my career on the parts of a system that can't go down: checkout hot paths, order pipelines, cross-region failover. At Square I led the Tier-0 printing platform behind Uber Eats, DoorDash, Postmates and Cash App orders. Now I work on the backend for eBay Live, eBay's live-stream shopping and auctions product.
 
@@ -38,7 +38,7 @@ Copy may be trimmed to fit a layout, but do not invent new claims, numbers, or e
    - Mark this card visibly as "details coming" or similar, it is a placeholder.
 
 2. Block printing platform
-   - Square (Block), Tech Lead, 2024 to 2026
+   - Square (Block), 2024 to 2026
    - Tier-0 platform that prints order tickets for Uber Eats, DoorDash, Postmates and Cash App sellers.
    - Led 5 engineers across 6 workstreams. Active-passive multi-region design with sub-800 ms cross-region failover. Took availability from three nines to five nines: annual downtime went from 9 hours to under 5 minutes, protecting $220M+ a year in revenue.
    - Wrote the DynamoDB data model: one polymorphic schema serving 8 access patterns with per-pattern consistency. Moved sharded job queues to Temporal and feed consumers to Kafka.
@@ -66,7 +66,7 @@ Smaller wins (one-liners, use if there is room):
 | Company | Role | Years | Place |
 |---|---|---|---|
 | eBay | Staff Software Engineer, eBay Live | 2026 to now | Toronto |
-| Square (Block) | Tech Lead | 2024 to 2026 | Toronto |
+| Square (Block) | Senior Software Engineer | 2024 to 2026 | Toronto |
 | Square (Block) | Senior Software Engineer | 2023 to 2024 | Toronto |
 | Square (Block) | Software Engineer | 2021 to 2023 | Toronto |
 | Lightspeed Commerce | Software Developer. Go services handling 10M events a day | 2020 to 2021 | Toronto |
