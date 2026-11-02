@@ -6,18 +6,18 @@
   "syncedAt": "2026-11-02",
   "tracks": [
     {
-      "uri": "spotify:track:5dYyoRxPWVaV36XSD49yGS",
-      "title": "New Bestie",
-      "artist": "Drake",
-      "durationMs": 259864,
-      "art": "https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3",
-      "preview": ""
-    },
-    {
       "uri": "spotify:track:7ppIKUHCFQGCQny1Se2jLV",
       "title": "Q&A",
       "artist": "Drake",
       "durationMs": 223255,
+      "art": "https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3",
+      "preview": ""
+    },
+    {
+      "uri": "spotify:track:5dYyoRxPWVaV36XSD49yGS",
+      "title": "New Bestie",
+      "artist": "Drake",
+      "durationMs": 259864,
       "art": "https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3",
       "preview": ""
     },
