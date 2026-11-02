@@ -21,10 +21,12 @@ jobs:
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }} 
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }} 
         run: node scripts/sync-playlist.mjs 
-      - name: Commit if changed 
-        run: | 
-          git config user.name "github-actions[bot]" 
-          git config user.email "github-actions[bot]@users.noreply.github.com" 
-          git add js/data/playlist.js js/data/playlist.json 
-          git diff --cached --quiet || git commit -m "chore: sync playlist snapshot from Spotify" 
-          git push 
+- name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add js/data/playlist.js js/data/playlist.json
+          git diff --cached --quiet || git commit -m "chore: sync playlist snapshot from Spotify"
+          # The cron can overlap with a previous run still pushing, so pull first.
+          git pull --rebase --quiet origin master || git pull --quiet origin master
+          git push
