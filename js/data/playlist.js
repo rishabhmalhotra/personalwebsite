@@ -4,7 +4,7 @@ export const PLAYLIST = {
   name: "Music",
   owner: "rishabhmalhotra",
   url: "https://open.spotify.com/playlist/6YGvluoYkCURQePkFMoYqW",
-  syncedAt: "2026-11-06",
+  syncedAt: "2026-11-07",
   tracks: [
     {"uri":"spotify:track:4gIzhWC1f98N3NtNlyPfY5","title":"BBW","artist":"Drake","durationMs":211859,"art":"https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3","preview":""},
     {"uri":"spotify:track:7ppIKUHCFQGCQny1Se2jLV","title":"Q&A","artist":"Drake","durationMs":223255,"art":"https://i.scdn.co/image/ab67616d0000b273539bb112d7c970545dd971e3","preview":""},
