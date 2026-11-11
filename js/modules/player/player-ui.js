@@ -64,6 +64,7 @@ export function initPlayer(panel, { host, chips = [] }) {
     preview: false,
     hint: null,
     offline: false,
+    hidden: false,
   };
   let engine = null;
   let connecting = null;
@@ -171,6 +172,17 @@ export function initPlayer(panel, { host, chips = [] }) {
   }
 
   const toggle = () => (state.playing || state.awaitingPlay ? pause() : play());
+
+  // When the document becomes visible again after being hidden (background tab,
+  // minimized app), resume any track whose play() was blocked while hidden so the
+  // playlist keeps advancing instead of stopping after each song.
+  function handleVisibility() {
+    const wasHidden = state.hidden;
+    state.hidden = document.hidden;
+    if (!state.hidden && wasHidden && state.awaitingPlay && !state.playing && !state.offline && engine) {
+      play();
+    }
+  }
 
   async function go(i, { autoplay = state.playing || state.awaitingPlay } = {}) {
     state.index = (i + tracks.length) % tracks.length;
@@ -409,6 +421,8 @@ export function initPlayer(panel, { host, chips = [] }) {
   };
   ui.queue.addEventListener('click', () => setQueueOpen(ui.queue.getAttribute('aria-expanded') !== 'true'));
   for (const chip of chips) chip.addEventListener('click', toggle);
+
+  document.addEventListener('visibilitychange', handleVisibility);
 
   // Warm up the embed when the browser is idle, or as soon as someone reaches for the player.
   panel.addEventListener('pointerenter', connect, { once: true });
