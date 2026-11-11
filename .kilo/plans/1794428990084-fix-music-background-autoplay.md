@@ -2,54 +2,89 @@
 
 ## Problem
 
-The music player auto-advances to the next track when the current track ends (`onEnded` → `go()` → `engine.load()` → `controller.play()`). When the document is hidden (user switches tabs or minimizes the browser on mobile), playback stops after each song and does not resume. There is no `visibilitychange` handling in the player, and no fallback end-detection if Spotify's `playback_update` events stop firing while hidden.
+The music player auto-advances to the next track when the current track ends (`onEnded` → `go()` → `engine.load()` → `controller.play()`). When the document is hidden (user switches tabs or minimizes the browser on mobile), playback stops after each song and does not resume. The user wants subsequent songs to keep playing until the playlist is over or the user stops playback.
 
 ## Root cause
 
-1. `player-ui.js` has no `visibilitychange` listener. When `onEnded` fires while hidden, `go()` loads the next track and calls `controller.play()`, but browser autoplay policy can block programmatic playback initiation when `document.hidden` is true. When the tab later becomes visible, nothing retries `play()`, so `state.awaitingPlay` stays `true` and `state.playing` stays `false`.
-2. `spotify-engine.js` detects track end solely from `playback_update` events. If those events are throttled or stop while hidden, `onEnded` never fires and `go()` is never called.
+**Browser autoplay policy blocks programmatic `play()` calls when `document.hidden` is true.** Three flaws in the current implementation:
+
+1. **`player-ui.js` `go()` (line 202)** calls `engine.load(current(), { autoplay: true })` while hidden. Inside `spotify-engine.js.load()`, this calls `this.play()` → `controller.play()`, which is blocked. Worse, `spotify-engine.js.play()` sets `started = true` even when play is blocked, so subsequent `play()` calls use `controller.resume()` instead of `controller.play()` — which won't start a track that never began.
+
+2. **`player-ui.js` `connect()` (line 126)** calls `startPlayback()` when `wantPlay` is true, even if `document.hidden` — same blocked-play problem plus incorrect `started` flag.
+
+3. **`player-ui.js` `onError()` (line 97-102)** clears `state.awaitingPlay = false`. If the blocked play triggers an error, `awaitingPlay` becomes `false`, so the visibility-change handler never retries when the tab becomes visible.
+
+**Constraint:** Browser autoplay policy makes *initiating* playback while hidden fundamentally impossible. The correct approach: don't attempt blocked `play()` while hidden; load the next track paused, set `awaitingPlay = true`, and start it immediately when the tab becomes visible.
 
 ## Files affected
 
-- `js/modules/player/player-ui.js` — add visibility handling + resume-on-show
-- `js/modules/player/spotify-engine.js` — add timeout-based end-detection fallback
+- `js/modules/player/player-ui.js` — don't autoplay while hidden, resume on visibility change
+- `js/modules/player/spotify-engine.js` — keep the `stalledAtEnd` fallback (already added)
 
 ## Plan
 
 ### 1. `js/modules/player/player-ui.js`
 
-**Constants:** Add `VISIBILITY_RESUME_TIMEOUT_MS` (grace period before treating a stalled background play as needing a resume on show).
+**State:** Keep `hidden: false` already added to state. Also set `state.hidden = document.hidden` at init time so the initial hidden state is correct.
 
-**State:** Add `hidden` boolean to `state`, tracking `document.hidden`.
+**`go(i, { autoplay })`:** Add early return when `document.hidden && autoplay`:
+- Load the track with `autoplay: false` (queued but paused) — this does NOT call `controller.play()`, so `started` stays `false`
+- Set `state.awaitingPlay = true`
+- Set `loadedUri = current().uri`
+- Render and return early — do NOT call `engine.load()` with `autoplay: true`, do NOT arm stall timer
 
-**`onEnded()`:** Unchanged — still calls `go(state.index + 1, { autoplay: true })`. `go()` already sets `state.awaitingPlay = true` and loads the next track even if `controller.play()` is blocked while hidden. The key is that `awaitingPlay` must persist so the visibility handler can resume later.
+```javascript
+if (document.hidden && autoplay) {
+  loadedUri = current().uri;
+  await engine.load(current(), { autoplay: false });
+  state.awaitingPlay = true;
+  render();
+  return;
+}
+```
 
-**New `handleVisibility()`:**
-- On `visibilitychange`, update `state.hidden = document.hidden`.
-- When `document.hidden` transitions from `true` to `false` (tab becomes visible):
-  - If `state.awaitingPlay && !state.playing && !state.offline && engine`, call `play()` to resume the queued track.
-  - This covers both the Spotify engine (blocked `controller.play()` while hidden) and the preview engine (suspended `<audio>` while hidden).
+Place this after the `if (!engine)` check and before the `try` block.
 
-**Event registration:** Add `document.addEventListener('visibilitychange', handleVisibility)` near the existing event listeners at the bottom of `initPlayer`, alongside `armSyncTimer()`.
+**`connect()`:** In the `.then(async (e) => { ... })` callback (line 119-128), guard `startPlayback()`:
+- Change `if (wantPlay) startPlayback();` to `if (wantPlay && !document.hidden) startPlayback();`
+- When hidden and `wantPlay`, leave `state.awaitingPlay = true` for `handleVisibility` to handle.
+
+**`handleVisibility()`:** Already added. When transitioning hidden→visible:
+- If `state.awaitingPlay && !state.playing && !state.offline && engine`, call `play()`
+- The track is already loaded (paused) from `go()` or `connect()`, so `play()` → `controller.play()` works since document is now visible
+- Add `armStallTimer()` after successful play
+
+**`onError()`:** Don't clear `state.awaitingPlay` when the error is `blocked` (NotAllowedError) AND `document.hidden`:
+```javascript
+onError(err) {
+  clearTimeout(stallTimer);
+  const isBlocked = err?.name === 'NotAllowedError';
+  state.hint = isBlocked ? 'blocked' : 'stalled';
+  if (!(isBlocked && document.hidden)) state.awaitingPlay = false;
+  render();
+},
+```
 
 ### 2. `js/modules/player/spotify-engine.js`
 
-**Constants:** Add `END_DETECTION_TIMEOUT_MS` (e.g. 10000) — how long without a `playback_update` before we assume the track has ended while armed.
+Keep the `stalledAtEnd` fallback already added:
+- `END_DETECTION_TIMEOUT_MS` constant
+- `lastUpdateMs` tracking
+- `stalledAtEnd` condition in `playback_update` listener
+- Reset `lastUpdateMs` in `load()`
 
-**State:** Add `lastUpdateMs` (timestamp of last `playback_update`).
-
-**`playback_update` listener:** Set `lastUpdateMs = performance.now()` on every valid update.
-
-**New end-detection fallback:** After the existing `finished` check, add a timer-based check: if `armed` is true, `!ended`, `last.durationMs > 0`, `last.positionMs >= last.durationMs - END_EPSILON_MS`, and `performance.now() - lastUpdateMs > END_DETECTION_TIMEOUT_MS`, treat as finished and call `callbacks.onEnded()`. Guard so it only fires once (`ended` flag).
-
-This covers the case where `playback_update` events stop while hidden and `onEnded` would otherwise never fire.
+No changes needed here — the `load()` method's internal `this.play()` won't be triggered while hidden because `go()` won't pass `autoplay: true` when `document.hidden`.
 
 ## Verification
 
 1. `npm run verify` — must pass (links, banned content, Uber Eats wording).
-2. `npm start` then `node tools/player-check.mjs http://localhost:8000` — all player checks must pass (embed, play, progress, next, seek, auto-advance, pause, fallback).
-3. Manual background-tab check: start playback, switch tabs/minimize, verify next track loads and resumes when tab returns to foreground.
-4. No changes to HTML, CSS, or playlist data files.
+2. `node --check js/modules/player/player-ui.js` and `spotify-engine.js` — syntax OK.
+3. Manual background-tab check: start playback, switch tabs/minimize, verify:
+   - When track ends while hidden, next track is queued (UI shows new track index)
+   - When tab returns to foreground, next track starts playing automatically
+   - No console errors related to blocked autoplay
+4. `npm start` then `node tools/player-check.mjs http://localhost:8000` — if Chrome is available.
+5. No changes to HTML, CSS, or playlist data files.
 
 ## Constraints
 
