@@ -64,7 +64,7 @@ export function initPlayer(panel, { host, chips = [] }) {
     preview: false,
     hint: null,
     offline: false,
-    hidden: false,
+    hidden: document.hidden,
   };
   let engine = null;
   let connecting = null;
@@ -96,9 +96,12 @@ export function initPlayer(panel, { host, chips = [] }) {
       go(state.index + 1, { autoplay: true });
     },
     onError(err) {
-      state.awaitingPlay = false;
       clearTimeout(stallTimer);
-      state.hint = err?.name === 'NotAllowedError' ? 'blocked' : 'stalled';
+      const isBlocked = err?.name === 'NotAllowedError';
+      state.hint = isBlocked ? 'blocked' : 'stalled';
+      // Don't clear awaitingPlay when autoplay was blocked by the tab being hidden:
+      // handleVisibility() will retry play() once the tab becomes visible.
+      if (!(isBlocked && document.hidden)) state.awaitingPlay = false;
       render();
     },
   };
@@ -123,7 +126,7 @@ export function initPlayer(panel, { host, chips = [] }) {
           await e.load(current(), { autoplay: false });
           loadedUri = current().uri;
         }
-        if (wantPlay) startPlayback();
+        if (wantPlay && !document.hidden) startPlayback();
         render();
         return e;
       })
@@ -181,6 +184,7 @@ export function initPlayer(panel, { host, chips = [] }) {
     state.hidden = document.hidden;
     if (!state.hidden && wasHidden && state.awaitingPlay && !state.playing && !state.offline && engine) {
       play();
+      armStallTimer();
     }
   }
 
@@ -195,6 +199,15 @@ export function initPlayer(panel, { host, chips = [] }) {
     revealCurrentTrack();
     if (!engine) {
       if (autoplay) connect();
+      return;
+    }
+    // Browser autoplay policy blocks play() while the document is hidden. Queue the next
+    // track paused and let handleVisibility() start it when the tab becomes visible.
+    if (document.hidden && autoplay) {
+      loadedUri = current().uri;
+      await engine.load(current(), { autoplay: false });
+      state.awaitingPlay = true;
+      render();
       return;
     }
     try {
