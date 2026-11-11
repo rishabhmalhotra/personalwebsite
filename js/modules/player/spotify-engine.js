@@ -94,7 +94,7 @@ export async function createSpotifyEngine(host, initialTrack, callbacks) {
     const pausedNearEnd = armed && last.playing && !state.playing && !userPaused && last.durationMs > 0
       && last.positionMs >= last.durationMs - PAUSED_NEAR_END_MS;
     // If updates stop while armed near the end (e.g. tab hidden), assume finished.
-    const stalledAtEnd = !ended && armed && last.durationMs > 0
+    const stalledAtEnd = !ended && armed && !userPaused && last.durationMs > 0
       && last.positionMs >= last.durationMs - END_EPSILON_MS
       && sinceLastUpdate > END_DETECTION_TIMEOUT_MS;
     const finished = !ended && (reachedEnd || pausedNearEnd || stalledAtEnd);

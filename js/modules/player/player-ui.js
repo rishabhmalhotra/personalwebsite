@@ -143,6 +143,7 @@ export function initPlayer(panel, { host, chips = [] }) {
     clearTimeout(stallTimer);
     stallTimer = setTimeout(() => {
       if (state.playing) return;
+      if (document.hidden) return;
       state.awaitingPlay = false;
       state.hint = 'stalled';
       render();
