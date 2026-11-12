@@ -11,6 +11,10 @@ const LOAD_READY_FALLBACK_MS = 1500;
 // duration, so "reached the end" is the signal. Some versions pause just short of the end instead.
 const END_EPSILON_MS = 300;
 const PAUSED_NEAR_END_MS = 1500;
+// If playback_update stops arriving while armed near the end of a track (for
+// example when the tab is hidden), assume the track finished after this long
+// with no update.
+const END_DETECTION_TIMEOUT_MS = 8000;
 
 let apiPromise = null;
 
@@ -71,10 +75,33 @@ export async function createSpotifyEngine(host, initialTrack, callbacks) {
   // late update from the previous track (still pinned at its end) cannot skip the new one.
   let armed = false;
   let last = { playing: false, positionMs: 0, durationMs: 0 };
+  let lastUpdateMs = 0;
+  let stalledTimer = 0;
+
+  function clearStalledTimer() {
+    clearTimeout(stalledTimer);
+    stalledTimer = 0;
+  }
+
+  function armStalledTimer() {
+    clearStalledTimer();
+    stalledTimer = setTimeout(() => {
+      if (!ended && armed && !userPaused && last.durationMs > 0
+        && last.positionMs >= last.durationMs - END_EPSILON_MS) {
+        ended = true;
+        const state = { ...last, playing: false };
+        callbacks.onState(state);
+        callbacks.onEnded();
+      }
+    }, END_DETECTION_TIMEOUT_MS);
+  }
 
   controller.addListener('playback_update', ({ data }) => {
     if (!data) return;
     if (data.playingURI && data.playingURI !== currentUri) return;
+    const now = performance.now();
+    const sinceLastUpdate = now - lastUpdateMs;
+    lastUpdateMs = now;
     const state = {
       playing: !data.isPaused,
       positionMs: data.position ?? 0,
@@ -94,6 +121,14 @@ export async function createSpotifyEngine(host, initialTrack, callbacks) {
     last = state;
     callbacks.onState(state);
     if (finished) callbacks.onEnded();
+
+    // If progress is short of the end, clear any stalled timer (track still mid-playback).
+    // If near the end, arm a timer so we detect completion even if updates stop (e.g. tab hidden).
+    if (state.durationMs > 0 && state.positionMs < state.durationMs - END_EPSILON_MS) {
+      clearStalledTimer();
+    } else if (state.durationMs > 0 && state.positionMs >= state.durationMs - END_EPSILON_MS) {
+      armStalledTimer();
+    }
   });
 
   const whenLoaded = () => new Promise((resolve) => {
@@ -110,6 +145,8 @@ export async function createSpotifyEngine(host, initialTrack, callbacks) {
       ended = false;
       armed = false;
       last = { playing: false, positionMs: 0, durationMs: 0 };
+      lastUpdateMs = 0;
+      clearStalledTimer();
       controller.loadUri(track.uri);
       await whenLoaded();
       if (autoplay) this.play();

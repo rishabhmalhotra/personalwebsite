@@ -64,6 +64,7 @@ export function initPlayer(panel, { host, chips = [] }) {
     preview: false,
     hint: null,
     offline: false,
+    hidden: document.hidden,
   };
   let engine = null;
   let connecting = null;
@@ -95,9 +96,12 @@ export function initPlayer(panel, { host, chips = [] }) {
       go(state.index + 1, { autoplay: true });
     },
     onError(err) {
-      state.awaitingPlay = false;
       clearTimeout(stallTimer);
-      state.hint = err?.name === 'NotAllowedError' ? 'blocked' : 'stalled';
+      const isBlocked = err?.name === 'NotAllowedError';
+      state.hint = isBlocked ? 'blocked' : 'stalled';
+      // Don't clear awaitingPlay when autoplay was blocked by the tab being hidden:
+      // handleVisibility() will retry play() once the tab becomes visible.
+      if (!(isBlocked && document.hidden)) state.awaitingPlay = false;
       render();
     },
   };
@@ -122,7 +126,7 @@ export function initPlayer(panel, { host, chips = [] }) {
           await e.load(current(), { autoplay: false });
           loadedUri = current().uri;
         }
-        if (wantPlay) startPlayback();
+        if (wantPlay && !document.hidden) startPlayback();
         render();
         return e;
       })
@@ -139,6 +143,7 @@ export function initPlayer(panel, { host, chips = [] }) {
     clearTimeout(stallTimer);
     stallTimer = setTimeout(() => {
       if (state.playing) return;
+      if (document.hidden) return;
       state.awaitingPlay = false;
       state.hint = 'stalled';
       render();
@@ -172,6 +177,18 @@ export function initPlayer(panel, { host, chips = [] }) {
 
   const toggle = () => (state.playing || state.awaitingPlay ? pause() : play());
 
+  // When the document becomes visible again after being hidden (background tab,
+  // minimized app), resume any track whose play() was blocked while hidden so the
+  // playlist keeps advancing instead of stopping after each song.
+  function handleVisibility() {
+    const wasHidden = state.hidden;
+    state.hidden = document.hidden;
+    if (!state.hidden && wasHidden && state.awaitingPlay && !state.playing && !state.offline && engine) {
+      play();
+      armStallTimer();
+    }
+  }
+
   async function go(i, { autoplay = state.playing || state.awaitingPlay } = {}) {
     state.index = (i + tracks.length) % tracks.length;
     state.positionMs = 0;
@@ -183,6 +200,15 @@ export function initPlayer(panel, { host, chips = [] }) {
     revealCurrentTrack();
     if (!engine) {
       if (autoplay) connect();
+      return;
+    }
+    // Browser autoplay policy blocks play() while the document is hidden. Queue the next
+    // track paused and let handleVisibility() start it when the tab becomes visible.
+    if (document.hidden && autoplay) {
+      loadedUri = current().uri;
+      await engine.load(current(), { autoplay: false });
+      state.awaitingPlay = true;
+      render();
       return;
     }
     try {
@@ -409,6 +435,8 @@ export function initPlayer(panel, { host, chips = [] }) {
   };
   ui.queue.addEventListener('click', () => setQueueOpen(ui.queue.getAttribute('aria-expanded') !== 'true'));
   for (const chip of chips) chip.addEventListener('click', toggle);
+
+  document.addEventListener('visibilitychange', handleVisibility);
 
   // Warm up the embed when the browser is idle, or as soon as someone reaches for the player.
   panel.addEventListener('pointerenter', connect, { once: true });
